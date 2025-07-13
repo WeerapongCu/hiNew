@@ -1,0 +1,1669 @@
+-- ตัวแปรสำหรับรายชื่อผู้เล่น
+local SENDER_LIST = {'Keesmineo296', 'Kuskawirtz754', 'Rettacraps959', 'Guzekpluym9233', 'Weeceduana98524',
+                     'Ihrieloia899', 'Kaeladefay2116', 'Kilpjenne71574', 'Lacohud4624', 'Havealancz30555',
+                     'Anamanavid507', 'Gurgaio522', 'Nuestloff617', 'Vliemsebra8739', 'EndondiTaron', 'Suberhueso59890',
+                     'Mencydalle3640', 'Litzalessa5948', 'Fontwiles6456', 'OwisenteRese', 'Ardisineke7961',
+                     'Gokmundy7880', 'OfanestaNers', 'Dyouszamir9245', 'YestestoWert', 'insindaNdaie', 'Drowburra715',
+                     'UriteriSeser', 'Amoustoni42124', 'Raubabolla27360', 'Akelrina015', 'Staatbreon273',
+                     'Mokwindt14845', 'Bazperou778', 'Blomkamhi38953', 'Seenoeung5916', 'iomichoForsu',
+                     'Doegeridge5193', 'Cescanesto7064', 'Sadstrei27083', 'Cimamukes611', 'Glostrim72414',
+                     'Zoranhamdi7537', 'Jessiholod1106', 'Dekequi469', 'UstomyaSanon', 'Jerzykaska607', 'TondediSered',
+                     'Lucahricoh41186', 'Varjuseger05196', 'Caasiraike581', 'Moratvolz2335', 'Aajaybaran2240',
+                     'Ieefolck51794', 'Feisduro57567', 'OfiofatoRito', 'Umarare3895', 'Fumiasauby822', 'Labissur4811',
+                     'Denhazarse84868', 'Tovolyras274', 'OrofatiStato', 'RistuiaTeric', 'KerengeStond',
+                     'Sahalknuff28026', 'Guiseledue8491', 'Eritofaidofo', 'Stachdelle23278', 'Razinbacal83088',
+                     'Akulajines433', 'Pernopisto9372', 'Hoddebewig5945', 'Posasicat7122', 'Lampoue15986',
+                     'Dargatalmo19043', 'Bouchkeala9668', 'Lauthnalli2442', 'GuthiteaTong', 'Sartikales017',
+                     'OristiteRion', 'TinedithiNgo', 'Mumahouey77714', 'Beecknohel9957', 'Brayesenac4843',
+                     'EsithangeSis', 'Ilinpansy64228', 'Yasirkatai6493', 'Rasangoudy82009', 'Worbyswed5362',
+                     'ididoriShest', 'Deruadem241', 'ArinentouRio', 'Naylaisse772', 'Sarahbiser46229', 'Khembuske50151',
+                     'Lazardoniz4628', 'Caneslalas664', 'Swammbilik06255', 'Stumbcamp5491', 'Derstyer45136',
+                     'Herbecrave11378', 'Bodidarko0863', 'Nairaquel33011', 'Kintzneil341', 'Chuggahlm35311',
+                     'Hiraikirsh521', 'Dudargoez339', 'OfofatoRedia', 'Breauyaniz71689', 'Ritzoceric28783',
+                     'Femkesears40839', 'Duretmoery110', 'Mjoenbaird1888', 'Vanehugie6486', 'VededouNofic',
+                     'Kasiehelm90293', 'Taceyfulps046', 'Ceppizonda79189', 'Bruynfew3991', 'Bojkozenk5951',
+                     'Buffacons105', 'Marokkhera80522', 'Meldaabee30843', 'Marwaclott1089', 'Stupiluzon7812',
+                     'RintesiGhous', 'AioweateSari', 'Kubikbryen14323', 'Abdinhurn6722', 'Thianpenaz47684',
+                     'Dentimrotz304', 'Zaibasprei009', 'Combapion171', 'Nealstade124', 'Siadkolas3254', 'Duncheun00721',
+                     'Teececatz813', 'Mumbyhenze590', 'Randtnishi1011', 'Elawoida458', 'Slimpsaul56780',
+                     'Heuleleoni74556', 'Laffphaup47428', 'Claboniess0194', 'Daultmeta85460', 'Sloasblauw393',
+                     'Dennymehic3323', 'Shatzbuena67272', 'Glaceodman84228', 'Shuaichaka128', 'Guetajehle7240',
+                     'Corinsieff7245', 'Rollohovi615', 'Digheshel81682', 'Arlazelik11839', 'ParanengiSor',
+                     'Saalepewe505', 'Kyawhenry178', 'Barerfahd41404', 'Bartzjilka34303', 'Goromelad785',
+                     'Crossburak63797', 'Reehhiatt818', 'NengediStous', 'Okanoboone082', 'Dolsankit5092',
+                     'Edebenic12317', 'Neliakrysa189', 'Cesurkeiss02028', 'Kacybiank845', 'Bilenborse312',
+                     'Maesagler4899', 'Funekryza262', 'SoungandoRan', 'Soshbatta26821', 'Cownsneate9954',
+                     'Verlyleow04321', 'Claarorzo71503', 'Corktrish53594', 'Perremets605', 'Aidassado349',
+                     'Godarburum8203', 'Brottprem0756', 'AidurerseDit', 'Gavalroa1630', 'Altykeyan8128', 'EshathiDises',
+                     'Saulapil65146', 'Junimijal566', 'Cluredonze8616', 'Bobilamo87188', 'Zheenama070', 'Seidesnurr874',
+                     'Boehrdeska332', 'Hollosaich57938', 'Wondaiyer87363', 'NorerastiNgo', 'EnorenoReres',
+                     'Kalmadedeo2303', 'Rahafkoles01675', 'Bororparbs4741', 'Rokeysesti16159', 'Ohldefolco231',
+                     'Marmoloman878', 'Paynyahr3259', 'Pranghake10791', 'Pikergiant65283', 'Babbyroush3282',
+                     'Ehnesaldan5383', 'Attixpono22078', 'EsomedoReres', 'Karrhanck59188', 'AteritouSont',
+                     'Bunyimunts862', 'Kopanvagas47813', 'Yahvahl6911', 'inendunduTir', 'Neldasodha7911',
+                     'Gedgeslota72125', 'Ulandeyob837', 'Karilyilma441', 'Lauzeirfa21148', 'Dancecale709',
+                     'Noilkuku250', 'Lesaknuha5408', 'Kaeckkodey37821', 'TindangeSeng', 'Diosoon875', 'Kindywano17423',
+                     'EdsatecoNtin', 'AngatoreRoun', 'Aloiaawyie632', 'Aginbiele8858', 'Postabella76959',
+                     'EdofishoRaie', 'Vokachegy978', 'Jianghelyn632', 'Gothswatt7782', 'Zotzryou875', 'Digbyshute868',
+                     'Gavinmacik9991', 'Pieplodes28985', 'Kuderbhan069', 'Brahurby00291', 'Zehnagrieb7386',
+                     'Krestnuran910', 'Tiengnunno251', 'Rollycoff4224', 'Judonifie27614', 'Puljunolta85509',
+                     'Husarguell415', 'Hoydradak8057', 'Seguicuro0277', 'Rianndabit968', 'Kjaerjesme34067',
+                     'Ayescutro94897', 'Mirekalysa7167', 'Bauloatis664', 'Coriamehok08396', 'Fadasport9664',
+                     'Zayanoga717', 'Casemdrath61423', 'Steigmilin67449', 'Dalcecron2367', 'Jekottyk19807',
+                     'Shbizomer21691'}
+local RECEIVER_LIST = {'Nobsgfell6830', 'Achsheise972', 'Timaenck2026', 'Wimmschhay055', 'Laiznakao74483',
+                       'OfeasteRsear', 'Howelprutz803', 'Voghttoale47892', 'Asiajakel5201', 'Jagowpisch414',
+                       'Embryfaino750', 'Servizierk6626', 'Hynescaso99440', 'UtiiiiiNerii'}
+-- ตัวแปรสำหรับการทำงาน
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local GuiService = game:GetService("GuiService")
+local VirtualInputManager = game:GetService("VirtualInputManager")
+
+-- ตัวแปรสำหรับ tracking
+local currentStep = 0
+local currentStepReceiver = 0 -- ตัวแปรแยกสำหรับ receiver mode
+local isTrading = false
+local tradePartner = nil
+
+-- ตัวแปรสำหรับตรวจสอบสถานะการเพิ่มไอเทม
+local shroomAdded = false
+local tokenAdded = false
+local creatureAdded = false
+
+-- ตัวแปรควบคุมการเรียก remote (ป้องกันการเรียกซ้อน)
+local isRemoteBusy = false
+local lastRemoteCallTime = 0
+
+-- ตัวแปรสำหรับ state-based tracking (เพิ่มใหม่)
+local receiverCreatureStartTime = 0
+local receiverCreatureRequested = false
+local receiverAcceptStartTime = 0
+local receiverAcceptRequested = false
+
+-- ตัวแปรสำหรับ receiver timeout (เพิ่มใหม่)
+local lastTradeRequestTime = tick()
+local RECEIVER_TIMEOUT = 300 -- 5 นาที (300 วินาที)
+
+-- ตัวแปรสำหรับ sender state-based tracking
+local senderShroomStartTime = 0
+local senderShroomRequested = false
+local senderTokenStartTime = 0
+local senderTokenRequested = false
+local senderCreatureStartTime = 0
+local senderCreatureRequested = false
+local senderAcceptStartTime = 0
+local senderAcceptRequested = false
+
+-- ตัวแปรป้องกันการทำงานพร้อมกัน
+local isSenderMainActive = false
+local isSenderReceiverActive = false
+
+-- ฟังก์ชันช่วยเหลือ
+local function IsInList(name, list)
+    for _, listName in ipairs(list) do
+        if name == listName then
+            return true
+        end
+    end
+    return false
+end
+
+local function Clicked_Ui(path)
+    local success, error = pcall(function()
+        GuiService.SelectedObject = path
+    end)
+
+    if not success then
+        warn("❌ เกิดข้อผิดพลาดในการเลือก UI: " .. tostring(error))
+    end
+end
+
+local function Click_NOW()
+    local success, error = pcall(function()
+        VirtualInputManager:SendKeyEvent(true, 13, false, game)
+        wait(0.1)
+        VirtualInputManager:SendKeyEvent(false, 13, false, game)
+        task.wait(2)
+        Clicked_Ui(nil)
+    end)
+
+    if not success then
+        warn("❌ เกิดข้อผิดพลาดในการกดปุ่ม: " .. tostring(error))
+    end
+end
+
+-- ฟังก์ชันวาร์ปไปยังตำแหน่งที่กำหนด
+local function WarpToLocation()
+    local success, error = pcall(function()
+        local character = LocalPlayer.Character
+        if character then
+            character:PivotTo(CFrame.new(Vector3.new(-2132.24, 490.66, 1106.83)))
+            print("✅ วาร์ปไปยังตำแหน่งที่กำหนดแล้ว")
+        end
+    end)
+
+    if not success then
+        warn("❌ เกิดข้อผิดพลาดในการวาร์ป: " .. tostring(error))
+    end
+end
+
+-- ฟังก์ชัน monitoring เห็ด
+local function MonitorShrooms()
+    while true do
+        local success, error = pcall(function()
+            local coinsValue = LocalPlayer.Data.Coins.Value
+            if coinsValue <= 20 then
+                print("⚠️ เห็ดเหลือน้อยกว่า 20 กำลังปิดเกม...")
+                game:Shutdown()
+                return
+            end
+        end)
+
+        if not success then
+            warn("❌ เกิดข้อผิดพลาดในการเช็คเห็ด: " .. tostring(error))
+        end
+
+        wait(5) -- เช็คทุก 5 วินาที
+    end
+end
+
+-- ฟังก์ชันหาคู่เทรดที่ว่าง
+local function FindValidReceiver()
+    local result = nil
+    local success, error = pcall(function()
+        print("🔍 กำลังค้นหาคู่เทรดที่ว่าง...")
+
+        -- ค้นหา receiver ที่ว่าง
+        local validReceivers = {}
+        local getPlayersSuccess = pcall(function()
+            for _, player in pairs(Players:GetPlayers()) do
+                if IsInList(player.Name, RECEIVER_LIST) then
+                    local isAvailable = false
+                    local tradingValue = nil
+                    local checkSuccess = pcall(function()
+                        if player and player:FindFirstChild("Settings") and player.Settings:FindFirstChild("Trading") then
+                            tradingValue = player.Settings.Trading.Value
+                            isAvailable = (tradingValue == false)
+                        else
+                            isAvailable = true
+                            tradingValue = "unknown"
+                        end
+                    end)
+
+                    if not checkSuccess then
+                        print("⚠️ เกิดข้อผิดพลาดในการเช็คสถานะ " .. player.Name .. " สมมติว่าว่าง...")
+                        isAvailable = true
+                        tradingValue = "error"
+                    end
+
+                    if isAvailable then
+                        print("✅ พบ receiver ที่ว่าง: " ..
+                            player.Name .. " (Trading.Value = " .. tostring(tradingValue) .. ")")
+                        table.insert(validReceivers, player)
+                    else
+                        print("❌ Receiver " ..
+                            player.Name .. " กำลังเทรดอยู่ (Trading.Value = " .. tostring(tradingValue) .. ")")
+                    end
+                end
+            end
+        end)
+
+        if not getPlayersSuccess then
+            print("❌ เกิดข้อผิดพลาดในการดึงรายชื่อผู้เล่น")
+            return nil
+        end
+
+        -- ถ้ามี receiver ว่าง ให้เลือกหนึ่งคน
+        if #validReceivers > 0 then
+            local selected = validReceivers[math.random(1, #validReceivers)]
+            print("🎯 เลือก receiver: " .. selected.Name)
+            result = selected
+            return
+        end
+
+        -- ถ้าไม่มี receiver ว่าง ให้ค้นหา sender อื่นที่ว่าง
+        print("ไม่มี receiver ว่าง กำลังค้นหา sender อื่น...")
+        local validSenders = {}
+        for _, player in pairs(Players:GetPlayers()) do
+            if IsInList(player.Name, SENDER_LIST) and player.Name ~= LocalPlayer.Name then
+                local isAvailable = false
+                local tradingValue = nil
+                pcall(function()
+                    tradingValue = player.Settings.Trading.Value
+                    isAvailable = (tradingValue == false)
+                end)
+
+                if isAvailable then
+                    print("✅ พบ sender ที่ว่าง: " .. player.Name .. " (Trading.Value = " .. tostring(tradingValue) .. ")")
+                    table.insert(validSenders, player)
+                else
+                    print("❌ Sender " ..
+                        player.Name .. " กำลังเทรดอยู่ (Trading.Value = " .. tostring(tradingValue) .. ")")
+                end
+            end
+        end
+
+        if #validSenders > 0 then
+            local selected = validSenders[math.random(1, #validSenders)]
+            print("🎯 เลือก sender เพื่อเทรดด้วย: " .. selected.Name)
+            result = selected
+            return
+        end
+
+        print("❌ ไม่พบคู่เทรดที่ว่าง")
+    end)
+    if not success then
+        warn("❌ เกิดข้อผิดพลาดในฟังก์ชัน FindValidReceiver: " .. tostring(error))
+    end
+    return result
+end
+
+-- ฟังก์ชันส่ง trade request
+local function SendTradeRequest(receiverName)
+    local success, error = pcall(function()
+        local args = {
+            "SendRequest",
+            game:GetService("Players"):WaitForChild(receiverName)
+        }
+        game:GetService("Players").LocalPlayer:WaitForChild("Remotes"):WaitForChild("TradeRequestRemote"):FireServer(
+            unpack(args))
+        print("📤 ส่ง trade request ไปยัง " .. receiverName)
+    end)
+
+    if not success then
+        warn("❌ เกิดข้อผิดพลาดในการส่ง trade request: " .. tostring(error))
+        return false
+    end
+
+    return true
+end
+
+-- ฟังก์ชัน add shroom
+local function AddShroom()
+    if not LocalPlayer.PlayerGui.TradeGui.Enabled then
+        print("❌ TradeGui ไม่เปิดใช้งาน")
+        return false
+    end
+
+    local success, error = pcall(function()
+        local tradeGui = LocalPlayer.PlayerGui.TradeGui
+        local containerFrame = tradeGui.ContainerFrame
+        local theirsFrame = containerFrame.Theirs
+        local displayNameLabel = theirsFrame.DisplayNameLabel
+        local userNameLabel = displayNameLabel.UserNameLabel
+        local opponentName = userNameLabel.Text
+
+        opponentName = opponentName:gsub("@", "")
+        local localPlayerName = LocalPlayer.Name
+
+        local coinsValue = LocalPlayer.Data.Coins.Value
+        local amount = coinsValue - 20
+        if amount > 500000 then amount = 500000 end
+        if amount < 0 then amount = 0 end
+
+        local args = {
+            "AddTradeItem",
+            {
+                Overwrite = true,
+                ItemType = "Currency",
+                Name = "Shooms",
+                Amount = amount
+            }
+        }
+
+        if not LocalPlayer.PlayerGui.TradeGui.Enabled then
+            print("❌ TradeGui ถูกปิดระหว่าง AddShroom, reset currentStep")
+            currentStep = 0
+            return false
+        end
+
+        local remote1Name = localPlayerName .. "-" .. opponentName .. "TradeRemote"
+        local remote1 = ReplicatedStorage:FindFirstChild("Remotes") and
+            ReplicatedStorage.Remotes:FindFirstChild(remote1Name)
+        if not remote1 then
+            print("❌ ไม่พบ remote1: " .. tostring(remote1Name))
+            currentStep = 0
+            return false
+        end
+        remote1:InvokeServer(unpack(args))
+        print("⏳ รอ 3 วินาทีหลังใช้ remote1...")
+        wait(3)
+
+        local remote2Name = opponentName .. "-" .. localPlayerName .. "TradeRemote"
+        local remote2 = ReplicatedStorage:FindFirstChild("Remotes") and
+            ReplicatedStorage.Remotes:FindFirstChild(remote2Name)
+        if not remote2 then
+            print("❌ ไม่พบ remote2: " .. tostring(remote2Name))
+            currentStep = 0
+            return false
+        end
+        remote2:InvokeServer(unpack(args))
+        print("⏳ รอ 3 วินาทีหลังใช้ remote2...")
+        wait(3)
+
+        print("✅ เพิ่ม " .. amount .. " Shrooms ในการเทรดกับ " .. opponentName)
+        return true
+    end)
+
+    if not success then
+        warn("❌ เกิดข้อผิดพลาดในฟังก์ชัน AddShroom: " .. tostring(error))
+        currentStep = 0
+        return false
+    end
+
+    return true
+end
+
+-- ฟังก์ชัน add token
+local function AddToken()
+    if not LocalPlayer.PlayerGui.TradeGui.Enabled then
+        print("❌ TradeGui ไม่เปิดใช้งาน")
+        return false
+    end
+
+    -- ตรวจสอบว่า remote กำลังใช้งานอยู่หรือไม่
+    if isRemoteBusy then
+        print("⚠️ Remote กำลังใช้งานอยู่ รอสักครู่...")
+        return false
+    end
+
+    local tokenList = {
+        'ChangeCreatureColorsToken',
+        'CreatureReviveToken',
+        'FullGrowToken',
+        'PartialGrowToken',
+        'FreeSpinToken',
+        'RandomStoredCreatureToken',
+    }
+
+    local success, error = pcall(function()
+        local tradeGui = LocalPlayer.PlayerGui.TradeGui
+        local containerFrame = tradeGui.ContainerFrame
+        local theirsFrame = containerFrame.Theirs
+        local displayNameLabel = theirsFrame.DisplayNameLabel
+        local userNameLabel = displayNameLabel.UserNameLabel
+        local opponentName = userNameLabel.Text
+
+        opponentName = opponentName:gsub('@', '')
+        local localPlayerName = LocalPlayer.Name
+
+        -- ตั้งค่า remote กำลังใช้งาน
+        isRemoteBusy = true
+
+        for i, tokenName in ipairs(tokenList) do
+            if not LocalPlayer.PlayerGui.TradeGui.Enabled then
+                print("❌ TradeGui ถูกปิดระหว่าง AddToken, reset currentStep")
+                isRemoteBusy = false
+                currentStep = 0
+                return false
+            end
+
+            local args = {
+                'AddTradeItem',
+                {
+                    Overwrite = true,
+                    ItemType = 'Tokens',
+                    Name = tokenName,
+                    Amount = 150,
+                },
+            }
+
+            local remoteName = localPlayerName .. '-' .. opponentName .. 'TradeRemote'
+            local remote = ReplicatedStorage:FindFirstChild('Remotes') and
+                ReplicatedStorage.Remotes:FindFirstChild(remoteName)
+            if not remote then
+                print('❌ ไม่พบ remote: ' .. tostring(remoteName))
+                isRemoteBusy = false
+                currentStep = 0
+                return false
+            end
+
+            print("📤 กำลังเพิ่ม " .. tokenName .. " (" .. i .. "/" .. #tokenList .. ")...")
+
+            local remoteSuccess, remoteError = pcall(function()
+                remote:InvokeServer(unpack(args))
+            end)
+
+            if not remoteSuccess then
+                warn("❌ เกิดข้อผิดพลาดในการเรียก remote สำหรับ " .. tokenName .. ": " .. tostring(remoteError))
+                isRemoteBusy = false
+                currentStep = 0
+                return false
+            end
+
+            print('✅ เพิ่ม ' .. tokenName .. ' ในการเทรดกับ ' .. opponentName)
+
+            -- รอ 3 วินาทีหลังใช้ remote
+            print("⏳ รอ 3 วินาทีหลังใช้ remote สำหรับ " .. tokenName .. "...")
+            wait(3)
+        end
+
+        -- ปลดล็อค remote
+        isRemoteBusy = false
+        print('✅ เพิ่ม token ทั้งหมดเสร็จสิ้น')
+        return true
+    end)
+
+    if not success then
+        warn("❌ เกิดข้อผิดพลาดในฟังก์ชัน AddToken: " .. tostring(error))
+        isRemoteBusy = false
+        currentStep = 0
+        return false
+    end
+
+    return true
+end
+
+-- ฟังก์ชัน add creature สำหรับ Receiver แบบปลอดภัย
+local function AddCreatureReceiver()
+    if not LocalPlayer.PlayerGui.TradeGui.Enabled then
+        print("❌ TradeGui ไม่เปิดใช้งาน")
+        return false
+    end
+
+    -- ตรวจสอบว่า remote กำลังใช้งานอยู่หรือไม่
+    if isRemoteBusy then
+        print("⚠️ Remote กำลังใช้งานอยู่ รอสักครู่...")
+        return false
+    end
+
+    local success, error = pcall(function()
+        local Unlocks = LocalPlayer.Data and LocalPlayer.Data.Unlocks
+        local creatureName = nil
+
+        if LocalPlayer and LocalPlayer.Data and LocalPlayer.Data.Unlocks then
+            for _, child in pairs(Unlocks:GetChildren()) do
+                if not LocalPlayer.PlayerGui.TradeGui.Enabled then
+                    print('❌ TradeGui ถูกปิดระหว่าง AddCreatureReceiver, reset currentStep')
+                    currentStepReceiver = 0
+                    return false
+                end
+                if child:IsA('ValueBase') and tonumber(child.Value) and tonumber(child.Value) > 0 then
+                    if child.Name ~= "Vin'rou" and child.Name ~= 'Eulopii' then
+                        creatureName = child.Name
+                        break
+                    end
+                end
+            end
+
+            if not creatureName then
+                warn('❌ ไม่พบ creature ที่ตรงเงื่อนไข')
+                currentStepReceiver = 0
+                return false
+            end
+
+            local theirLabel = LocalPlayer.PlayerGui and LocalPlayer.PlayerGui:FindFirstChild('TradeGui') and
+                LocalPlayer.PlayerGui.TradeGui.ContainerFrame.Theirs.DisplayNameLabel.UserNameLabel
+
+            if not theirLabel or not theirLabel.Text then
+                warn('❌ ไม่พบชื่อฝ่ายตรงข้าม')
+                currentStepReceiver = 0
+                return false
+            end
+
+            local otherPlayerName = theirLabel.Text
+            if string.sub(otherPlayerName, 1, 1) == '@' then
+                otherPlayerName = string.sub(otherPlayerName, 2)
+            end
+
+            local remoteName = otherPlayerName .. '-' .. LocalPlayer.Name .. 'TradeRemote'
+            local remotes = ReplicatedStorage:FindFirstChild('Remotes')
+            if not remotes then
+                print('❌ ไม่พบ Remotes folder')
+                currentStepReceiver = 0
+                return false
+            end
+
+            local remote = remotes:FindFirstChild(remoteName)
+            if not remote then
+                print('❌ ไม่พบ remote: ' .. tostring(remoteName))
+                currentStepReceiver = 0
+                return false
+            end
+
+            if not LocalPlayer.PlayerGui.TradeGui.Enabled then
+                print('❌ TradeGui ถูกปิดระหว่าง AddCreatureReceiver, reset currentStep')
+                currentStepReceiver = 0
+                return false
+            end
+
+            -- ตรวจสอบเวลาที่ผ่านไปตั้งแต่ remote call ล่าสุด
+            local timeSinceLastCall = tick() - lastRemoteCallTime
+            if timeSinceLastCall < 3 then
+                local waitTime = 3 - timeSinceLastCall
+                print("⏳ รอ " .. string.format("%.1f", waitTime) .. " วินาทีก่อนเรียก remote สำหรับ creature...")
+                wait(waitTime)
+            end
+
+            -- ตั้งค่า remote กำลังใช้งาน
+            isRemoteBusy = true
+            lastRemoteCallTime = tick()
+
+            local args = {
+                'AddTradeItem',
+                {
+                    Overwrite = true,
+                    ItemType = 'Creatures',
+                    Name = creatureName,
+                    Amount = 1,
+                },
+            }
+
+            print("📤 กำลังเพิ่ม creature: " .. creatureName .. "...")
+
+            local remoteSuccess, remoteError = pcall(function()
+                remote:InvokeServer(unpack(args))
+            end)
+
+            if not remoteSuccess then
+                warn('❌ เกิดข้อผิดพลาดในการเรียก Remote: ' .. tostring(remoteError))
+                isRemoteBusy = false
+                currentStepReceiver = 0
+                return false
+            else
+                print('✅ เพิ่ม creature สำเร็จ!')
+                lastRemoteCallTime = tick()
+
+                -- รอ 3 วินาทีหลังใช้ remote
+                print("⏳ รอ 3 วินาทีหลังใช้ remote สำหรับ creature...")
+                wait(3)
+
+                -- ปลดล็อค remote
+                isRemoteBusy = false
+                return true
+            end
+        else
+            print('❌ ไม่สามารถเข้าถึง Data.Unlocks ได้')
+            currentStepReceiver = 0
+            return false
+        end
+    end)
+
+    if not success then
+        warn('❌ เกิดข้อผิดพลาดในฟังก์ชัน AddCreatureReceiver: ' .. tostring(error))
+        isRemoteBusy = false
+        currentStepReceiver = 0
+        return false
+    end
+
+    return true
+end
+
+-- ฟังก์ชัน add creature
+local function AddCreature(isReceiver)
+    if not LocalPlayer.PlayerGui.TradeGui.Enabled then
+        print("❌ TradeGui ไม่เปิดใช้งาน")
+        return false
+    end
+
+    -- ตรวจสอบว่า remote กำลังใช้งานอยู่หรือไม่
+    if isRemoteBusy then
+        print("⚠️ Remote กำลังใช้งานอยู่ รอสักครู่...")
+        return false
+    end
+
+    local success, error = pcall(function()
+        local Unlocks = LocalPlayer.Data and LocalPlayer.Data.Unlocks
+        local creatureName = nil
+
+        if LocalPlayer and LocalPlayer.Data and LocalPlayer.Data.Unlocks then
+            for _, child in pairs(Unlocks:GetChildren()) do
+                if not LocalPlayer.PlayerGui.TradeGui.Enabled then
+                    print('❌ TradeGui ถูกปิดระหว่าง AddCreature, reset currentStep')
+                    currentStep = 0
+                    return false
+                end
+                if child:IsA('ValueBase') and tonumber(child.Value) and tonumber(child.Value) > 0 then
+                    if child.Name ~= "Vin'rou" and child.Name ~= 'Eulopii' then
+                        creatureName = child.Name
+                        break
+                    end
+                end
+            end
+
+            if not creatureName then
+                warn('❌ ไม่พบ creature ที่ตรงเงื่อนไข')
+                currentStep = 0
+                return false
+            end
+
+            local theirLabel = LocalPlayer.PlayerGui and LocalPlayer.PlayerGui:FindFirstChild('TradeGui') and
+                LocalPlayer.PlayerGui.TradeGui.ContainerFrame.Theirs.DisplayNameLabel.UserNameLabel
+
+            if not theirLabel or not theirLabel.Text then
+                warn('❌ ไม่พบชื่อฝ่ายตรงข้าม')
+                currentStep = 0
+                return false
+            end
+
+            local otherPlayerName = theirLabel.Text
+            if string.sub(otherPlayerName, 1, 1) == '@' then
+                otherPlayerName = string.sub(otherPlayerName, 2)
+            end
+
+            local remoteName
+            if isReceiver then
+                remoteName = otherPlayerName .. '-' .. LocalPlayer.Name .. 'TradeRemote'
+            else
+                remoteName = LocalPlayer.Name .. '-' .. otherPlayerName .. 'TradeRemote'
+            end
+            local remote = ReplicatedStorage:FindFirstChild('Remotes') and
+                ReplicatedStorage.Remotes:FindFirstChild(remoteName)
+            if not remote then
+                print('❌ ไม่พบ remote: ' .. tostring(remoteName))
+                currentStep = 0
+                return false
+            end
+
+            if not LocalPlayer.PlayerGui.TradeGui.Enabled then
+                print('❌ TradeGui ถูกปิดระหว่าง AddCreature, reset currentStep')
+                currentStep = 0
+                return false
+            end
+
+            -- ตรวจสอบเวลาที่ผ่านไปตั้งแต่ remote call ล่าสุด
+            local timeSinceLastCall = tick() - lastRemoteCallTime
+            if timeSinceLastCall < 3 then
+                local waitTime = 3 - timeSinceLastCall
+                print("⏳ รอ " .. string.format("%.1f", waitTime) .. " วินาทีก่อนเรียก remote สำหรับ creature...")
+                wait(waitTime)
+            end
+
+            -- ตั้งค่า remote กำลังใช้งาน
+            isRemoteBusy = true
+            lastRemoteCallTime = tick()
+
+            local args = {
+                'AddTradeItem',
+                {
+                    Overwrite = true,
+                    ItemType = 'Creatures',
+                    Name = creatureName,
+                    Amount = 1,
+                },
+            }
+
+            print("📤 กำลังเพิ่ม creature: " .. creatureName .. "...")
+
+            local remoteSuccess, remoteError = pcall(function()
+                remote:InvokeServer(unpack(args))
+            end)
+
+            if not remoteSuccess then
+                warn('❌ เกิดข้อผิดพลาดในการเรียก Remote: ' .. tostring(remoteError))
+                isRemoteBusy = false
+                currentStep = 0
+                return false
+            else
+                print('✅ เพิ่ม creature สำเร็จ!')
+                lastRemoteCallTime = tick()
+
+                -- รอ 3 วินาทีหลังใช้ remote
+                print("⏳ รอ 3 วินาทีหลังใช้ remote สำหรับ creature...")
+                wait(3)
+
+                -- ปลดล็อค remote
+                isRemoteBusy = false
+                return true
+            end
+        else
+            print('❌ ไม่สามารถเข้าถึง Data.Unlocks ได้')
+            currentStep = 0
+            return false
+        end
+    end)
+
+    if not success then
+        warn('❌ เกิดข้อผิดพลาดในฟังก์ชัน AddCreature: ' .. tostring(error))
+        isRemoteBusy = false
+        currentStep = 0
+        return false
+    end
+
+    return true
+end
+
+-- ฟังก์ชันกด accept สำหรับ Receiver แบบปลอดภัย
+local function ClickAcceptReceiver()
+    local success, error = pcall(function()
+        if not LocalPlayer.PlayerGui.TradeGui.Enabled then
+            print("❌ TradeGui ไม่เปิดใช้งาน")
+            return false
+        end
+
+        -- ตรวจสอบว่า remote กำลังใช้งานอยู่หรือไม่
+        if isRemoteBusy then
+            print("⚠️ Remote ยังใช้งานอยู่ ไม่สามารถกด accept ได้!")
+            return false
+        end
+
+        local tradeGui = LocalPlayer.PlayerGui:FindFirstChild("TradeGui")
+        if not tradeGui then
+            print("❌ ไม่พบ TradeGui")
+            return false
+        end
+
+        local containerFrame = tradeGui:FindFirstChild("ContainerFrame")
+        if not containerFrame then
+            print("❌ ไม่พบ ContainerFrame")
+            return false
+        end
+
+        local acceptButton = containerFrame:FindFirstChild("AcceptButton")
+        if not acceptButton then
+            print("❌ ไม่พบ AcceptButton")
+            return false
+        end
+
+        local upperLabel = acceptButton:FindFirstChild("UpperLabel")
+        if not upperLabel then
+            print("❌ ไม่พบ UpperLabel")
+            return false
+        end
+
+        Clicked_Ui(upperLabel)
+        task.wait(.1)
+        Click_NOW()
+        print("✅ กด accept แล้ว")
+        return true
+    end)
+
+    if not success then
+        warn("❌ เกิดข้อผิดพลาดในการกด accept: " .. tostring(error))
+        return false
+    end
+
+    return true
+end
+
+-- ฟังก์ชันกด accept
+local function ClickAccept()
+    local success, error = pcall(function()
+        if not LocalPlayer.PlayerGui.TradeGui.Enabled then
+            print("❌ TradeGui ไม่เปิดใช้งาน")
+            return false
+        end
+
+        -- ตรวจสอบว่า remote กำลังใช้งานอยู่หรือไม่
+        if isRemoteBusy then
+            print("⚠️ Remote ยังใช้งานอยู่ ไม่สามารถกด accept ได้!")
+            return false
+        end
+
+        Clicked_Ui(LocalPlayer.PlayerGui.TradeGui.ContainerFrame.AcceptButton.UpperLabel)
+        task.wait(.1)
+        Click_NOW()
+        print("✅ กด accept แล้ว")
+        return true
+    end)
+
+    if not success then
+        warn("❌ เกิดข้อผิดพลาดในการกด accept: " .. tostring(error))
+        return false
+    end
+
+    return true
+end
+
+-- ฟังก์ชันกด cancel
+local function ClickCancel()
+    local success, error = pcall(function()
+        Clicked_Ui(LocalPlayer.PlayerGui.TradeGui.ContainerFrame.CancelButton.UpperLabel)
+        task.wait(.1)
+        Click_NOW()
+        print("❌ ยกเลิกการเทรด")
+    end)
+
+    if not success then
+        warn("❌ เกิดข้อผิดพลาดในการกด cancel: " .. tostring(error))
+    end
+end
+
+-- ฟังก์ชันเช็คชื่อคู่เทรด
+local function CheckTradePartner()
+    local success, error = pcall(function()
+        if not LocalPlayer.PlayerGui.TradeGui.Enabled then
+            return false
+        end
+
+        local theirLabel = LocalPlayer.PlayerGui.TradeGui.ContainerFrame.Theirs.DisplayNameLabel.UserNameLabel
+        if not theirLabel or not theirLabel.Text then
+            return false
+        end
+
+        local opponentName = theirLabel.Text:gsub("@", "")
+
+        -- เช็คว่าชื่อตรงกับในรายชื่อหรือไม่
+        if IsInList(opponentName, RECEIVER_LIST) or IsInList(opponentName, SENDER_LIST) then
+            print("✅ ชื่อคู่เทรดถูกต้อง: " .. opponentName)
+            return true
+        else
+            print("❌ ชื่อคู่เทรดไม่ตรงกับรายชื่อ: " .. opponentName)
+            ClickCancel()
+            return false
+        end
+    end)
+
+    if not success then
+        warn("❌ เกิดข้อผิดพลาดในการเช็คชื่อคู่เทรด: " .. tostring(error))
+        return false
+    end
+
+    return true
+end
+
+-- ฟังก์ชัน accept trade request สำหรับ Sender
+local function AcceptTradeRequestForSender()
+    local success, error = pcall(function()
+        local requestsFrame = LocalPlayer.PlayerGui.RequestsGui.RequestsFrame.Other
+        if not requestsFrame then
+            return false
+        end
+
+        for _, child in pairs(requestsFrame:GetChildren()) do
+            if string.find(child.Name, "^Trade") then
+                local senderName = child.Name:sub(6) -- ตัด "Trade" ออก
+                -- Sender สามารถรับ trade request จาก sender อื่นได้
+                if IsInList(senderName, SENDER_LIST) then
+                    print("✅ Sender พบ trade request จาก " .. senderName .. " กำลัง accept...")
+
+                    -- อัปเดตเวลาสุดท้ายที่ได้รับ trade request (เพิ่มใหม่)
+                    lastTradeRequestTime = tick()
+
+                    Clicked_Ui(child.AcceptButton.UpperLabel)
+                    task.wait(.1)
+                    Click_NOW()
+                    return true
+                else
+                    print("❌ Trade request จาก " .. senderName .. " ไม่ตรงกับรายชื่อ กำลัง decline...")
+                    Clicked_Ui(child.DeclineButton.UpperLabel)
+                    task.wait(.1)
+                    Click_NOW()
+                end
+            end
+        end
+
+        return false
+    end)
+
+    if not success then
+        warn("❌ เกิดข้อผิดพลาดในการ accept trade request สำหรับ Sender: " .. tostring(error))
+        return false
+    end
+
+    return true
+end
+
+-- ฟังก์ชัน accept trade request สำหรับ Receiver แบบปลอดภัย
+local function AcceptTradeRequestReceiver()
+    local success, error = pcall(function()
+        local requestsGui = LocalPlayer.PlayerGui:FindFirstChild('RequestsGui')
+        if not requestsGui then
+            return false
+        end
+
+        local requestsFrame = requestsGui:FindFirstChild('RequestsFrame')
+        if not requestsFrame then
+            return false
+        end
+
+        local otherFrame = requestsFrame:FindFirstChild('Other')
+        if not otherFrame then
+            return false
+        end
+
+        for _, child in pairs(otherFrame:GetChildren()) do
+            if string.find(child.Name, "^Trade") then
+                local senderName = child.Name:sub(6) -- ตัด "Trade" ออก
+                if IsInList(senderName, SENDER_LIST) then
+                    print("✅ Receiver พบ trade request จาก " .. senderName .. " กำลัง accept...")
+
+                    -- อัปเดตเวลาสุดท้ายที่ได้รับ trade request (เพิ่มใหม่)
+                    lastTradeRequestTime = tick()
+
+                    Clicked_Ui(child.AcceptButton.UpperLabel)
+                    task.wait(.1)
+                    Click_NOW()
+                    return true
+                else
+                    print("❌ Trade request จาก " .. senderName .. " ไม่ตรงกับรายชื่อ กำลัง decline...")
+                    Clicked_Ui(child.DeclineButton.UpperLabel)
+                    task.wait(.1)
+                    Click_NOW()
+                end
+            end
+        end
+
+        return false
+    end)
+
+    if not success then
+        warn("❌ เกิดข้อผิดพลาดในการ accept trade request สำหรับ Receiver: " .. tostring(error))
+        return false
+    end
+
+    return true
+end
+
+-- ฟังก์ชัน accept trade request สำหรับ Receiver
+local function AcceptTradeRequest()
+    local success, error = pcall(function()
+        local requestsFrame = LocalPlayer.PlayerGui.RequestsGui.RequestsFrame.Other
+        if not requestsFrame then
+            return false
+        end
+
+        for _, child in pairs(requestsFrame:GetChildren()) do
+            if string.find(child.Name, "^Trade") then
+                local senderName = child.Name:sub(6) -- ตัด "Trade" ออก
+                if IsInList(senderName, SENDER_LIST) then
+                    print("✅ Receiver พบ trade request จาก " .. senderName .. " กำลัง accept...")
+
+                    -- อัปเดตเวลาสุดท้ายที่ได้รับ trade request (เพิ่มใหม่)
+                    lastTradeRequestTime = tick()
+
+                    Clicked_Ui(child.AcceptButton.UpperLabel)
+                    task.wait(.1)
+                    Click_NOW()
+                    return true
+                else
+                    print("❌ Trade request จาก " .. senderName .. " ไม่ตรงกับรายชื่อ กำลัง decline...")
+                    Clicked_Ui(child.DeclineButton.UpperLabel)
+                    task.wait(.1)
+                    Click_NOW()
+                end
+            end
+        end
+
+        return false
+    end)
+
+    if not success then
+        warn("❌ เกิดข้อผิดพลาดในการ accept trade request สำหรับ Receiver: " .. tostring(error))
+        return false
+    end
+
+    return true
+end
+
+-- ฟังก์ชัน Coroutine สำหรับ Sender ที่รับ trade request
+local function SenderReceiverCoroutine()
+    while true do
+        local success, error = pcall(function()
+            if not LocalPlayer.PlayerGui.TradeGui.Enabled then
+                -- รอ trade request
+                AcceptTradeRequestForSender()
+
+                -- ตรวจสอบ timeout สำหรับ Sender ที่ทำงานแบบ Receiver (เพิ่มใหม่)
+                local timeSinceLastRequest = tick() - lastTradeRequestTime
+                local timeRemaining = RECEIVER_TIMEOUT - timeSinceLastRequest
+
+                if timeSinceLastRequest >= RECEIVER_TIMEOUT then
+                    print("⚠️ Sender (Receiver mode) ไม่ได้รับ trade request นาน " ..
+                        string.format("%.1f", timeSinceLastRequest) .. " วินาที (เกิน " .. RECEIVER_TIMEOUT .. " วินาที)")
+                    print("🔄 กำลังเปลี่ยนเซิร์ฟเวอร์เพื่อหาคู่เทรดใหม่...")
+
+                    local success, error = pcall(function()
+                        local TeleportService = game:GetService("TeleportService")
+                        TeleportService:Teleport(14119723130)
+                    end)
+
+                    if not success then
+                        warn("❌ เกิดข้อผิดพลาดในการเปลี่ยนเซิร์ฟเวอร์: " .. tostring(error))
+                        print("🚪 กำลังออกจากเกม...")
+                        game:Shutdown()
+                    end
+                    return
+                else
+                    -- แสดงสถานะเวลาที่เหลือทุก 30 วินาที
+                    if math.floor(timeSinceLastRequest) % 30 == 0 or timeRemaining <= 60 then
+                        print("⏰ Sender (Receiver mode) รอ trade request... เหลือเวลาอีก " ..
+                            string.format("%.0f", timeRemaining) .. " วินาทีก่อนเปลี่ยนเซิร์ฟเวอร์")
+                    end
+                end
+
+                -- รีเซ็ตสถานะเมื่อไม่ได้เทรด
+                receiverCreatureStartTime = 0
+                receiverCreatureRequested = false
+                receiverAcceptStartTime = 0
+                receiverAcceptRequested = false
+                currentStepReceiver = 0
+                isSenderReceiverActive = false
+                wait(2)
+            else
+                -- กำลังเทรดอยู่ (เมื่อเป็น receiver)
+                -- ตรวจสอบว่ามี trade request หรือไม่
+                local hasTradeRequest = false
+                local requestsFrame = LocalPlayer.PlayerGui.RequestsGui.RequestsFrame.Other
+                if requestsFrame then
+                    for _, child in pairs(requestsFrame:GetChildren()) do
+                        if string.find(child.Name, "^Trade") then
+                            hasTradeRequest = true
+                            break
+                        end
+                    end
+                end
+
+                -- ถ้ามี trade request ให้ override main sender
+                if hasTradeRequest then
+                    print("📩 พบ trade request กำลัง override Main Sender...")
+                    isSenderMainActive = false
+                end
+
+                -- ตรวจสอบว่า main sender loop กำลังทำงานอยู่หรือไม่
+                if isSenderMainActive then
+                    print("⏸️ Main Sender กำลังทำงานอยู่ SenderReceiver รอสักครู่...")
+                    wait(1)
+                    return
+                end
+
+                if currentStepReceiver == 0 then
+                    -- เช็คชื่อคู่เทรดก่อน
+                    if CheckTradePartner() then
+                        isSenderReceiverActive = true
+                        currentStepReceiver = 1
+                        print("🚀 Sender เริ่มขั้นตอนที่ 1: Add Creature (โหมด Receiver)")
+                    else
+                        wait(1)
+                    end
+                elseif currentStepReceiver == 1 then
+                    -- Add Creature - ใช้ state-based tracking
+                    if not receiverCreatureRequested then
+                        -- ตรวจสอบว่า remote กำลังใช้งานอยู่หรือไม่
+                        if isRemoteBusy then
+                            print("⏳ Remote กำลังใช้งานอยู่ รอสักครู่...")
+                            wait(1)
+                        else
+                            print("🚀 เริ่ม Add Creature...")
+                            -- เริ่มทำ AddCreature แบบไม่รอผลลัพธ์
+                            spawn(function()
+                                AddCreature(true)
+                            end)
+                            receiverCreatureRequested = true
+                            receiverCreatureStartTime = tick()
+                            print("⏳ รอให้ Add Creature เสร็จ...")
+                        end
+                    else
+                        -- ตรวจสอบว่าผ่านไป 5 วินาทีแล้วหรือยัง
+                        local elapsedTime = tick() - receiverCreatureStartTime
+                        if elapsedTime >= 5 then
+                            currentStepReceiver = 2
+                            print("�� Sender เริ่มขั้นตอนที่ 2: Click Accept (โหมด Receiver)")
+                        else
+                            print("⏳ รอ Add Creature เสร็จ... (" .. string.format("%.1f", 5 - elapsedTime) .. " วินาที)")
+                        end
+                    end
+                elseif currentStepReceiver == 2 then
+                    -- Click Accept - ใช้ state-based tracking
+                    if not receiverAcceptRequested then
+                        print("🚀 เริ่ม Click Accept...")
+                        -- เริ่มทำ ClickAccept แบบไม่รอผลลัพธ์
+                        spawn(function()
+                            ClickAccept()
+                        end)
+                        receiverAcceptRequested = true
+                        receiverAcceptStartTime = tick()
+                        print("⏳ รอให้ Click Accept เสร็จ...")
+                    else
+                        -- ตรวจสอบว่าผ่านไป 3 วินาทีแล้วหรือยัง
+                        local elapsedTime = tick() - receiverAcceptStartTime
+                        if elapsedTime >= 3 then
+                            currentStepReceiver = 0
+                            print("✅ Sender เทรดเสร็จสิ้น (โหมด Receiver)")
+                            -- รีเซ็ตสถานะ
+                            receiverCreatureStartTime = 0
+                            receiverCreatureRequested = false
+                            receiverAcceptStartTime = 0
+                            receiverAcceptRequested = false
+                            isSenderReceiverActive = false
+                        else
+                            print("⏳ รอ Click Accept เสร็จ... (" .. string.format("%.1f", 3 - elapsedTime) .. " วินาที)")
+                        end
+                    end
+                end
+                wait(1)
+            end
+        end)
+
+        if not success then
+            warn("❌ เกิดข้อผิดพลาดใน SenderReceiverCoroutine: " .. tostring(error))
+            currentStepReceiver = 0
+            -- รีเซ็ตสถานะ
+            receiverCreatureStartTime = 0
+            receiverCreatureRequested = false
+            receiverAcceptStartTime = 0
+            receiverAcceptRequested = false
+            isSenderReceiverActive = false
+            wait(5) -- รอ 5 วินาทีก่อนลองใหม่
+        end
+    end
+end
+
+function TradeStepHandlerSender(step)
+    if not LocalPlayer.PlayerGui.TradeGui.Enabled then
+        -- ยังไม่ได้เทรด
+        if step ~= 0 then
+            print("Trade ถูกยกเลิกหรือจบกลางคัน กำลัง reset step...")
+            -- รีเซ็ตสถานะการเพิ่มไอเทม
+            shroomAdded = false
+            tokenAdded = false
+            creatureAdded = false
+            -- รีเซ็ตสถานะ sender tracking
+            senderShroomStartTime = 0
+            senderShroomRequested = false
+            senderTokenStartTime = 0
+            senderTokenRequested = false
+            senderCreatureStartTime = 0
+            senderCreatureRequested = false
+            senderAcceptStartTime = 0
+            senderAcceptRequested = false
+            isSenderMainActive = false
+            step = 0
+        end
+
+        -- ตรวจสอบว่า SenderReceiver กำลังทำงานอยู่หรือไม่
+        if isSenderReceiverActive then
+            print("⏸️ SenderReceiver กำลังทำงานอยู่ Main Sender รอสักครู่...")
+            return 0
+        end
+
+        local validPartner = FindValidReceiver()
+        if validPartner then
+            SendTradeRequest(validPartner.Name)
+        else
+            -- ถ้าไม่มี partner ให้ปลดล็อค main sender
+            isSenderMainActive = false
+        end
+        return 0 -- reset step
+    else
+        -- กำลังเทรดอยู่
+        if step == 0 then
+            if CheckTradePartner() then
+                print("🚀 เริ่มขั้นตอนที่ 1: Add Shroom")
+                -- รีเซ็ตสถานะการเพิ่มไอเทมเมื่อเริ่มเทรดใหม่
+                shroomAdded = false
+                tokenAdded = false
+                creatureAdded = false
+                -- รีเซ็ตสถานะ sender tracking
+                senderShroomStartTime = 0
+                senderShroomRequested = false
+                senderTokenStartTime = 0
+                senderTokenRequested = false
+                senderCreatureStartTime = 0
+                senderCreatureRequested = false
+                senderAcceptStartTime = 0
+                senderAcceptRequested = false
+                return 1
+            end
+        elseif step == 1 then
+            if not LocalPlayer.PlayerGui.TradeGui.Enabled then
+                print("TradeGui ถูกปิดระหว่าง AddShroom, reset step")
+                return 0
+            end
+            -- Add Shroom - ใช้ state-based tracking
+            if not senderShroomRequested then
+                -- ตรวจสอบว่า remote กำลังใช้งานอยู่หรือไม่
+                if isRemoteBusy then
+                    print("⏳ Remote กำลังใช้งานอยู่ รอสักครู่...")
+                    return 1
+                else
+                    print("🚀 เริ่ม Add Shroom...")
+                    senderShroomRequested = true
+                    senderShroomStartTime = tick()
+                    isSenderMainActive = true -- ตั้ง active เมื่อเริ่มเทรดจริง
+                    -- เรียก AddShroom แบบ synchronous และหยุด loop
+                    print("⏸️ หยุด loop เพื่อรอ Add Shroom เสร็จ...")
+                    local shroomSuccess = AddShroom()
+                    if shroomSuccess then
+                        shroomAdded = true
+                        print("✅ Add Shroom เสร็จสิ้น")
+                        print("🚀 เริ่มขั้นตอนที่ 2: Add Token")
+                        return 2
+                    else
+                        print("❌ Add Shroom ล้มเหลว")
+                        senderShroomRequested = false
+                        isSenderMainActive = false
+                        return 0
+                    end
+                end
+            else
+                -- ถ้า shroom ยังไม่เสร็จ แต่เวลาผ่านไปมากเกินไป
+                local elapsedTime = tick() - senderShroomStartTime
+                if elapsedTime >= 10 then
+                    print("⚠️ Add Shroom ใช้เวลานานเกินไป กำลังข้ามไป step 2")
+                    shroomAdded = true
+                    return 2
+                else
+                    print("⏳ รอ Add Shroom เสร็จ... (" .. string.format("%.1f", 10 - elapsedTime) .. " วินาที)")
+                    return 1
+                end
+            end
+        elseif step == 2 then
+            if not LocalPlayer.PlayerGui.TradeGui.Enabled then
+                print("TradeGui ถูกปิดระหว่าง AddToken, reset step")
+                return 0
+            end
+            -- Add Token - ใช้ state-based tracking
+            if not senderTokenRequested then
+                -- ตรวจสอบว่า remote กำลังใช้งานอยู่หรือไม่
+                if isRemoteBusy then
+                    print("⏳ Remote กำลังใช้งานอยู่ รอสักครู่...")
+                    return 2
+                else
+                    print("🚀 เริ่ม Add Token...")
+                    senderTokenRequested = true
+                    senderTokenStartTime = tick()
+                    -- เรียก AddToken แบบ synchronous และหยุด loop
+                    print("⏸️ หยุด loop เพื่อรอ Add Token เสร็จ...")
+                    local tokenSuccess = AddToken()
+                    if tokenSuccess then
+                        tokenAdded = true
+                        print("✅ Add Token เสร็จสิ้น")
+                        print("🚀 เริ่มขั้นตอนที่ 3: Add Creature")
+                        return 3
+                    else
+                        print("❌ Add Token ล้มเหลว")
+                        senderTokenRequested = false
+                        return 0
+                    end
+                end
+            else
+                -- ถ้า token ยังไม่เสร็จ แต่เวลาผ่านไปมากเกินไป
+                local elapsedTime = tick() - senderTokenStartTime
+                if elapsedTime >= 30 then
+                    print("⚠️ Add Token ใช้เวลานานเกินไป กำลังข้ามไป step 3")
+                    tokenAdded = true
+                    return 3
+                else
+                    print("⏳ รอ Add Token เสร็จ... (" .. string.format("%.1f", 30 - elapsedTime) .. " วินาที)")
+                    return 2
+                end
+            end
+        elseif step == 3 then
+            if not LocalPlayer.PlayerGui.TradeGui.Enabled then
+                print("TradeGui ถูกปิดระหว่าง AddCreature, reset step")
+                return 0
+            end
+            -- Add Creature - ใช้ state-based tracking
+            if not senderCreatureRequested then
+                -- ตรวจสอบว่า remote กำลังใช้งานอยู่หรือไม่
+                if isRemoteBusy then
+                    print("⏳ Remote กำลังใช้งานอยู่ รอสักครู่...")
+                    return 3
+                else
+                    print("🚀 เริ่ม Add Creature...")
+                    senderCreatureRequested = true
+                    senderCreatureStartTime = tick()
+                    -- เรียก AddCreature แบบ synchronous และหยุด loop
+                    print("⏸️ หยุด loop เพื่อรอ Add Creature เสร็จ...")
+                    local creatureSuccess = AddCreature(false)
+                    if creatureSuccess then
+                        creatureAdded = true
+                        print("✅ Add Creature เสร็จสิ้น")
+                        print("🚀 เริ่มขั้นตอนที่ 4: Click Accept")
+                        return 4
+                    else
+                        print("❌ Add Creature ล้มเหลว")
+                        senderCreatureRequested = false
+                        return 0
+                    end
+                end
+            else
+                -- ถ้า creature ยังไม่เสร็จ แต่เวลาผ่านไปมากเกินไป
+                local elapsedTime = tick() - senderCreatureStartTime
+                if elapsedTime >= 10 then
+                    print("⚠️ Add Creature ใช้เวลานานเกินไป กำลังข้ามไป step 4")
+                    creatureAdded = true
+                    return 4
+                else
+                    print("⏳ รอ Add Creature เสร็จ... (" .. string.format("%.1f", 10 - elapsedTime) .. " วินาที)")
+                    return 3
+                end
+            end
+        elseif step == 4 then
+            if not LocalPlayer.PlayerGui.TradeGui.Enabled then
+                print("TradeGui ถูกปิดระหว่าง ClickAccept, reset step")
+                return 0
+            end
+            -- Click Accept - ใช้ state-based tracking
+            if not senderAcceptRequested then
+                -- ตรวจสอบว่าทุกขั้นตอนเสร็จสิ้นแล้ว
+                if shroomAdded and tokenAdded and creatureAdded then
+                    print("🔍 ตรวจสอบสถานะ: Shroom=" ..
+                        tostring(shroomAdded) ..
+                        ", Token=" .. tostring(tokenAdded) .. ", Creature=" .. tostring(creatureAdded))
+
+                    -- ตรวจสอบว่า remote ยังใช้งานอยู่หรือไม่
+                    if isRemoteBusy then
+                        print("⚠️ Remote ยังใช้งานอยู่ ไม่สามารถกด accept ได้! รอสักครู่...")
+                        return 4 -- ยังคงอยู่ใน step 4
+                    end
+                    print("🚀 เริ่ม Click Accept...")
+                    senderAcceptRequested = true
+                    senderAcceptStartTime = tick()
+                    -- เรียก ClickAccept แบบ synchronous และหยุด loop
+                    print("⏸️ หยุด loop เพื่อรอ Click Accept เสร็จ...")
+                    local acceptSuccess = ClickAccept()
+                    if acceptSuccess then
+                        print("✅ เทรดเสร็จสิ้น")
+                        -- รีเซ็ตสถานะการเพิ่มไอเทม
+                        shroomAdded = false
+                        tokenAdded = false
+                        creatureAdded = false
+                        -- รีเซ็ตสถานะ sender tracking
+                        senderShroomStartTime = 0
+                        senderShroomRequested = false
+                        senderTokenStartTime = 0
+                        senderTokenRequested = false
+                        senderCreatureStartTime = 0
+                        senderCreatureRequested = false
+                        senderAcceptStartTime = 0
+                        senderAcceptRequested = false
+                        isSenderMainActive = false
+                        return 0
+                    else
+                        print("❌ Click Accept ล้มเหลว")
+                        senderAcceptRequested = false
+                        return 0
+                    end
+                else
+                    print("⚠️ ยังมีขั้นตอนที่ยังไม่เสร็จ: Shroom=" ..
+                        tostring(shroomAdded) ..
+                        ", Token=" .. tostring(tokenAdded) .. ", Creature=" .. tostring(creatureAdded))
+                    -- กลับไปทำขั้นตอนที่ยังไม่เสร็จ
+                    if not shroomAdded then
+                        print("🔄 กลับไปทำ Add Shroom")
+                        return 1
+                    elseif not tokenAdded then
+                        print("🔄 กลับไปทำ Add Token")
+                        return 2
+                    elseif not creatureAdded then
+                        print("🔄 กลับไปทำ Add Creature")
+                        return 3
+                    end
+                end
+            else
+                -- ถ้า accept ยังไม่เสร็จ แต่เวลาผ่านไปมากเกินไป
+                local elapsedTime = tick() - senderAcceptStartTime
+                if elapsedTime >= 5 then
+                    print("⚠️ Click Accept ใช้เวลานานเกินไป กำลังจบเทรด")
+                    print("✅ เทรดเสร็จสิ้น")
+                    -- รีเซ็ตสถานะการเพิ่มไอเทม
+                    shroomAdded = false
+                    tokenAdded = false
+                    creatureAdded = false
+                    -- รีเซ็ตสถานะ sender tracking
+                    senderShroomStartTime = 0
+                    senderShroomRequested = false
+                    senderTokenStartTime = 0
+                    senderTokenRequested = false
+                    senderCreatureStartTime = 0
+                    senderCreatureRequested = false
+                    senderAcceptStartTime = 0
+                    senderAcceptRequested = false
+                    isSenderMainActive = false
+                    return 0
+                else
+                    print("⏳ รอ Click Accept เสร็จ... (" .. string.format("%.1f", 5 - elapsedTime) .. " วินาที)")
+                    return 4
+                end
+            end
+        end
+    end
+    return step
+end
+
+-- เรียกใช้งานแบบ timer (ทุก 1 วินาที)
+local function StartSenderStepLoop()
+    spawn(function()
+        while true do
+            local success, err = pcall(function()
+                local previousStep = currentStep
+                currentStep = TradeStepHandlerSender(currentStep)
+
+                -- ถ้า step เปลี่ยน แสดงว่าขั้นตอนเสร็จแล้ว
+                if previousStep ~= currentStep then
+                    print("🔄 ขั้นตอนเปลี่ยนจาก " .. previousStep .. " เป็น " .. currentStep)
+                end
+            end)
+            if not success then
+                warn("❌ เกิดข้อผิดพลาดใน TradeStepHandlerSender: " .. tostring(err))
+                currentStep = 0
+                -- รีเซ็ตสถานะ sender tracking
+                senderShroomStartTime = 0
+                senderShroomRequested = false
+                senderTokenStartTime = 0
+                senderTokenRequested = false
+                senderCreatureStartTime = 0
+                senderCreatureRequested = false
+                senderAcceptStartTime = 0
+                senderAcceptRequested = false
+                isSenderMainActive = false
+            end
+
+            -- รอ 1 วินาทีแล้ววนใหม่
+            wait(1)
+        end
+    end)
+end
+
+-- Coroutine สำหรับ Receiver แบบปลอดภัย
+local function ReceiverCoroutine()
+    while true do
+        local success, error = pcall(function()
+            -- ตรวจสอบ TradeGui อย่างปลอดภัย
+            local tradeGuiEnabled = false
+            local tradeGui = LocalPlayer.PlayerGui:FindFirstChild("TradeGui")
+            if tradeGui then
+                tradeGuiEnabled = tradeGui.Enabled
+            end
+
+            if not tradeGuiEnabled then
+                -- รอ trade request
+                AcceptTradeRequestReceiver()
+
+                -- ตรวจสอบ timeout (เพิ่มใหม่)
+                local timeSinceLastRequest = tick() - lastTradeRequestTime
+                local timeRemaining = RECEIVER_TIMEOUT - timeSinceLastRequest
+
+                if timeSinceLastRequest >= RECEIVER_TIMEOUT then
+                    print("⚠️ Receiver ไม่ได้รับ trade request นาน " ..
+                        string.format("%.1f", timeSinceLastRequest) .. " วินาที (เกิน " .. RECEIVER_TIMEOUT .. " วินาที)")
+                    print("🔄 กำลังเปลี่ยนเซิร์ฟเวอร์เพื่อหาคู่เทรดใหม่...")
+
+                    local success, error = pcall(function()
+                        local TeleportService = game:GetService("TeleportService")
+                        TeleportService:Teleport(14119723130)
+                    end)
+
+                    if not success then
+                        warn("❌ เกิดข้อผิดพลาดในการเปลี่ยนเซิร์ฟเวอร์: " .. tostring(error))
+                        print("🚪 กำลังออกจากเกม...")
+                        game:Shutdown()
+                    end
+                    return
+                else
+                    -- แสดงสถานะเวลาที่เหลือทุก 30 วินาที
+                    if math.floor(timeSinceLastRequest) % 30 == 0 or timeRemaining <= 60 then
+                        print("⏰ Receiver รอ trade request... เหลือเวลาอีก " ..
+                            string.format("%.0f", timeRemaining) .. " วินาทีก่อนเปลี่ยนเซิร์ฟเวอร์")
+                    end
+                end
+
+                -- รีเซ็ตสถานะเมื่อไม่ได้เทรด
+                receiverCreatureStartTime = 0
+                receiverCreatureRequested = false
+                receiverAcceptStartTime = 0
+                receiverAcceptRequested = false
+                currentStepReceiver = 0
+                wait(2)
+            else
+                -- กำลังเทรดอยู่
+                if currentStepReceiver == 0 then
+                    -- เช็คชื่อคู่เทรดก่อน
+                    if CheckTradePartner() then
+                        currentStepReceiver = 1
+                        print("🚀 Receiver เริ่มขั้นตอนที่ 1: Add Creature")
+                        -- รีเซ็ตสถานะก่อนเริ่มใหม่
+                        receiverCreatureStartTime = 0
+                        receiverCreatureRequested = false
+                        receiverAcceptStartTime = 0
+                        receiverAcceptRequested = false
+                    else
+                        wait(1)
+                    end
+                elseif currentStepReceiver == 1 then
+                    -- Add Creature - ใช้ state-based tracking แบบปรับปรุง
+                    if not receiverCreatureRequested then
+                        -- ตรวจสอบว่า remote กำลังใช้งานอยู่หรือไม่
+                        if isRemoteBusy then
+                            print("⏳ Receiver: Remote กำลังใช้งานอยู่ รอสักครู่...")
+                            wait(1)
+                        else
+                            print("🚀 Receiver เริ่ม Add Creature...")
+                            receiverCreatureRequested = true
+                            receiverCreatureStartTime = tick()
+
+                            -- เรียก AddCreatureReceiver แบบ synchronous พร้อม error handling
+                            local creatureSuccess = false
+                            local attemptSuccess, attemptError = pcall(function()
+                                creatureSuccess = AddCreatureReceiver()
+                            end)
+
+                            if attemptSuccess and creatureSuccess then
+                                print("✅ Receiver Add Creature เสร็จสิ้น")
+                                currentStepReceiver = 2
+                                print("🚀 Receiver เริ่มขั้นตอนที่ 2: Click Accept")
+                            else
+                                warn("❌ Receiver Add Creature ล้มเหลว: " .. tostring(attemptError))
+                                -- รีเซ็ตเพื่อลองใหม่
+                                receiverCreatureRequested = false
+                                receiverCreatureStartTime = 0
+                                wait(2) -- รอก่อนลองใหม่
+                            end
+                        end
+                    else
+                        -- ตรวจสอบว่าผ่านไป 10 วินาทีแล้วหรือยัง (เพิ่มเวลา)
+                        local elapsedTime = tick() - receiverCreatureStartTime
+                        if elapsedTime >= 10 then
+                            print("⚠️ Receiver Add Creature ใช้เวลานานเกินไป กำลังข้ามไป step 2")
+                            currentStepReceiver = 2
+                            print("🚀 Receiver เริ่มขั้นตอนที่ 2: Click Accept")
+                        else
+                            print("⏳ Receiver รอ Add Creature เสร็จ... (" ..
+                                string.format("%.1f", 10 - elapsedTime) .. " วินาที)")
+                        end
+                    end
+                elseif currentStepReceiver == 2 then
+                    -- Click Accept - ใช้ state-based tracking แบบปรับปรุง
+                    if not receiverAcceptRequested then
+                        -- ตรวจสอบว่า remote ยังใช้งานอยู่หรือไม่
+                        if isRemoteBusy then
+                            print("⚠️ Receiver: Remote ยังใช้งานอยู่ ไม่สามารถกด accept ได้! รอสักครู่...")
+                            wait(1)
+                        else
+                            print("🚀 Receiver เริ่ม Click Accept...")
+                            receiverAcceptRequested = true
+                            receiverAcceptStartTime = tick()
+
+                            -- เรียก ClickAcceptReceiver แบบ synchronous พร้อม error handling
+                            local acceptSuccess = false
+                            local attemptSuccess, attemptError = pcall(function()
+                                acceptSuccess = ClickAcceptReceiver()
+                            end)
+
+                            if attemptSuccess and acceptSuccess then
+                                print("✅ Receiver เทรดเสร็จสิ้น")
+                                currentStepReceiver = 0
+                                -- รีเซ็ตสถานะ
+                                receiverCreatureStartTime = 0
+                                receiverCreatureRequested = false
+                                receiverAcceptStartTime = 0
+                                receiverAcceptRequested = false
+                            else
+                                warn("❌ Receiver Click Accept ล้มเหลว: " .. tostring(attemptError))
+                                -- รีเซ็ตเพื่อลองใหม่
+                                receiverAcceptRequested = false
+                                receiverAcceptStartTime = 0
+                                wait(2) -- รอก่อนลองใหม่
+                            end
+                        end
+                    else
+                        -- ตรวจสอบว่าผ่านไป 5 วินาทีแล้วหรือยัง (เพิ่มเวลา)
+                        local elapsedTime = tick() - receiverAcceptStartTime
+                        if elapsedTime >= 5 then
+                            print("⚠️ Receiver Click Accept ใช้เวลานานเกินไป กำลังจบเทรด")
+                            print("✅ Receiver เทรดเสร็จสิ้น")
+                            currentStepReceiver = 0
+                            -- รีเซ็ตสถานะ
+                            receiverCreatureStartTime = 0
+                            receiverCreatureRequested = false
+                            receiverAcceptStartTime = 0
+                            receiverAcceptRequested = false
+                        else
+                            print("⏳ Receiver รอ Click Accept เสร็จ... (" ..
+                                string.format("%.1f", 5 - elapsedTime) .. " วินาที)")
+                        end
+                    end
+                end
+                wait(1)
+            end
+        end)
+
+        if not success then
+            warn("❌ เกิดข้อผิดพลาดใน ReceiverCoroutine: " .. tostring(error))
+            currentStepReceiver = 0
+            -- รีเซ็ตสถานะ
+            receiverCreatureStartTime = 0
+            receiverCreatureRequested = false
+            receiverAcceptStartTime = 0
+            receiverAcceptRequested = false
+            wait(5) -- รอ 5 วินาทีก่อนลองใหม่
+        end
+    end
+end
+
+-- ฟังก์ชันหลัก
+local function Main()
+    local success, error = pcall(function()
+        print("🎮 เริ่มต้นสคริปต์ Trade")
+
+        -- วาร์ปไปยังตำแหน่งที่กำหนด
+        WarpToLocation()
+
+        -- เริ่ม monitoring เห็ด
+        coroutine.wrap(MonitorShrooms)()
+
+        -- ตรวจสอบว่าเป็น Sender หรือ Receiver
+        local isSender = IsInList(LocalPlayer.Name, SENDER_LIST)
+        local isReceiver = IsInList(LocalPlayer.Name, RECEIVER_LIST)
+
+        if isSender then
+            print("👤 ทำงานในโหมด Sender")
+            -- รีเซ็ตเวลาเริ่มต้นสำหรับ sender (สำหรับโหมด receiver) (เพิ่มใหม่)
+            lastTradeRequestTime = tick()
+            StartSenderStepLoop()
+            -- เพิ่มการทำงานแบบ Receiver สำหรับ Sender
+            coroutine.wrap(SenderReceiverCoroutine)()
+        elseif isReceiver then
+            print("👤 ทำงานในโหมด Receiver")
+            -- รีเซ็ตเวลาเริ่มต้นสำหรับ receiver (เพิ่มใหม่)
+            lastTradeRequestTime = tick()
+            coroutine.wrap(ReceiverCoroutine)()
+        else
+            print("❌ ชื่อผู้เล่นไม่ตรงกับรายชื่อใดๆ")
+        end
+    end)
+
+    if not success then
+        warn("❌ เกิดข้อผิดพลาดในฟังก์ชันหลัก: " .. tostring(error))
+        -- ลองรันใหม่หลังจาก 10 วินาที
+        wait(10)
+        Main()
+    end
+end
+
+-- เริ่มต้นสคริปต์
+Main()
