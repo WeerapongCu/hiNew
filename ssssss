@@ -19,10 +19,6 @@ local CHECK_INTERVAL = 5 -- เช็คคำสั่งทุก 5 วิน�
 local WEB_API_URL = "http://199.21.172.211:3001/api/trade-command" -- URL ของเว็บ API
 local MIN_COINS_THRESHOLD = 5000 -- จำนวนเหรียญขั้นต่ำสำหรับการรัน trade start
 
--- Player Configuration (แก้ไขตามต้องการ)
-local PLAYER_ID = "Player1" -- เปลี่ยนเป็น ID ที่ต้องการ
-local PLAYER_USERNAME = "YourUsername" -- เปลี่ยนเป็น username ของคุณ
-
 -- Place IDs สำหรับการ join
 local TRADE_START_PLACE_ID = 14119723130
 local TRADE_STOP_PLACE_ID = 5233782396
@@ -90,11 +86,11 @@ local function getCurrentCoins()
     end
 end
 
--- ฟังก์ชันส่ง request ไปยังเว็บ API (Multi Player)
+-- ฟังก์ชันส่ง request ไปยังเว็บ API
 local function getTradeCommand()
     local success, result = pcall(function()
         local response = requestFunction({
-            Url = WEB_API_URL .. "/" .. PLAYER_ID,
+            Url = WEB_API_URL,
             Method = 'GET',
             Headers = {
                 ['User-Agent'] = 'Roblox-Trade-Control-Script/1.0',
@@ -118,7 +114,7 @@ local function getTradeCommand()
     end
 end
 
--- ฟังก์ชันส่งสถานะกลับไปยังเว็บ (Multi Player)
+-- ฟังก์ชันส่งสถานะกลับไปยังเว็บ
 local function sendStatus(status, message)
     local success, result = pcall(function()
         local data = {
@@ -126,13 +122,12 @@ local function sendStatus(status, message)
             message = message,
             timestamp = os.time(),
             place_id = getCurrentPlaceId(),
-            coins = getCurrentCoins(),
-            username = PLAYER_USERNAME
+            coins = getCurrentCoins()
         }
         
         local json_data = HttpService:JSONEncode(data)
         local response = requestFunction({
-            Url = WEB_API_URL .. "/" .. PLAYER_ID .. "/status",
+            Url = WEB_API_URL .. "/status",
             Method = 'POST',
             Headers = {
                 ['User-Agent'] = 'Roblox-Trade-Control-Script/1.0',
@@ -326,10 +321,8 @@ end
 -- Main Loop
 local function mainLoop()
     local success, error_msg = pcall(function()
-        printToConsole("🚀 Roblox Multi-Player Trade Script Started!")
-        printToConsole("👤 Player ID: " .. PLAYER_ID)
-        printToConsole("👤 Username: " .. PLAYER_USERNAME)
-        printToConsole("🌐 Web API URL: " .. WEB_API_URL .. "/" .. PLAYER_ID)
+        printToConsole("🚀 Roblox Web-Based Trade Script Started!")
+        printToConsole("🌐 Web API URL: " .. WEB_API_URL)
         printToConsole("⏱️  Check interval: " .. CHECK_INTERVAL .. " วินาที")
         printToConsole("🕐 Action Cooldown: " .. ACTION_COOLDOWN .. " วินาที")
         printToConsole("")
@@ -338,7 +331,7 @@ local function mainLoop()
         printToConsole("   2: Start Trade → Place ID: " .. TRADE_START_PLACE_ID .. " (เหรียญ > " .. MIN_COINS_THRESHOLD .. ")")
         printToConsole("   3: Shutdown Game")
         printToConsole("")
-        printToConsole("💡 ระบบ Smart (Multi Player):")
+        printToConsole("💡 ระบบ Smart:")
         printToConsole("   - เช็คคำสั่งจากเว็บทุก " .. CHECK_INTERVAL .. " วินาที")
         printToConsole("   - เช็ค place id ปัจจุบันก่อน join")
         printToConsole("   - เช็คจำนวนเหรียญก่อนรัน Trade Start")
@@ -346,14 +339,12 @@ local function mainLoop()
         printToConsole("   - ส่งสถานะกลับไปยังเว็บ")
         printToConsole("   - รัน loadstring ตามคำสั่งอัตโนมัติ")
         printToConsole("   - วาร์ปอัตโนมัติใน Trade Start Place")
-        printToConsole("   - รองรับหลาย Player พร้อมกัน")
         printToConsole("")
         printToConsole("🛡️  ระบบป้องกัน:")
         printToConsole("   - ใช้ pcall ป้องกันการหยุดทำงาน")
         printToConsole("   - Cooldown " .. ACTION_COOLDOWN .. " วินาที ป้องกันการทำงานซ้ำ")
         printToConsole("   - แสดงข้อความใน console ทุกการทำงาน")
         printToConsole("   - ส่งสถานะกลับไปยังเว็บ")
-        printToConsole("   - แยกคำสั่งตาม Player ID")
         printToConsole("----------------------------------------")
         
         -- แสดงสถานะเริ่มต้น
