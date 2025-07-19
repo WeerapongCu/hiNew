@@ -1,14 +1,6 @@
 -- ตัวแปรสำหรับรายชื่อผู้เล่น
-local SENDER_LIST = {'Tateeber827', 'Elhajgert170', 'Gwiltbusha07805', 'Archysoldo20902', 'Swolboyd633',
-                     'Heldajani1227', 'Lopauneus3467', 'Guffyhagl7246', 'Stellmouer366', 'Rhoddwitas97038',
-                     'Myranbaban84934', 'Townfeth21982', 'Tirkcolpi1149', 'Petzbegle27811', 'Munnoazar90205',
-                     'Bernagalde3964', 'Kantacarza3066', 'Eibolund2128', 'Appelgrady5654', 'Vicotech225',
-                     'Abuegfujan13644', 'Ynoalupi982', 'Sallsmekhi133', 'Alguslouy47783', 'Hauchmarty924',
-                     'Giamoimmel894', 'Pratlsaper7967', 'Haisttima43318', 'Bablpecht9628', 'Moganroice155',
-                     'Seacebeels12392', 'Katheauth395', 'Vaskebern0893', 'Sutakcorle786', 'Blygertz3275',
-                     'Abensbacos039', 'Dinhido76893', 'Forspilz88890'}
-
-local RECEIVER_LIST = {'Juhnrocko68489', 'Shaercurz530'}
+local SENDER_LIST = local SENDER_LIST = { 'Ynoalupi982', 'Tateeber827', 'Elhajgert170', 'Gwiltbusha07805', 'Lopauneus3467', 'Guffyhagl7246', 'Stellmouer366', 'Rhoddwitas97038', 'Myranbaban84934', 'Townfeth21982', 'Tirkcolpi1149', 'Petzbegle27811', 'Munnoazar90205', 'Bernagalde3964', 'Kantacarza3066', 'Eibolund2128', 'Hauchmarty924', 'Haisttima43318', 'Sallsmekhi133', 'Giamoimmel894', 'Bablpecht9628', 'Alguslouy47783', 'Pratlsaper7967', 'Moganroice155', 'Vicotech225', 'Seacebeels12392', 'Katheauth395', 'Vaskebern0893', 'Sutakcorle786', 'Blygertz3275', 'Abensbacos039', 'Dinhido76893', 'Forspilz88890', 'Juhnrocko68489', 'Shaercurz530', 'Archysoldo20902', 'Swolboyd633', 'Heldajani1227' }
+local RECEIVER_LIST = { 'Hauchmarty924', 'Sallsmekhi133' }
 
 -- ตัวแปรสำหรับการทำงาน
 local Players = game:GetService("Players")
