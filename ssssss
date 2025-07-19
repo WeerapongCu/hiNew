@@ -1,0 +1,403 @@
+--[[
+    Roblox Smart Trade Trigger Script (Luau) - Web-Based Control
+    สคริปต์ที่รับคำสั่งจากเว็บเพื่อควบคุมการ trade
+    
+    คำสั่งที่รองรับ:
+    - 1: Stop Trade
+    - 2: Start Trade  
+    - 3: Shutdown Game
+    
+    วิธีการใช้งาน:
+    1. เปิด Roblox Executor
+    2. Copy โค้ดนี้ไปวาง
+    3. กด Execute
+    4. สคริปต์จะรอคำสั่งจากเว็บ
+]]
+
+-- Configuration
+local CHECK_INTERVAL = 5 -- เช็คคำสั่งทุก 5 วินาที
+local WEB_API_URL = "http://199.21.172.211:3001/api/trade-command" -- URL ของเว็บ API
+local MIN_COINS_THRESHOLD = 5000 -- จำนวนเหรียญขั้นต่ำสำหรับการรัน trade start
+
+-- Player Configuration (แก้ไขตามต้องการ)
+local PLAYER_ID = "Player1" -- เปลี่ยนเป็น ID ที่ต้องการ
+local PLAYER_USERNAME = "YourUsername" -- เปลี่ยนเป็น username ของคุณ
+
+-- Place IDs สำหรับการ join
+local TRADE_START_PLACE_ID = 14119723130
+local TRADE_STOP_PLACE_ID = 5233782396
+
+-- Loadstring URLs
+local TRADE_START_LOADSTRING = "https://raw.githubusercontent.com/WeerapongCu/hiNew/refs/heads/main/brbrbr"
+local TRADE_STOP_LOADSTRING = "https://api.luarmor.net/files/v3/loaders/008bf699b44dd5a7d35d683c3e0805aa.lua"
+
+-- ตัวแปรเก็บสถานะ
+local last_action_time = 0
+local ACTION_COOLDOWN = 10 -- วินาที (ป้องกันการทำงานซ้ำเร็วเกินไป)
+local last_command = 0 -- เก็บคำสั่งล่าสุด
+local is_running = true -- สถานะการทำงานของสคริปต์
+
+-- ใช้ HttpService สำหรับ decode JSON
+local HttpService = game:GetService("HttpService")
+
+-- ฟังก์ชัน request ของ executor
+local requestFunction = (syn and syn.request) or (http and http.request) or request
+if not requestFunction then
+    warn("❌ ไม่พบฟังก์ชัน request ใน executor นี้!")
+    return
+end
+
+-- ฟังก์ชันแสดงข้อความใน console
+local function printToConsole(message)
+    print("[" .. os.date("%H:%M:%S") .. "] " .. message)
+end
+
+-- ฟังก์ชันเช็ค place id ปัจจุบัน
+local function getCurrentPlaceId()
+    local success, result = pcall(function()
+        return game.PlaceId
+    end)
+    if success then
+        return result
+    else
+        printToConsole("❌ ไม่สามารถเช็ค place id ปัจจุบันได้: " .. tostring(result))
+        return nil
+    end
+end
+
+-- ฟังก์ชันเช็คจำนวนเหรียญปัจจุบัน
+local function getCurrentCoins()
+    local success, result = pcall(function()
+        local players = game:GetService("Players")
+        local current_place_id = getCurrentPlaceId()
+        
+        -- ถ้าอยู่ใน Trade Start Place ใช้ LocalPlayer.Data.Coins.Value
+        if current_place_id == TRADE_START_PLACE_ID then
+            local coins = players.LocalPlayer.Data.Coins.Value
+            return coins
+        else
+            -- ถ้าอยู่ใน Place อื่น ใช้ LocalPlayer.PlayerGui.Data.Coins.Value
+            local coins = players.LocalPlayer.PlayerGui.Data.Coins.Value
+            return coins
+        end
+    end)
+    
+    if success and result then
+        return result
+    else
+        printToConsole("❌ ไม่สามารถเช็คจำนวนเหรียญได้: " .. tostring(result))
+        return nil
+    end
+end
+
+-- ฟังก์ชันส่ง request ไปยังเว็บ API (Multi Player)
+local function getTradeCommand()
+    local success, result = pcall(function()
+        local response = requestFunction({
+            Url = WEB_API_URL .. "/" .. PLAYER_ID,
+            Method = 'GET',
+            Headers = {
+                ['User-Agent'] = 'Roblox-Trade-Control-Script/1.0',
+                ['Accept'] = 'application/json',
+            },
+        })
+        
+        if response and response.StatusCode == 200 then
+            local data = HttpService:JSONDecode(response.Body)
+            return data.command
+        else
+            error('HTTP request failed or status not 200')
+        end
+    end)
+    
+    if success then
+        return result
+    else
+        printToConsole("❌ ไม่สามารถรับคำสั่งจากเว็บได้: " .. tostring(result))
+        return 0 -- ไม่มีคำสั่ง
+    end
+end
+
+-- ฟังก์ชันส่งสถานะกลับไปยังเว็บ (Multi Player)
+local function sendStatus(status, message)
+    local success, result = pcall(function()
+        local data = {
+            status = status,
+            message = message,
+            timestamp = os.time(),
+            place_id = getCurrentPlaceId(),
+            coins = getCurrentCoins(),
+            username = PLAYER_USERNAME
+        }
+        
+        local json_data = HttpService:JSONEncode(data)
+        local response = requestFunction({
+            Url = WEB_API_URL .. "/" .. PLAYER_ID .. "/status",
+            Method = 'POST',
+            Headers = {
+                ['User-Agent'] = 'Roblox-Trade-Control-Script/1.0',
+                ['Content-Type'] = 'application/json',
+                ['Accept'] = 'application/json',
+            },
+            Body = json_data
+        })
+        
+        if not response or response.StatusCode ~= 200 then
+            error('Failed to send status')
+        end
+    end)
+    
+    if not success then
+        printToConsole("❌ ไม่สามารถส่งสถานะไปยังเว็บได้: " .. tostring(result))
+    end
+end
+
+-- ฟังก์ชันสำหรับ join place
+local function joinPlace(placeId, reason)
+    local success, result = pcall(function()
+        printToConsole("🚀 กำลัง join place ID: " .. placeId .. " (" .. reason .. ")")
+        local TeleportService = game:GetService("TeleportService")
+        TeleportService:Teleport(placeId)
+        printToConsole("✅ เริ่มการ join place สำเร็จ")
+    end)
+    if not success then
+        printToConsole("❌ ไม่สามารถ join place ได้: " .. tostring(result))
+    end
+end
+
+-- ฟังก์ชันวาร์ปไปยังตำแหน่งที่กำหนด (สำหรับ place 14119723130)
+local function warpToPosition()
+    local success, result = pcall(function()
+        local player = game.Players.LocalPlayer
+        local character = player.Character
+        if character then
+            printToConsole("🚀 กำลังวาร์ปไปยังตำแหน่งที่กำหนด...")
+            character:PivotTo(CFrame.new(Vector3.new(-2132.24, 490.66, 1106.83)))
+            printToConsole("✅ วาร์ปสำเร็จไปยังตำแหน่ง (-2132.24, 490.66, 1106.83)")
+        else
+            printToConsole("❌ ไม่พบ Character ของ LocalPlayer")
+        end
+    end)
+    if not success then
+        printToConsole("❌ ไม่สามารถวาร์ปได้: " .. tostring(result))
+    end
+end
+
+-- ฟังก์ชันรัน Trade Start Script
+local function runTradeStartScript()
+    local success, result = pcall(function()
+        printToConsole("📜 กำลังรัน Trade Start Script...")
+        loadstring(game:HttpGet(TRADE_START_LOADSTRING))()
+        printToConsole("✅ รัน Trade Start Script สำเร็จ")
+    end)
+    if not success then
+        printToConsole("❌ ไม่สามารถรัน Trade Start Script ได้: " .. tostring(result))
+    end
+end
+
+-- ฟังก์ชันรัน Trade Stop Script
+local function runTradeStopScript()
+    local success, result = pcall(function()
+        printToConsole("📜 กำลังรัน Trade Stop Script...")
+        loadstring(game:HttpGet(TRADE_STOP_LOADSTRING))()
+        printToConsole("✅ รัน Trade Stop Script สำเร็จ")
+    end)
+    if not success then
+        printToConsole("❌ ไม่สามารถรัน Trade Stop Script ได้: " .. tostring(result))
+    end
+end
+
+-- ฟังก์ชันปิดเกม
+local function shutdownGame()
+    local success, result = pcall(function()
+        printToConsole("🔄 กำลังปิดเกม...")
+        game:Shutdown()
+    end)
+    if not success then
+        printToConsole("❌ ไม่สามารถปิดเกมได้: " .. tostring(result))
+    end
+end
+
+-- ฟังก์ชันประมวลผลคำสั่ง
+local function processCommand(command)
+    local success, error_msg = pcall(function()
+        local current_place_id = getCurrentPlaceId()
+        local now = tick()
+        
+        if command == 1 then
+            -- Stop Trade
+            printToConsole("🛑 คำสั่ง: Stop Trade")
+            
+            if current_place_id == TRADE_STOP_PLACE_ID then
+                -- อยู่ใน Trade Stop Place แล้ว รัน script
+                if now - last_action_time > ACTION_COOLDOWN then
+                    runTradeStopScript()
+                    last_action_time = now
+                    sendStatus("success", "Stop Trade Script รันสำเร็จ")
+                else
+                    printToConsole("⏳ Cooldown: รอ " .. math.ceil(ACTION_COOLDOWN - (now - last_action_time)) .. " วินาที")
+                    sendStatus("cooldown", "รอ cooldown")
+                end
+            else
+                -- ไม่ได้อยู่ใน Trade Stop Place ให้ join ไป
+                if now - last_action_time > ACTION_COOLDOWN then
+                    printToConsole("🔄 กำลังไป Trade Stop Place")
+                    joinPlace(TRADE_STOP_PLACE_ID, "Trade Stop")
+                    last_action_time = now
+                    sendStatus("joining", "กำลัง join Trade Stop Place")
+                else
+                    printToConsole("⏳ Cooldown: รอ " .. math.ceil(ACTION_COOLDOWN - (now - last_action_time)) .. " วินาที")
+                    sendStatus("cooldown", "รอ cooldown")
+                end
+            end
+            
+        elseif command == 2 then
+            -- Start Trade
+            printToConsole("▶️ คำสั่ง: Start Trade")
+            
+            local coins = getCurrentCoins()
+            if not coins then
+                printToConsole("❌ ไม่สามารถเช็คเหรียญได้")
+                sendStatus("error", "ไม่สามารถเช็คเหรียญได้")
+                return
+            end
+            
+            if coins <= MIN_COINS_THRESHOLD then
+                printToConsole("❌ เหรียญไม่เพียงพอ: " .. coins .. " ≤ " .. MIN_COINS_THRESHOLD)
+                sendStatus("error", "เหรียญไม่เพียงพอ: " .. coins .. " ≤ " .. MIN_COINS_THRESHOLD)
+                return
+            end
+            
+            if current_place_id == TRADE_START_PLACE_ID then
+                -- อยู่ใน Trade Start Place แล้ว รัน script และวาร์ป
+                if now - last_action_time > ACTION_COOLDOWN then
+                    runTradeStartScript()
+                    warpToPosition()
+                    last_action_time = now
+                    sendStatus("success", "Start Trade Script รันสำเร็จ (เหรียญ: " .. coins .. ")")
+                else
+                    printToConsole("⏳ Cooldown: รอ " .. math.ceil(ACTION_COOLDOWN - (now - last_action_time)) .. " วินาที")
+                    sendStatus("cooldown", "รอ cooldown")
+                end
+            else
+                -- ไม่ได้อยู่ใน Trade Start Place ให้ join ไป
+                if now - last_action_time > ACTION_COOLDOWN then
+                    printToConsole("🔄 กำลังไป Trade Start Place")
+                    joinPlace(TRADE_START_PLACE_ID, "Trade Start - เหรียญ " .. tostring(coins))
+                    last_action_time = now
+                    sendStatus("joining", "กำลัง join Trade Start Place (เหรียญ: " .. coins .. ")")
+                else
+                    printToConsole("⏳ Cooldown: รอ " .. math.ceil(ACTION_COOLDOWN - (now - last_action_time)) .. " วินาที")
+                    sendStatus("cooldown", "รอ cooldown")
+                end
+            end
+            
+        elseif command == 3 then
+            -- Shutdown Game
+            printToConsole("🔄 คำสั่ง: Shutdown Game")
+            sendStatus("shutdown", "กำลังปิดเกม")
+            shutdownGame()
+            
+        else
+            -- ไม่มีคำสั่งหรือคำสั่งไม่ถูกต้อง
+            if command ~= 0 then
+                printToConsole("❓ คำสั่งไม่ถูกต้อง: " .. tostring(command))
+                sendStatus("error", "คำสั่งไม่ถูกต้อง: " .. tostring(command))
+            end
+        end
+        
+        -- แสดงสถานะปัจจุบัน
+        local coin_status = ""
+        local coins = getCurrentCoins()
+        if coins then
+            coin_status = " | เหรียญ: " .. coins .. "/" .. MIN_COINS_THRESHOLD
+        end
+        
+        printToConsole("📊 สถานะ: Place ID " .. tostring(current_place_id) .. coin_status)
+        printToConsole("----------------------------------------")
+    end)
+    
+    if not success then
+        printToConsole("❌ [ERROR] Error in processCommand: " .. tostring(error_msg))
+        sendStatus("error", "เกิดข้อผิดพลาด: " .. tostring(error_msg))
+    end
+end
+
+-- Main Loop
+local function mainLoop()
+    local success, error_msg = pcall(function()
+        printToConsole("🚀 Roblox Multi-Player Trade Script Started!")
+        printToConsole("👤 Player ID: " .. PLAYER_ID)
+        printToConsole("👤 Username: " .. PLAYER_USERNAME)
+        printToConsole("🌐 Web API URL: " .. WEB_API_URL .. "/" .. PLAYER_ID)
+        printToConsole("⏱️  Check interval: " .. CHECK_INTERVAL .. " วินาที")
+        printToConsole("🕐 Action Cooldown: " .. ACTION_COOLDOWN .. " วินาที")
+        printToConsole("")
+        printToConsole("🎯 คำสั่งที่รองรับ:")
+        printToConsole("   1: Stop Trade → Place ID: " .. TRADE_STOP_PLACE_ID)
+        printToConsole("   2: Start Trade → Place ID: " .. TRADE_START_PLACE_ID .. " (เหรียญ > " .. MIN_COINS_THRESHOLD .. ")")
+        printToConsole("   3: Shutdown Game")
+        printToConsole("")
+        printToConsole("💡 ระบบ Smart (Multi Player):")
+        printToConsole("   - เช็คคำสั่งจากเว็บทุก " .. CHECK_INTERVAL .. " วินาที")
+        printToConsole("   - เช็ค place id ปัจจุบันก่อน join")
+        printToConsole("   - เช็คจำนวนเหรียญก่อนรัน Trade Start")
+        printToConsole("   - ป้องกันการทำงานซ้ำด้วย cooldown")
+        printToConsole("   - ส่งสถานะกลับไปยังเว็บ")
+        printToConsole("   - รัน loadstring ตามคำสั่งอัตโนมัติ")
+        printToConsole("   - วาร์ปอัตโนมัติใน Trade Start Place")
+        printToConsole("   - รองรับหลาย Player พร้อมกัน")
+        printToConsole("")
+        printToConsole("🛡️  ระบบป้องกัน:")
+        printToConsole("   - ใช้ pcall ป้องกันการหยุดทำงาน")
+        printToConsole("   - Cooldown " .. ACTION_COOLDOWN .. " วินาที ป้องกันการทำงานซ้ำ")
+        printToConsole("   - แสดงข้อความใน console ทุกการทำงาน")
+        printToConsole("   - ส่งสถานะกลับไปยังเว็บ")
+        printToConsole("   - แยกคำสั่งตาม Player ID")
+        printToConsole("----------------------------------------")
+        
+        -- แสดงสถานะเริ่มต้น
+        local current_place_id = getCurrentPlaceId()
+        local coins = getCurrentCoins()
+        printToConsole("📍 Place ID ปัจจุบัน: " .. tostring(current_place_id))
+        if coins then
+            printToConsole("💰 เหรียญปัจจุบัน: " .. tostring(coins))
+        end
+        printToConsole("🟢 พร้อมรับคำสั่งจากเว็บ...")
+        printToConsole("----------------------------------------")
+        
+        -- ส่งสถานะเริ่มต้นไปยังเว็บ
+        sendStatus("ready", "สคริปต์พร้อมรับคำสั่ง")
+        
+        -- Main loop
+        while is_running do
+            local loop_success, loop_error = pcall(function()
+                -- รับคำสั่งจากเว็บ
+                local command = getTradeCommand()
+                
+                -- ประมวลผลคำสั่งถ้ามีคำสั่งใหม่
+                if command ~= last_command and command ~= 0 then
+                    last_command = command
+                    processCommand(command)
+                end
+                
+                wait(CHECK_INTERVAL)
+            end)
+            
+            if not loop_success then
+                printToConsole("❌ [ERROR] Error in main loop: " .. tostring(loop_error))
+                sendStatus("error", "เกิดข้อผิดพลาดใน main loop: " .. tostring(loop_error))
+                printToConsole("🔄 Restarting loop in 5 seconds...")
+                wait(5)
+            end
+        end
+    end)
+    
+    if not success then
+        printToConsole("❌ [CRITICAL ERROR] Script failed to start: " .. tostring(error_msg))
+        sendStatus("error", "สคริปต์ไม่สามารถเริ่มต้นได้: " .. tostring(error_msg))
+    end
+end
+
+-- เริ่มต้นสคริปต์
+mainLoop() 
