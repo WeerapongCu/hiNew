@@ -30,7 +30,7 @@ local TRADE_STOP_LOADSTRING = "https://api.luarmor.net/files/v3/loaders/008bf699
 -- ตัวแปรเก็บสถานะ
 local last_action_time = 0
 local ACTION_COOLDOWN = 10 -- วินาที (ป้องกันการทำงานซ้ำเร็วเกินไป)
-local last_command = 0 -- เก็บคำสั่งล่าสุด
+local last_command = 1 -- เก็บคำสั่งล่าสุด (default = 1 = Stop Trade)
 local is_running = true -- สถานะการทำงานของสคริปต์
 
 -- ใช้ HttpService สำหรับ decode JSON
@@ -358,7 +358,7 @@ local function mainLoop()
         printToConsole("----------------------------------------")
         
         -- ส่งสถานะเริ่มต้นไปยังเว็บ
-        sendStatus("ready", "สคริปต์พร้อมรับคำสั่ง")
+        sendStatus("ready", "สคริปต์พร้อมรับคำสั่ง (Default: Stop Trade)")
         
         -- Main loop
         while is_running do
