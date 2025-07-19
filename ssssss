@@ -19,10 +19,6 @@ local CHECK_INTERVAL = 5 -- เช็คคำสั่งทุก 5 วิน�
 local WEB_API_URL = "http://199.21.172.211:3001/api/trade-command" -- URL ของเว็บ API
 local MIN_COINS_THRESHOLD = 5000 -- จำนวนเหรียญขั้นต่ำสำหรับการรัน trade start
 
--- DDC Configuration (แก้ไขตามเครื่องที่ใช้งาน)
-local DDC_NAME = "FISH-03" -- เปลี่ยนเป็นชื่อ DDC ของเครื่องนี้
-local DDC_STATUS = "idle" -- สถานะเริ่มต้น: idle, trading, waiting, shutdown
-
 -- Place IDs สำหรับการ join
 local TRADE_START_PLACE_ID = 14119723130
 local TRADE_STOP_PLACE_ID = 5233782396
@@ -126,9 +122,7 @@ local function sendStatus(status, message)
             message = message,
             timestamp = os.time(),
             place_id = getCurrentPlaceId(),
-            coins = getCurrentCoins(),
-            ddc_name = DDC_NAME,
-            ddc_status = DDC_STATUS
+            coins = getCurrentCoins()
         }
         
         local json_data = HttpService:JSONEncode(data)
@@ -151,12 +145,6 @@ local function sendStatus(status, message)
     if not success then
         printToConsole("❌ ไม่สามารถส่งสถานะไปยังเว็บได้: " .. tostring(result))
     end
-end
-
--- ฟังก์ชันอัปเดตสถานะ DDC
-local function updateDDCStatus(new_status)
-    DDC_STATUS = new_status
-    printToConsole("🏢 DDC Status Updated: " .. DDC_NAME .. " → " .. new_status)
 end
 
 -- ฟังก์ชันสำหรับ join place
@@ -234,7 +222,6 @@ local function processCommand(command)
         if command == 1 then
             -- Stop Trade
             printToConsole("🛑 คำสั่ง: Stop Trade")
-            updateDDCStatus("idle")
             
             if current_place_id == TRADE_STOP_PLACE_ID then
                 -- อยู่ใน Trade Stop Place แล้ว รัน script
@@ -262,7 +249,6 @@ local function processCommand(command)
         elseif command == 2 then
             -- Start Trade
             printToConsole("▶️ คำสั่ง: Start Trade")
-            updateDDCStatus("waiting")
             
             local coins = getCurrentCoins()
             if not coins then
@@ -282,7 +268,6 @@ local function processCommand(command)
                 if now - last_action_time > ACTION_COOLDOWN then
                     runTradeStartScript()
                     warpToPosition()
-                    updateDDCStatus("trading")
                     last_action_time = now
                     sendStatus("success", "Start Trade Script รันสำเร็จ (เหรียญ: " .. coins .. ")")
                 else
@@ -305,7 +290,6 @@ local function processCommand(command)
         elseif command == 3 then
             -- Shutdown Game
             printToConsole("🔄 คำสั่ง: Shutdown Game")
-            updateDDCStatus("shutdown")
             sendStatus("shutdown", "กำลังปิดเกม")
             shutdownGame()
             
