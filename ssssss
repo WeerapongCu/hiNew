@@ -1,6 +1,9 @@
 --[[
-    Roblox Smart Trade Trigger Script (Luau) - Web-Based Control
-    สคริปต์ที่รับคำสั่งจากเว็บเพื่อควบคุมการ trade
+    Roblox Smart Trade Trigger Script (Luau) - Web-Based Control with Coroutines
+    สคริปต์ที่รับคำสั่งจากเว็บเพื่อควบคุมการ trade แบบแยก coroutines
+    
+    นาย A: รับผิดชอบการรัน script (1 ครั้งเท่านั้น)
+    นาย B: รับผิดชอบการเช็คกล่องและย้าย place (ทำงานต่อเนื่อง)
     
     คำสั่งที่รองรับ:
     - 1: Stop Trade
@@ -17,7 +20,7 @@
 -- Configuration
 local CHECK_INTERVAL = 5 -- เช็คคำสั่งทุก 5 วินาที
 local WEB_API_URL = "http://199.21.172.211:3001/api/trade-command" -- URL ของเว็บ API
-local MIN_COINS_THRESHOLD = 5000 -- จำนวนเหรียญขั้นต่ำสำหรับการรัน trade start
+local MIN_COINS_THRESHOLD = 3000 -- จำนวนเหรียญขั้นต่ำสำหรับการรัน trade start
 
 -- Place IDs สำหรับการ join
 local TRADE_START_PLACE_ID = 14119723130
@@ -32,6 +35,12 @@ local last_action_time = 0
 local ACTION_COOLDOWN = 10 -- วินาที (ป้องกันการทำงานซ้ำเร็วเกินไป)
 local last_command = 1 -- เก็บคำสั่งล่าสุด (default = 1 = Stop Trade)
 local is_running = true -- สถานะการทำงานของสคริปต์
+
+-- ตัวแปรสำหรับ coroutines
+local script_run_flags = {
+    start_trade_ran = false,  -- นาย A รัน start trade script แล้วหรือยัง
+    stop_trade_ran = false    -- นาย A รัน stop trade script แล้วหรือยัง
+}
 
 -- ใช้ HttpService สำหรับ decode JSON
 local HttpService = game:GetService("HttpService")
@@ -100,6 +109,7 @@ local function getTradeCommand()
         
         if response and response.StatusCode == 200 then
             local data = HttpService:JSONDecode(response.Body)
+            printToConsole("📡 Response จากเว็บ: " .. tostring(response.Body))
             return data.command
         else
             error('HTTP request failed or status not 200')
@@ -213,115 +223,112 @@ local function shutdownGame()
     end
 end
 
--- ฟังก์ชันประมวลผลคำสั่ง
-local function processCommand(command)
-    local success, error_msg = pcall(function()
-        local current_place_id = getCurrentPlaceId()
-        local now = tick()
-        
-        if command == 1 then
-            -- Stop Trade
-            printToConsole("🛑 คำสั่ง: Stop Trade")
-            
-            if current_place_id == TRADE_STOP_PLACE_ID then
-                -- อยู่ใน Trade Stop Place แล้ว รัน script
-                if now - last_action_time > ACTION_COOLDOWN then
-                    runTradeStopScript()
-                    last_action_time = now
-                    sendStatus("success", "Stop Trade Script รันสำเร็จ")
-                else
-                    printToConsole("⏳ Cooldown: รอ " .. math.ceil(ACTION_COOLDOWN - (now - last_action_time)) .. " วินาที")
-                    sendStatus("cooldown", "รอ cooldown")
-                end
-            else
-                -- ไม่ได้อยู่ใน Trade Stop Place ให้ join ไป
-                if now - last_action_time > ACTION_COOLDOWN then
-                    printToConsole("🔄 กำลังไป Trade Stop Place")
-                    joinPlace(TRADE_STOP_PLACE_ID, "Trade Stop")
-                    last_action_time = now
-                    sendStatus("joining", "กำลัง join Trade Stop Place")
-                else
-                    printToConsole("⏳ Cooldown: รอ " .. math.ceil(ACTION_COOLDOWN - (now - last_action_time)) .. " วินาที")
-                    sendStatus("cooldown", "รอ cooldown")
-                end
-            end
-            
-        elseif command == 2 then
-            -- Start Trade
-            printToConsole("▶️ คำสั่ง: Start Trade")
-            
-            local coins = getCurrentCoins()
-            if not coins then
-                printToConsole("❌ ไม่สามารถเช็คเหรียญได้")
-                sendStatus("error", "ไม่สามารถเช็คเหรียญได้")
-                return
-            end
-            
-            if coins <= MIN_COINS_THRESHOLD then
-                printToConsole("❌ เหรียญไม่เพียงพอ: " .. coins .. " ≤ " .. MIN_COINS_THRESHOLD)
-                sendStatus("error", "เหรียญไม่เพียงพอ: " .. coins .. " ≤ " .. MIN_COINS_THRESHOLD)
-                return
-            end
-            
-            if current_place_id == TRADE_START_PLACE_ID then
-                -- อยู่ใน Trade Start Place แล้ว รัน script และวาร์ป
-                if now - last_action_time > ACTION_COOLDOWN then
-                    runTradeStartScript()
-                    warpToPosition()
-                    last_action_time = now
-                    sendStatus("success", "Start Trade Script รันสำเร็จ (เหรียญ: " .. coins .. ")")
-                else
-                    printToConsole("⏳ Cooldown: รอ " .. math.ceil(ACTION_COOLDOWN - (now - last_action_time)) .. " วินาที")
-                    sendStatus("cooldown", "รอ cooldown")
-                end
-            else
-                -- ไม่ได้อยู่ใน Trade Start Place ให้ join ไป
-                if now - last_action_time > ACTION_COOLDOWN then
-                    printToConsole("🔄 กำลังไป Trade Start Place")
-                    joinPlace(TRADE_START_PLACE_ID, "Trade Start - เหรียญ " .. tostring(coins))
-                    last_action_time = now
-                    sendStatus("joining", "กำลัง join Trade Start Place (เหรียญ: " .. coins .. ")")
-                else
-                    printToConsole("⏳ Cooldown: รอ " .. math.ceil(ACTION_COOLDOWN - (now - last_action_time)) .. " วินาที")
-                    sendStatus("cooldown", "รอ cooldown")
-                end
-            end
-            
-        elseif command == 3 then
-            -- Shutdown Game
-            printToConsole("🔄 คำสั่ง: Shutdown Game")
-            sendStatus("shutdown", "กำลังปิดเกม")
-            shutdownGame()
-            
-        else
-            -- ไม่มีคำสั่งหรือคำสั่งไม่ถูกต้อง
-            if command ~= 0 then
-                printToConsole("❓ คำสั่งไม่ถูกต้อง: " .. tostring(command))
-                sendStatus("error", "คำสั่งไม่ถูกต้อง: " .. tostring(command))
-            end
-        end
-        
-        -- แสดงสถานะปัจจุบัน
-        local coin_status = ""
-        local coins = getCurrentCoins()
-        if coins then
-            coin_status = " | เหรียญ: " .. coins .. "/" .. MIN_COINS_THRESHOLD
-        end
-        
-        printToConsole("📊 สถานะ: Place ID " .. tostring(current_place_id) .. coin_status)
-        printToConsole("----------------------------------------")
-    end)
+-- นาย A: รับผิดชอบการรัน script (1 ครั้งเท่านั้น)
+local function personA_scriptRunner()
+    printToConsole("👨‍💼 นาย A: เริ่มทำงาน (รัน script)")
     
-    if not success then
-        printToConsole("❌ [ERROR] Error in processCommand: " .. tostring(error_msg))
-        sendStatus("error", "เกิดข้อผิดพลาด: " .. tostring(error_msg))
+    while is_running do
+        local success, error_msg = pcall(function()
+            local command = getTradeCommand()
+            local current_place_id = getCurrentPlaceId()
+            
+            if command == 2 then -- Start Trade
+                if current_place_id == TRADE_START_PLACE_ID and not script_run_flags.start_trade_ran then
+                    printToConsole("👨‍💼 นาย A: รัน Start Trade Script (ครั้งแรก)")
+                    runTradeStartScript()
+                    script_run_flags.start_trade_ran = true
+                    sendStatus("success", "Start Trade Script รันสำเร็จ")
+                elseif current_place_id ~= TRADE_START_PLACE_ID then
+                    local coins = getCurrentCoins()
+                    if not coins or coins < MIN_COINS_THRESHOLD then
+                        printToConsole("👨‍💼 นาย A: เหรียญไม่พอ รัน Stop Trade Script")
+                        runTradeStopScript()
+                        sendStatus("error", "เหรียญไม่เพียงพอ รัน Stop Trade Script")
+                    end
+                end
+            elseif command == 1 then -- Stop Trade
+                if current_place_id == TRADE_STOP_PLACE_ID and not script_run_flags.stop_trade_ran then
+                    printToConsole("👨‍💼 นาย A: รัน Stop Trade Script (ครั้งแรก)")
+                    runTradeStopScript()
+                    script_run_flags.stop_trade_ran = true
+                    sendStatus("success", "Stop Trade Script รันสำเร็จ")
+                end
+            elseif command == 3 then -- Shutdown
+                printToConsole("👨‍💼 นาย A: ปิดเกม")
+                shutdownGame()
+                is_running = false -- ใช้ flag แทน break
+            end
+        end)
+        
+        if not success then
+            printToConsole("❌ [ERROR] นาย A Error: " .. tostring(error_msg))
+        end
+        
+        if not is_running then
+            break -- ออกจาก loop เมื่อ shutdown
+        end
+        
+        wait(CHECK_INTERVAL)
+    end
+end
+
+-- นาย B: รับผิดชอบการเช็คกล่องและย้าย place
+local function personB_placeController()
+    printToConsole("👨‍💼 นาย B: เริ่มทำงาน (เช็คกล่องและย้าย place)")
+    
+    while is_running do
+        local success, error_msg = pcall(function()
+            local command = getTradeCommand()
+            local current_place_id = getCurrentPlaceId()
+            
+            if command == 2 then -- Start Trade
+                if current_place_id == TRADE_START_PLACE_ID then
+                    -- อยู่ที่ Start Place แล้ว ไม่ต้องทำอะไร (เน้น ไม่งั้นเดี๋ยววาร์ปมั่ว)
+                    printToConsole("👨‍💼 นาย B: อยู่ที่ Start Place แล้ว ไม่ต้องทำอะไร")
+                else
+                    -- ไม่อยู่ที่ Start Place ให้วาร์ปไป
+                    local coins = getCurrentCoins()
+                    if coins and coins >= MIN_COINS_THRESHOLD then
+                        printToConsole("👨‍💼 นาย B: วาร์ปไป Start Trade Place")
+                        joinPlace(TRADE_START_PLACE_ID, "Start Trade - นาย B")
+                        -- รีเซ็ต flag เมื่อย้าย place
+                        script_run_flags.start_trade_ran = false
+                    end
+                end
+            elseif command == 1 then -- Stop Trade
+                if current_place_id == TRADE_STOP_PLACE_ID then
+                    -- อยู่ที่ Stop Place แล้ว ไม่ต้องทำอะไร (เน้น ไม่งั้นเดี๋ยววาร์ปมั่ว)
+                    printToConsole("👨‍💼 นาย B: อยู่ที่ Stop Place แล้ว ไม่ต้องทำอะไร")
+                else
+                    -- ไม่อยู่ที่ Stop Place ให้วาร์ปกลับทันที (ไม่สน coin)
+                    printToConsole("👨‍💼 นาย B: วาร์ปกลับ Stop Trade Place ทันที")
+                    joinPlace(TRADE_STOP_PLACE_ID, "Stop Trade - นาย B")
+                    -- รีเซ็ต flag เมื่อย้าย place
+                    script_run_flags.stop_trade_ran = false
+                end
+            elseif command == 3 then -- Shutdown
+                printToConsole("👨‍💼 นาย B: ปิดเกม")
+                shutdownGame()
+                is_running = false -- ใช้ flag แทน break
+            end
+        end)
+        
+        if not success then
+            printToConsole("❌ [ERROR] นาย B Error: " .. tostring(error_msg))
+        end
+        
+        if not is_running then
+            break -- ออกจาก loop เมื่อ shutdown
+        end
+        
+        wait(CHECK_INTERVAL)
     end
 end
 
 -- Main Loop
 local function mainLoop()
     local success, error_msg = pcall(function()
-        printToConsole("🚀 Roblox Web-Based Trade Script Started!")
+        printToConsole("🚀 Roblox Web-Based Trade Script Started! (Coroutines)")
         printToConsole("🌐 Web API URL: " .. WEB_API_URL)
         printToConsole("⏱️  Check interval: " .. CHECK_INTERVAL .. " วินาที")
         printToConsole("🕐 Action Cooldown: " .. ACTION_COOLDOWN .. " วินาที")
@@ -331,18 +338,17 @@ local function mainLoop()
         printToConsole("   2: Start Trade → Place ID: " .. TRADE_START_PLACE_ID .. " (เหรียญ > " .. MIN_COINS_THRESHOLD .. ")")
         printToConsole("   3: Shutdown Game")
         printToConsole("")
-        printToConsole("💡 ระบบ Smart:")
-        printToConsole("   - เช็คคำสั่งจากเว็บทุก " .. CHECK_INTERVAL .. " วินาที")
-        printToConsole("   - เช็ค place id ปัจจุบันก่อน join")
-        printToConsole("   - เช็คจำนวนเหรียญก่อนรัน Trade Start")
-        printToConsole("   - ป้องกันการทำงานซ้ำด้วย cooldown")
-        printToConsole("   - ส่งสถานะกลับไปยังเว็บ")
-        printToConsole("   - รัน loadstring ตามคำสั่งอัตโนมัติ")
-        printToConsole("   - วาร์ปอัตโนมัติใน Trade Start Place")
+        printToConsole("👥 ระบบ Coroutines:")
+        printToConsole("   👨‍💼 นาย A: รัน script (1 ครั้งเท่านั้น)")
+        printToConsole("   👨‍💼 นาย B: เช็คกล่องและย้าย place (ทำงานต่อเนื่อง)")
+        printToConsole("   - แยกการทำงานจริงๆ")
+        printToConsole("   - นาย A รัน script แล้ว นาย B ยังเช็คกล่องต่อได้")
+        printToConsole("   - ป้องกันการวาร์ปมั่ว")
         printToConsole("")
         printToConsole("🛡️  ระบบป้องกัน:")
         printToConsole("   - ใช้ pcall ป้องกันการหยุดทำงาน")
-        printToConsole("   - Cooldown " .. ACTION_COOLDOWN .. " วินาที ป้องกันการทำงานซ้ำ")
+        printToConsole("   - รัน script 1 ครั้งเท่านั้นต่อคำสั่ง")
+        printToConsole("   - รีเซ็ต flag เมื่อย้าย place")
         printToConsole("   - แสดงข้อความใน console ทุกการทำงาน")
         printToConsole("   - ส่งสถานะกลับไปยังเว็บ")
         printToConsole("----------------------------------------")
@@ -358,21 +364,29 @@ local function mainLoop()
         printToConsole("----------------------------------------")
         
         -- ส่งสถานะเริ่มต้นไปยังเว็บ
-        sendStatus("ready", "สคริปต์พร้อมรับคำสั่ง (Default: Stop Trade)")
+        sendStatus("ready", "สคริปต์พร้อมรับคำสั่ง (Coroutines)")
         
-        -- Main loop
+        -- เริ่มต้น coroutines
+        local personA_thread = coroutine.create(personA_scriptRunner)
+        local personB_thread = coroutine.create(personB_placeController)
+        
+        -- รัน coroutines
+        coroutine.resume(personA_thread)
+        coroutine.resume(personB_thread)
+        
+        -- Main loop สำหรับตรวจสอบ coroutines
         while is_running do
             local loop_success, loop_error = pcall(function()
-                -- รับคำสั่งจากเว็บ
-                local command = getTradeCommand()
-                
-                -- ประมวลผลคำสั่งถ้ามีคำสั่งใหม่
-                if command ~= last_command and command ~= 0 then
-                    last_command = command
-                    processCommand(command)
+                -- ตรวจสอบสถานะ coroutines
+                if coroutine.status(personA_thread) == "dead" then
+                    printToConsole("❌ นาย A coroutine เสร็จสิ้น")
+                    is_running = false
                 end
                 
-                wait(CHECK_INTERVAL)
+                if coroutine.status(personB_thread) == "dead" then
+                    printToConsole("❌ นาย B coroutine เสร็จสิ้น")
+                    is_running = false
+                end
             end)
             
             if not loop_success then
@@ -381,6 +395,12 @@ local function mainLoop()
                 printToConsole("🔄 Restarting loop in 5 seconds...")
                 wait(5)
             end
+            
+            if not is_running then
+                break -- ออกจาก loop เมื่อ coroutine เสร็จสิ้น
+            end
+            
+            wait(CHECK_INTERVAL)
         end
     end)
     
