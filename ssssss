@@ -20,7 +20,7 @@
 -- Configuration
 local CHECK_INTERVAL = 5 -- เช็คคำสั่งทุก 5 วินาที
 local WEB_API_URL = "http://199.21.172.211:3001/api/trade-command" -- URL ของเว็บ API
-local MIN_COINS_THRESHOLD = 3000 -- จำนวนเหรียญขั้นต่ำสำหรับการรัน trade start
+local MIN_COINS_THRESHOLD = 2000 -- จำนวนเหรียญขั้นต่ำสำหรับการรัน trade start
 
 -- Place IDs สำหรับการ join
 local TRADE_START_PLACE_ID = 14119723130
