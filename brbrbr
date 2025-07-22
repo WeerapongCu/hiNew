@@ -299,28 +299,6 @@ local function WarpToLocation()
     end
 end
 
--- ฟังก์ชัน monitoring เห็ด
-local function MonitorShrooms()
-    while true do
-        local success, error = pcall(function()
-            local coinsValue = LocalPlayer.Data.Coins.Value
-            if coinsValue <= 20 then
-                print(
-                    "⚠️ เห็ดเหลือน้อยกว่า 20 กำลังปิดเกม...")
-                game:Shutdown()
-                return
-            end
-        end)
-
-        if not success then
-            warn("❌ เกิดข้อผิดพลาดในการเช็คเห็ด: " ..
-                     tostring(error))
-        end
-
-        wait(5) -- เช็คทุก 5 วินาที
-    end
-end
-
 -- ฟังก์ชันหาคู่เทรดที่ว่าง
 local function FindValidReceiver()
     local result = nil
@@ -1832,9 +1810,6 @@ local function Main()
 
         -- วาร์ปไปยังตำแหน่งที่กำหนด
         WarpToLocation()
-
-        -- เริ่ม monitoring เห็ด
-        coroutine.wrap(MonitorShrooms)()
 
         -- ตรวจสอบว่าเป็น Sender หรือ Receiver
         local isSender = IsInList(LocalPlayer.Name, SENDER_LIST)
