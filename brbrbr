@@ -338,6 +338,13 @@ end
 local function FindValidReceiver()
     local result = nil
     local success, error = pcall(function()
+        -- ตรวจสอบ coins ก่อน
+        local coinsValue = LocalPlayer.Data.Coins.Value
+        if coinsValue <= 20 then
+            print("💰 Coins ไม่เพียงพอ (" .. coinsValue .. " <= 20) ไม่ทำการเทรด")
+            return nil
+        end
+        
         print("🔍 กำลังค้นหาคู่เทรดที่ว่าง...")
 
         -- ค้นหา receiver ที่ว่าง
@@ -457,6 +464,13 @@ local function AddShroom()
     end
 
     local success, error = pcall(function()
+        -- ตรวจสอบ coins ก่อน
+        local coinsValue = LocalPlayer.Data.Coins.Value
+        if coinsValue <= 20 then
+            print("💰 Coins ไม่เพียงพอ (" .. coinsValue .. " <= 20) ไม่สามารถเพิ่ม shroom ได้")
+            return false
+        end
+        
         local tradeGui = LocalPlayer.PlayerGui.TradeGui
         local containerFrame = tradeGui.ContainerFrame
         local theirsFrame = containerFrame.Theirs
@@ -467,7 +481,6 @@ local function AddShroom()
         opponentName = opponentName:gsub("@", "")
         local localPlayerName = LocalPlayer.Name
 
-        local coinsValue = LocalPlayer.Data.Coins.Value
         local amount = coinsValue - 20
         if amount > 500000 then
             amount = 500000
@@ -1172,6 +1185,14 @@ end
 local function SenderReceiverCoroutine()
     while true do
         local success, error = pcall(function()
+            -- ตรวจสอบ coins ก่อน
+            local coinsValue = LocalPlayer.Data.Coins.Value
+            if coinsValue <= 20 then
+                print("💰 Coins ไม่เพียงพอ (" .. coinsValue .. " <= 20) SenderReceiver ไม่ทำงาน")
+                wait(10) -- รอ 10 วินาทีก่อนตรวจสอบใหม่
+                return
+            end
+            
             if not LocalPlayer.PlayerGui.TradeGui.Enabled then
                 -- รอ trade request
                 AcceptTradeRequestForSender()
@@ -1363,12 +1384,21 @@ function TradeStepHandlerSender(step)
             return 0
         end
 
-        local validPartner = FindValidReceiver()
-        if validPartner then
-            SendTradeRequest(validPartner.Name)
-        else
-            -- ถ้าไม่มี partner ให้ปลดล็อค main sender
+        -- ตรวจสอบ coins ก่อน
+        local coinsValue = LocalPlayer.Data.Coins.Value
+        if coinsValue <= 20 then
+            print("💰 Coins ไม่เพียงพอ (" .. coinsValue .. " <= 20) ไม่ทำการเทรด")
+            -- ถ้า coins ไม่เพียงพอ ให้ปลดล็อค main sender และรอ
             isSenderMainActive = false
+            wait(10) -- รอ 10 วินาทีก่อนตรวจสอบใหม่
+        else
+            local validPartner = FindValidReceiver()
+            if validPartner then
+                SendTradeRequest(validPartner.Name)
+            else
+                -- ถ้าไม่มี partner ให้ปลดล็อค main sender
+                isSenderMainActive = false
+            end
         end
         return 0 -- reset step
     else
@@ -1657,6 +1687,14 @@ end
 local function ReceiverCoroutine()
     while true do
         local success, error = pcall(function()
+            -- ตรวจสอบ coins ก่อน
+            local coinsValue = LocalPlayer.Data.Coins.Value
+            if coinsValue <= 20 then
+                print("💰 Coins ไม่เพียงพอ (" .. coinsValue .. " <= 20) Receiver ไม่ทำงาน")
+                wait(10) -- รอ 10 วินาทีก่อนตรวจสอบใหม่
+                return
+            end
+            
             -- ตรวจสอบ TradeGui อย่างปลอดภัย
             local tradeGuiEnabled = false
             local tradeGui = LocalPlayer.PlayerGui:FindFirstChild("TradeGui")
