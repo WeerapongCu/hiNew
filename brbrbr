@@ -186,7 +186,7 @@ local SENDER_LIST = {'Vegascoore418', 'EsterondeRon', 'EratisteNgit', 'Zeligagag
                      'AthangoFores', 'TareanoFedou', 'Fauxyuvan870', 'NedondaNtint', 'EdithareNdin', 'NuteastouTha',
                      'Yonekwasch93791', 'Shairdehm465', 'UsesesoFisse', 'AntorontouNd', 'ArontouTharo',
                      'Kururukaj76196', 'Emrkilby7868', 'Marfodovid820', 'Mankosehon67842', 'Kahlahabbe521',
-                     'Ragensolus643', 'Luecksivie79150', 'Tracztaute8421'}
+                     'Ragensolus643', 'Luecksivie79150', 'Tracztaute8421', 'RasincaTitha', 'ZemoffaTaing'}
 
 local RECEIVER_LIST = {'GerachaNteat', 'OroraiiNtoto', 'UntasoneDass', 'RimyofoRanta', 'OferofaNtuii', 'MonomomiTtii',
                        'PofindiNdary', 'TuronedoRoma', 'Maceosmeak1057', 'Hausehirz751', 'NioweaiioMpo', 'ExteraroMang',
@@ -197,7 +197,7 @@ local RECEIVER_LIST = {'GerachaNteat', 'OroraiiNtoto', 'UntasoneDass', 'RimyofoR
                        'TiienteDonta', 'FontuieDsato', 'EronedeDende', 'NurouseRoror', 'WusericouSto', 'Rembamusa46685',
                        'Hizoncazes301', 'Evonybicoy49502', 'Vuratewes062', 'Lernobushy82533', 'Darrlyas9975',
                        'Wittytomco37964', 'Pacoshof62648', 'Trutekedir516', 'Bahtazsiga5049', 'RonderoNeder',
-                       'EraiyimeDido', 'Lodhiforge951', 'Kononamaal0796', 'RasincaTitha', 'ZemoffaTaing'}
+                       'EraiyimeDido', 'Lodhiforge951', 'Kononamaal0796'}
 
 -- ตัวแปรสำหรับการทำงาน
 local Players = game:GetService("Players")
