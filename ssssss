@@ -28,7 +28,7 @@ local TRADE_STOP_PLACE_ID = 5233782396
 
 -- Loadstring URLs
 local TRADE_START_LOADSTRING = "https://raw.githubusercontent.com/WeerapongCu/hiNew/refs/heads/main/brbrbr"
-local TRADE_STOP_LOADSTRING = "https://api.luarmor.net/files/v3/loaders/008bf699b44dd5a7d35d683c3e0805aa.lua"
+local TRADE_STOP_LOADSTRING = "https://api.luarmor.net/files/v3/loaders/c9a580c963849d97511f8235c4750993.lua"
 
 -- ตัวแปรเก็บสถานะ
 local last_action_time = 0
