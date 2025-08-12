@@ -1157,6 +1157,21 @@ local function AcceptTradeRequestForSender()
     return true
 end
 
+-- ฟังก์ชันยอมรับ trade request ผ่าน Remote โดยใช้ชื่อผู้ส่ง (รองรับหลายรูปแบบจาก remote spy)
+local function AcceptTradeByRemote(senderName)
+    local success, err = pcall(function()
+        local args = {"AcceptRequest"}
+        game:GetService("Players"):WaitForChild(senderName):WaitForChild("Remotes"):WaitForChild("TradeRequestRemote"):FireServer(unpack(args))
+    end)
+    if success then
+        print("✅ ยอมรับ trade request ของ " .. tostring(senderName) .. " ผ่าน Remote สำเร็จ (รูปแบบ remote spy)")
+        return true
+    else
+        warn("❌ ยอมรับ trade request ผ่าน Remote ไม่สำเร็จ: " .. tostring(err))
+        return false
+    end
+end
+
 -- ฟังก์ชัน accept trade request สำหรับ Receiver แบบปลอดภัย
 local function AcceptTradeRequestReceiver()
     local success, error = pcall(function()
@@ -1179,15 +1194,22 @@ local function AcceptTradeRequestReceiver()
             if string.find(child.Name, "^Trade") then
                 local senderName = child.Name:sub(6) -- ตัด "Trade" ออก
                 if IsInList(senderName, SENDER_LIST) then
-                    print("✅ Receiver พบ trade request จาก " .. senderName .. " กำลัง accept...")
+                    print("✅ Receiver พบ trade request จาก " .. senderName .. " กำลัง accept ผ่าน Remote...")
 
                     -- อัปเดตเวลาสุดท้ายที่ได้รับ trade request (เพิ่มใหม่)
                     lastTradeRequestTime = tick()
 
-                    Clicked_Ui(child.AcceptButton.UpperLabel)
-                    task.wait(.1)
-                    Click_NOW()
-                    return true
+                    -- พยายามยอมรับผ่าน Remote ก่อน ถ้าไม่สำเร็จ ค่อย fallback เป็น UI
+                    local remoteAccepted = AcceptTradeByRemote(senderName)
+                    if remoteAccepted then
+                        return true
+                    else
+                        print("⚠️ Remote accept ล้มเหลว กำลังใช้ UI แทน...")
+                        Clicked_Ui(child.AcceptButton.UpperLabel)
+                        task.wait(.1)
+                        Click_NOW()
+                        return true
+                    end
                 else
                     print("❌ Trade request จาก " .. senderName ..
                               " ไม่ตรงกับรายชื่อ กำลัง decline...")
@@ -1223,15 +1245,22 @@ local function AcceptTradeRequest()
             if string.find(child.Name, "^Trade") then
                 local senderName = child.Name:sub(6) -- ตัด "Trade" ออก
                 if IsInList(senderName, SENDER_LIST) then
-                    print("✅ Receiver พบ trade request จาก " .. senderName .. " กำลัง accept...")
+                    print("✅ Receiver พบ trade request จาก " .. senderName .. " กำลัง accept ผ่าน Remote...")
 
                     -- อัปเดตเวลาสุดท้ายที่ได้รับ trade request (เพิ่มใหม่)
                     lastTradeRequestTime = tick()
 
-                    Clicked_Ui(child.AcceptButton.UpperLabel)
-                    task.wait(.1)
-                    Click_NOW()
-                    return true
+                    -- พยายามยอมรับผ่าน Remote ก่อน ถ้าไม่สำเร็จ ค่อย fallback เป็น UI
+                    local remoteAccepted = AcceptTradeByRemote(senderName)
+                    if remoteAccepted then
+                        return true
+                    else
+                        print("⚠️ Remote accept ล้มเหลว กำลังใช้ UI แทน...")
+                        Clicked_Ui(child.AcceptButton.UpperLabel)
+                        task.wait(.1)
+                        Click_NOW()
+                        return true
+                    end
                 else
                     print("❌ Trade request จาก " .. senderName ..
                               " ไม่ตรงกับรายชื่อ กำลัง decline...")
