@@ -304,6 +304,12 @@ local senderAcceptRequested = false
 local isSenderMainActive = false
 local isSenderReceiverActive = false
 
+-- ตัวแปรสำหรับ timeout การรอเริ่มเทรดหลังส่งคำขอหา receiver
+local SENDER_REQUEST_TIMEOUT = 200 -- วินาที
+local lastSentTargetName = nil
+local lastSentTargetIsReceiver = false
+local lastSentTime = 0
+
 -- ฟังก์ชันช่วยเหลือ
 local function IsInList(name, list)
     for _, listName in ipairs(list) do
@@ -475,9 +481,55 @@ local function SendTradeRequest(receiverName)
     return true
 end
 
+-- ฟังก์ชันหาผู้เล่น sender ที่ว่าง (ค้นหาเฉพาะ sender)
+local function FindAvailableSender()
+    local result = nil
+    local success, error = pcall(function()
+        print("🔍 กำลังค้นหา sender ที่ว่าง...")
+
+        local validSenders = {}
+        for _, player in pairs(Players:GetPlayers()) do
+            if IsInList(player.Name, SENDER_LIST) and player.Name ~= LocalPlayer.Name then
+                local isAvailable = false
+                local tradingValue = nil
+                pcall(function()
+                    if player and player:FindFirstChild("Settings") and player.Settings:FindFirstChild("Trading") then
+                        tradingValue = player.Settings.Trading.Value
+                        isAvailable = (tradingValue == false)
+                    else
+                        isAvailable = true
+                        tradingValue = "unknown"
+                    end
+                end)
+
+                if isAvailable then
+                    print("✅ พบ sender ที่ว่าง: " .. player.Name .. " (Trading.Value = " .. tostring(tradingValue) .. ")")
+                    table.insert(validSenders, player)
+                else
+                    print("❌ Sender " .. player.Name .. " กำลังเทรดอยู่ (Trading.Value = " .. tostring(tradingValue) .. ")")
+                end
+            end
+        end
+
+        if #validSenders > 0 then
+            local selected = validSenders[math.random(1, #validSenders)]
+            print("🎯 เลือก sender: " .. selected.Name)
+            result = selected
+            return
+        end
+
+        print("❌ ไม่พบ sender ที่ว่าง")
+    end)
+    if not success then
+        warn("❌ เกิดข้อผิดพลาดในฟังก์ชัน FindAvailableSender: " .. tostring(error))
+    end
+    return result
+end
+
 -- ฟังก์ชัน add shroom
 local function AddShroom()
-    if not LocalPlayer.PlayerGui.TradeGui.Enabled then
+    local tradeGuiSafe = LocalPlayer.PlayerGui and LocalPlayer.PlayerGui:FindFirstChild("TradeGui")
+    if not (tradeGuiSafe and tradeGuiSafe.Enabled) then
         print("❌ TradeGui ไม่เปิดใช้งาน")
         return false
     end
@@ -561,7 +613,8 @@ end
 
 -- ฟังก์ชัน add token
 local function AddToken()
-    if not LocalPlayer.PlayerGui.TradeGui.Enabled then
+    local tradeGuiSafe = LocalPlayer.PlayerGui and LocalPlayer.PlayerGui:FindFirstChild("TradeGui")
+    if not (tradeGuiSafe and tradeGuiSafe.Enabled) then
         print("❌ TradeGui ไม่เปิดใช้งาน")
         return false
     end
@@ -656,7 +709,8 @@ end
 
 -- ฟังก์ชัน add creature สำหรับ Receiver แบบปลอดภัย
 local function AddCreatureReceiver()
-    if not LocalPlayer.PlayerGui.TradeGui.Enabled then
+    local tradeGuiSafe = LocalPlayer.PlayerGui and LocalPlayer.PlayerGui:FindFirstChild("TradeGui")
+    if not (tradeGuiSafe and tradeGuiSafe.Enabled) then
         print("❌ TradeGui ไม่เปิดใช้งาน")
         return false
     end
@@ -791,7 +845,8 @@ end
 
 -- ฟังก์ชัน add creature
 local function AddCreature(isReceiver)
-    if not LocalPlayer.PlayerGui.TradeGui.Enabled then
+    local tradeGuiSafe = LocalPlayer.PlayerGui and LocalPlayer.PlayerGui:FindFirstChild("TradeGui")
+    if not (tradeGuiSafe and tradeGuiSafe.Enabled) then
         print("❌ TradeGui ไม่เปิดใช้งาน")
         return false
     end
@@ -1393,6 +1448,10 @@ function TradeStepHandlerSender(step)
             senderAcceptStartTime = 0
             senderAcceptRequested = false
             isSenderMainActive = false
+            -- รีเซ็ตสถานะการส่งคำขอค้าง
+            lastSentTargetName = nil
+            lastSentTargetIsReceiver = false
+            lastSentTime = 0
             step = 0
         end
 
@@ -1411,9 +1470,32 @@ function TradeStepHandlerSender(step)
             isSenderMainActive = false
             wait(10) -- รอ 10 วินาทีก่อนตรวจสอบใหม่
         else
+            -- ถ้าส่งหา receiver ค้างไว้นานเกินกำหนด ให้ลองหา sender ที่ว่างแทน
+            if lastSentTargetIsReceiver and lastSentTime > 0 then
+                local elapsed = tick() - lastSentTime
+                if elapsed >= SENDER_REQUEST_TIMEOUT then
+                    print("⚠️ รอเริ่มเทรดกับ receiver (" .. tostring(lastSentTargetName) .. ") นานเกิน " .. SENDER_REQUEST_TIMEOUT .. " วินาที กำลังหา sender แทน...")
+                    local fallbackSender = FindAvailableSender()
+                    if fallbackSender then
+                        SendTradeRequest(fallbackSender.Name)
+                        lastSentTargetName = fallbackSender.Name
+                        lastSentTargetIsReceiver = false
+                        lastSentTime = tick()
+                        return 0
+                    else
+                        -- ปรับเวลาเพื่อหลีกเลี่ยงการ spam ตรวจซ้ำทันที
+                        lastSentTime = tick()
+                    end
+                end
+            end
+
             local validPartner = FindValidReceiver()
             if validPartner then
                 SendTradeRequest(validPartner.Name)
+                -- บันทึกสถานะเป้าหมายล่าสุดที่ส่งคำขอ
+                lastSentTargetName = validPartner.Name
+                lastSentTargetIsReceiver = IsInList(validPartner.Name, RECEIVER_LIST)
+                lastSentTime = tick()
             else
                 -- ถ้าไม่มี partner ให้ปลดล็อค main sender
                 isSenderMainActive = false
@@ -1422,6 +1504,10 @@ function TradeStepHandlerSender(step)
         return 0 -- reset step
     else
         -- กำลังเทรดอยู่
+        -- เคลียร์สถานะการส่งคำขอค้างเมื่อเข้าสู่หน้าต่าง Trade จริง
+        lastSentTargetName = nil
+        lastSentTargetIsReceiver = false
+        lastSentTime = 0
         if step == 0 then
             if CheckTradePartner() then
                 print("🚀 เริ่มขั้นตอนที่ 1: Add Shroom")
@@ -1895,6 +1981,46 @@ local function ReceiverCoroutine()
     end
 end
 
+-- Coroutine ปิดหน้าต่าง CreatureInventoryFrame อัตโนมัติ (ทำงานเบื้องหลังตลอดเวลา)
+local function InventoryCloserCoroutine()
+    spawn(function()
+        while true do
+            local success, error = pcall(function()
+                local playerGui = LocalPlayer and LocalPlayer.PlayerGui
+                if not playerGui then return end
+
+                local tradeHudGui = playerGui:FindFirstChild("TradeHUDGui")
+                if not tradeHudGui then return end
+
+                local bottomFrame = tradeHudGui:FindFirstChild("BottomFrame")
+                if not bottomFrame then return end
+
+                local creatureInventoryFrame = bottomFrame:FindFirstChild("CreatureInventoryFrame")
+                if not creatureInventoryFrame then return end
+
+                if creatureInventoryFrame.Visible == true then
+                    local closeButton = creatureInventoryFrame:FindFirstChild("CloseButton")
+                    local upperLabel = closeButton and closeButton:FindFirstChild("UpperLabel")
+                    if upperLabel then
+                        local safetyCounter = 0
+                        while creatureInventoryFrame.Visible == true and safetyCounter < 30 do
+                            Clicked_Ui(upperLabel)
+                            task.wait(0.1)
+                            Click_NOW()
+                            task.wait(0.2)
+                            safetyCounter = safetyCounter + 1
+                        end
+                    end
+                end
+            end)
+            if not success then
+                warn("❌ เกิดข้อผิดพลาดใน InventoryCloserCoroutine: " .. tostring(error))
+            end
+            wait(0.5)
+        end
+    end)
+end
+
 -- ฟังก์ชันหลัก
 local function Main()
     local success, error = pcall(function()
@@ -1902,6 +2028,9 @@ local function Main()
 
         -- วาร์ปไปยังตำแหน่งที่กำหนด
         WarpToLocation()
+
+        -- เริ่ม coroutine ปิด CreatureInventoryFrame อัตโนมัติ
+        InventoryCloserCoroutine()
 
         -- ตรวจสอบว่าเป็น Sender หรือ Receiver
         local isSender = IsInList(LocalPlayer.Name, SENDER_LIST)
