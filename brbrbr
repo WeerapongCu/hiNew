@@ -1,4 +1,5 @@
 -- ตัวแปรสำหรับรายชื่อผู้เล่น
+
 local SENDER_LIST = {'SarahMint2619', 'JieunOlive5877', 'LakshmiArrow4985', 'ZehraPink5749', 'QuinnSpell7103',
                      'KaoriPhantom1126', 'DaeunNinja0124', 'MarleeNinja3485', 'NienkeSteel5028', 'PromiseMaiden2891',
                      'KinsleyIvory9562', 'AzureMetallic8095', 'XimenaBlush7864', 'DeirdreTiger3702', 'JinahSpirit1670',
@@ -264,11 +265,6 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local GuiService = game:GetService("GuiService")
 local VirtualInputManager = game:GetService("VirtualInputManager")
 
--- ตัวแปรสำหรับการตรวจสอบ path
-local pathConfirmed = false
-local pathCheckAttempts = 0
-local MAX_PATH_CHECK_ATTEMPTS = 3
-
 -- ตัวแปรสำหรับ tracking
 local currentStep = 0
 local currentStepReceiver = 0 -- ตัวแปรแยกสำหรับ receiver mode
@@ -318,93 +314,6 @@ local function IsInList(name, list)
     return false
 end
 
--- ฟังก์ชันตรวจสอบและยืนยัน path
-local function CheckAndConfirmPath()
-    if pathConfirmed then
-        return true
-    end
-    
-    pathCheckAttempts = pathCheckAttempts + 1
-    
-    print("=" * 60)
-    print("🔍 ตรวจสอบ Path และการตั้งค่า")
-    print("=" * 60)
-    
-    -- แสดงข้อมูลผู้เล่นปัจจุบัน
-    print("👤 ผู้เล่นปัจจุบัน: " .. LocalPlayer.Name)
-    print("🎮 Game ID: " .. game.PlaceId)
-    print("🌐 Server ID: " .. game.JobId)
-    
-    -- แสดงรายชื่อในรายการ
-    print("\n📋 รายชื่อ Sender:")
-    for i, name in ipairs(SENDER_LIST) do
-        print("   " .. i .. ". " .. name)
-    end
-    
-    print("\n📋 รายชื่อ Receiver:")
-    for i, name in ipairs(RECEIVER_LIST) do
-        print("   " .. i .. ". " .. name)
-    end
-    
-    -- ตรวจสอบว่าผู้เล่นอยู่ในรายชื่อหรือไม่
-    local isSender = IsInList(LocalPlayer.Name, SENDER_LIST)
-    local isReceiver = IsInList(LocalPlayer.Name, RECEIVER_LIST)
-    
-    if isSender then
-        print("\n✅ คุณอยู่ในรายชื่อ SENDER")
-    elseif isReceiver then
-        print("\n✅ คุณอยู่ในรายชื่อ RECEIVER")
-    else
-        print("\n❌ คุณไม่ได้อยู่ในรายชื่อใดๆ!")
-        print("⚠️  สคริปต์จะไม่ทำงาน")
-        return false
-    end
-    
-    -- แสดงตำแหน่งที่จะวาร์ปไป
-    print("\n📍 ตำแหน่งที่จะวาร์ปไป:")
-    print("   X: -2132.24")
-    print("   Y: 490.66")
-    print("   Z: 1106.83")
-    
-    -- แสดงข้อมูล coins ปัจจุบัน
-    local coinsValue = LocalPlayer.Data and LocalPlayer.Data.Coins and LocalPlayer.Data.Coins.Value or "ไม่สามารถเข้าถึงได้"
-    print("\n💰 Coins ปัจจุบัน: " .. tostring(coinsValue))
-    
-    print("\n" .. "=" * 60)
-    
-    -- ถ้าเป็นครั้งแรก ให้รอการยืนยัน
-    if pathCheckAttempts == 1 then
-        print("❓ คุณต้องการดำเนินการต่อในตำแหน่งนี้หรือไม่?")
-        print("💡 กด Enter เพื่อยืนยัน หรือรอ 10 วินาทีเพื่อยกเลิก")
-        
-        -- รอการยืนยัน 10 วินาที
-        local startTime = tick()
-        local confirmed = false
-        
-        while tick() - startTime < 10 do
-            if tick() - startTime >= 5 and not confirmed then
-                print("⏰ เหลือเวลาอีก " .. string.format("%.0f", 10 - (tick() - startTime)) .. " วินาที...")
-            end
-            wait(1)
-        end
-        
-        if not confirmed then
-            print("⏰ เวลาหมดแล้ว ยกเลิกการดำเนินการ")
-            return false
-        end
-    end
-    
-    -- ถ้าเป็นครั้งที่ 2 หรือ 3 ให้รอสั้นๆ
-    if pathCheckAttempts >= 2 then
-        print("⏳ รอ " .. (5 - pathCheckAttempts) .. " วินาที...")
-        wait(5 - pathCheckAttempts)
-    end
-    
-    pathConfirmed = true
-    print("✅ ยืนยันแล้ว! ดำเนินการต่อ...")
-    return true
-end
-
 local function Clicked_Ui(path)
     local success, error = pcall(function()
         GuiService.SelectedObject = path
@@ -451,17 +360,10 @@ local function FindValidReceiver()
         -- ตรวจสอบ coins ก่อน
         local coinsValue = LocalPlayer.Data.Coins.Value
         if coinsValue <= 20 then
-            print("💰 Coins ไม่เพียงพอ (" .. coinsValue ..
-                      " <= 20) ไม่ทำการเทรด")
+            print("💰 Coins ไม่เพียงพอ (" .. coinsValue .. " <= 20) ไม่ทำการเทรด")
             return nil
         end
         
-        -- ตรวจสอบ path อีกครั้งก่อนดำเนินการ
-        if not pathConfirmed then
-            print("⚠️ ยังไม่ได้ยืนยัน path กรุณารอสักครู่...")
-            return nil
-        end
-
         print("🔍 กำลังค้นหาคู่เทรดที่ว่าง...")
 
         -- ค้นหา receiver ที่ว่าง
@@ -584,11 +486,10 @@ local function AddShroom()
         -- ตรวจสอบ coins ก่อน
         local coinsValue = LocalPlayer.Data.Coins.Value
         if coinsValue <= 20 then
-            print("💰 Coins ไม่เพียงพอ (" .. coinsValue ..
-                      " <= 20) ไม่สามารถเพิ่ม shroom ได้")
+            print("💰 Coins ไม่เพียงพอ (" .. coinsValue .. " <= 20) ไม่สามารถเพิ่ม shroom ได้")
             return false
         end
-
+        
         local tradeGui = LocalPlayer.PlayerGui.TradeGui
         local containerFrame = tradeGui.ContainerFrame
         local theirsFrame = containerFrame.Theirs
@@ -1159,12 +1060,6 @@ end
 -- ฟังก์ชัน accept trade request สำหรับ Sender
 local function AcceptTradeRequestForSender()
     local success, error = pcall(function()
-        -- ตรวจสอบ path อีกครั้งก่อนดำเนินการ
-        if not pathConfirmed then
-            print("⚠️ ยังไม่ได้ยืนยัน path กรุณารอสักครู่...")
-            return false
-        end
-        
         local requestsFrame = LocalPlayer.PlayerGui.RequestsGui.RequestsFrame.Other
         if not requestsFrame then
             return false
@@ -1210,12 +1105,6 @@ end
 -- ฟังก์ชัน accept trade request สำหรับ Receiver แบบปลอดภัย
 local function AcceptTradeRequestReceiver()
     local success, error = pcall(function()
-        -- ตรวจสอบ path อีกครั้งก่อนดำเนินการ
-        if not pathConfirmed then
-            print("⚠️ ยังไม่ได้ยืนยัน path กรุณารอสักครู่...")
-            return false
-        end
-        
         local requestsGui = LocalPlayer.PlayerGui:FindFirstChild('RequestsGui')
         if not requestsGui then
             return false
@@ -1318,12 +1207,11 @@ local function SenderReceiverCoroutine()
             -- ตรวจสอบ coins ก่อน
             local coinsValue = LocalPlayer.Data.Coins.Value
             if coinsValue <= 20 then
-                print("💰 Coins ไม่เพียงพอ (" .. coinsValue ..
-                          " <= 20) SenderReceiver ไม่ทำงาน")
+                print("💰 Coins ไม่เพียงพอ (" .. coinsValue .. " <= 20) SenderReceiver ไม่ทำงาน")
                 wait(10) -- รอ 10 วินาทีก่อนตรวจสอบใหม่
                 return
             end
-
+            
             if not LocalPlayer.PlayerGui.TradeGui.Enabled then
                 -- รอ trade request
                 AcceptTradeRequestForSender()
@@ -1518,8 +1406,7 @@ function TradeStepHandlerSender(step)
         -- ตรวจสอบ coins ก่อน
         local coinsValue = LocalPlayer.Data.Coins.Value
         if coinsValue <= 20 then
-            print("💰 Coins ไม่เพียงพอ (" .. coinsValue ..
-                      " <= 20) ไม่ทำการเทรด")
+            print("💰 Coins ไม่เพียงพอ (" .. coinsValue .. " <= 20) ไม่ทำการเทรด")
             -- ถ้า coins ไม่เพียงพอ ให้ปลดล็อค main sender และรอ
             isSenderMainActive = false
             wait(10) -- รอ 10 วินาทีก่อนตรวจสอบใหม่
@@ -1822,12 +1709,11 @@ local function ReceiverCoroutine()
             -- ตรวจสอบ coins ก่อน
             local coinsValue = LocalPlayer.Data.Coins.Value
             if coinsValue <= 20 then
-                print("💰 Coins ไม่เพียงพอ (" .. coinsValue ..
-                          " <= 20) Receiver ไม่ทำงาน")
+                print("💰 Coins ไม่เพียงพอ (" .. coinsValue .. " <= 20) Receiver ไม่ทำงาน")
                 wait(10) -- รอ 10 วินาทีก่อนตรวจสอบใหม่
                 return
             end
-
+            
             -- ตรวจสอบ TradeGui อย่างปลอดภัย
             local tradeGuiEnabled = false
             local tradeGui = LocalPlayer.PlayerGui:FindFirstChild("TradeGui")
@@ -2013,12 +1899,6 @@ end
 local function Main()
     local success, error = pcall(function()
         print("🎮 เริ่มต้นสคริปต์ Trade")
-        
-        -- ตรวจสอบและยืนยัน path ก่อน
-        if not CheckAndConfirmPath() then
-            print("❌ ไม่ได้รับการยืนยัน path ออกจากสคริปต์")
-            return
-        end
 
         -- วาร์ปไปยังตำแหน่งที่กำหนด
         WarpToLocation()
