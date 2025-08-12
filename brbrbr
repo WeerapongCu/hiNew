@@ -1157,7 +1157,104 @@ local function AcceptTradeRequestForSender()
     return true
 end
 
+local function AcceptTradeRequestForSenderMobile()
+    local success, error = pcall(function()
+        local requestsFrame = LocalPlayer.PlayerGui.RequestsGui.RequestsFrame.Mobile
+        if not requestsFrame then
+            return false
+        end
+
+        for _, child in pairs(requestsFrame:GetChildren()) do
+            if string.find(child.Name, "^Trade") then
+                local senderName = child.Name:sub(6) -- ตัด "Trade" ออก
+                -- Sender สามารถรับ trade request จาก sender อื่นได้
+                if IsInList(senderName, SENDER_LIST) then
+                    print("✅ Sender พบ trade request จาก " .. senderName .. " กำลัง accept...")
+
+                    -- อัปเดตเวลาสุดท้ายที่ได้รับ trade request (เพิ่มใหม่)
+                    lastTradeRequestTime = tick()
+
+                    Clicked_Ui(child.AcceptButton.UpperLabel)
+                    task.wait(.1)
+                    Click_NOW()
+                    return true
+                else
+                    print("❌ Trade request จาก " .. senderName ..
+                              " ไม่ตรงกับรายชื่อ กำลัง decline...")
+                    Clicked_Ui(child.DeclineButton.UpperLabel)
+                    task.wait(.1)
+                    Click_NOW()
+                end
+            end
+        end
+
+        return false
+    end)
+
+    if not success then
+        warn(
+            "❌ เกิดข้อผิดพลาดในการ accept trade request สำหรับ Sender: " ..
+                tostring(error))
+        return false
+    end
+
+    return true
+end
+
 -- ฟังก์ชัน accept trade request สำหรับ Receiver แบบปลอดภัย
+local function AcceptTradeRequestReceiver()
+    local success, error = pcall(function()
+        local requestsGui = LocalPlayer.PlayerGui:FindFirstChild('RequestsGui')
+        if not requestsGui then
+            return false
+        end
+
+        local requestsFrame = requestsGui:FindFirstChild('RequestsFrame')
+        if not requestsFrame then
+            return false
+        end
+
+        local otherFrame = requestsFrame:FindFirstChild('Other')
+        if not otherFrame then
+            return false
+        end
+
+        for _, child in pairs(otherFrame:GetChildren()) do
+            if string.find(child.Name, "^Trade") then
+                local senderName = child.Name:sub(6) -- ตัด "Trade" ออก
+                if IsInList(senderName, SENDER_LIST) then
+                    print("✅ Receiver พบ trade request จาก " .. senderName .. " กำลัง accept...")
+
+                    -- อัปเดตเวลาสุดท้ายที่ได้รับ trade request (เพิ่มใหม่)
+                    lastTradeRequestTime = tick()
+
+                    Clicked_Ui(child.AcceptButton.UpperLabel)
+                    task.wait(.1)
+                    Click_NOW()
+                    return true
+                else
+                    print("❌ Trade request จาก " .. senderName ..
+                              " ไม่ตรงกับรายชื่อ กำลัง decline...")
+                    Clicked_Ui(child.DeclineButton.UpperLabel)
+                    task.wait(.1)
+                    Click_NOW()
+                end
+            end
+        end
+
+        return false
+    end)
+
+    if not success then
+        warn(
+            "❌ เกิดข้อผิดพลาดในการ accept trade request สำหรับ Receiver: " ..
+                tostring(error))
+        return false
+    end
+
+    return true
+end
+
 local function AcceptTradeRequestReceiver()
     local success, error = pcall(function()
         local requestsGui = LocalPlayer.PlayerGui:FindFirstChild('RequestsGui')
@@ -1255,6 +1352,49 @@ local function AcceptTradeRequest()
     return true
 end
 
+local function AcceptTradeRequestForReceiverMobile()
+    local success, error = pcall(function()
+        local requestsFrame = LocalPlayer.PlayerGui.RequestsGui.RequestsFrame.Mobile
+        if not requestsFrame then
+            return false
+        end
+
+        for _, child in pairs(requestsFrame:GetChildren()) do
+            if string.find(child.Name, "^Trade") then
+                local senderName = child.Name:sub(6) -- ตัด "Trade" ออก
+                if IsInList(senderName, SENDER_LIST) then
+                    print("✅ Receiver พบ trade request จาก " .. senderName .. " กำลัง accept...")
+
+                    -- อัปเดตเวลาสุดท้ายที่ได้รับ trade request (เพิ่มใหม่)
+                    lastTradeRequestTime = tick()
+
+                    Clicked_Ui(child.AcceptButton.UpperLabel)
+                    task.wait(.1)
+                    Click_NOW()
+                    return true
+                else
+                    print("❌ Trade request จาก " .. senderName ..
+                              " ไม่ตรงกับรายชื่อ กำลัง decline...")
+                    Clicked_Ui(child.DeclineButton.UpperLabel)
+                    task.wait(.1)
+                    Click_NOW()
+                end
+            end
+        end
+
+        return false
+    end)
+
+    if not success then
+        warn(
+            "❌ เกิดข้อผิดพลาดในการ accept trade request สำหรับ Receiver: " ..
+                tostring(error))
+        return false
+    end
+
+    return true
+end
+
 -- ฟังก์ชัน Coroutine สำหรับ Sender ที่รับ trade request
 local function SenderReceiverCoroutine()
     while true do
@@ -1270,6 +1410,7 @@ local function SenderReceiverCoroutine()
             if not LocalPlayer.PlayerGui.TradeGui.Enabled then
                 -- รอ trade request
                 AcceptTradeRequestForSender()
+                AcceptTradeRequestForSenderMobile()
 
                 -- ตรวจสอบ timeout สำหรับ Sender ที่ทำงานแบบ Receiver (เพิ่มใหม่)
                 local timeSinceLastRequest = tick() - lastTradeRequestTime
@@ -1810,6 +1951,8 @@ local function ReceiverCoroutine()
             if not tradeGuiEnabled then
                 -- รอ trade request
                 AcceptTradeRequestReceiver()
+
+                AcceptTradeRequestForReceiverMobile()
 
                 -- ตรวจสอบ timeout (เพิ่มใหม่)
                 local timeSinceLastRequest = tick() - lastTradeRequestTime
