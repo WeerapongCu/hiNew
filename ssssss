@@ -33,9 +33,8 @@ local TRADE_STOP_LOADSTRING = "https://api.luarmor.net/files/v3/loaders/c9a580c9
 -- ตัวแปรเก็บสถานะ
 local last_action_time = 0
 local ACTION_COOLDOWN = 10 -- วินาที (ป้องกันการทำงานซ้ำเร็วเกินไป)
-local last_command = 2 -- เก็บคำสั่งล่าสุด (default = 2 = Start Trade - ตั้งเป็น start trade ตลอดเวลา)
+local last_command = 1 -- เก็บคำสั่งล่าสุด (default = 1 = Stop Trade)
 local is_running = true -- สถานะการทำงานของสคริปต์
-local FORCE_START_TRADE = true -- บังคับให้เป็น start trade ตลอดเวลา
 
 -- ตัวแปรสำหรับ coroutines
 local script_run_flags = {
@@ -96,15 +95,8 @@ local function getCurrentCoins()
     end
 end
 
--- ฟังก์ชันส่ง request ไปยังเว็บ API (แก้ไขให้ return Start Trade ตลอดเวลา)
+-- ฟังก์ชันส่ง request ไปยังเว็บ API
 local function getTradeCommand()
-    -- บังคับให้เป็น Start Trade ตลอดเวลา
-    if FORCE_START_TRADE then
-        printToConsole("🔄 บังคับสถานะ: Start Trade (ไม่ใช้คำสั่งจากเว็บ)")
-        return 2 -- Start Trade
-    end
-    
-    -- โค้ดเดิมสำหรับรับคำสั่งจากเว็บ (ไม่ใช้แล้ว)
     local success, result = pcall(function()
         local response = requestFunction({
             Url = WEB_API_URL,
@@ -128,7 +120,7 @@ local function getTradeCommand()
         return result
     else
         printToConsole("❌ ไม่สามารถรับคำสั่งจากเว็บได้: " .. tostring(result))
-        return 2 -- ถ้าเกิดข้อผิดพลาด ให้ใช้ Start Trade
+        return 0 -- ไม่มีคำสั่ง
     end
 end
 
@@ -336,14 +328,15 @@ end
 -- Main Loop
 local function mainLoop()
     local success, error_msg = pcall(function()
-        printToConsole("🚀 Roblox AUTO Start Trade Script Started! (Coroutines)")
-        printToConsole("🔥 โหมด: บังคับ START TRADE ตลอดเวลา")
+        printToConsole("🚀 Roblox Web-Based Trade Script Started! (Coroutines)")
+        printToConsole("🌐 Web API URL: " .. WEB_API_URL)
         printToConsole("⏱️  Check interval: " .. CHECK_INTERVAL .. " วินาที")
         printToConsole("🕐 Action Cooldown: " .. ACTION_COOLDOWN .. " วินาที")
         printToConsole("")
-        printToConsole("🎯 สถานะ: Start Trade เท่านั้น")
-        printToConsole("   📍 Target Place ID: " .. TRADE_START_PLACE_ID .. " (เหรียญ > " .. MIN_COINS_THRESHOLD .. ")")
-        printToConsole("   🚫 ไม่รองรับ Stop Trade หรือ Shutdown")
+        printToConsole("🎯 คำสั่งที่รองรับ:")
+        printToConsole("   1: Stop Trade → Place ID: " .. TRADE_STOP_PLACE_ID)
+        printToConsole("   2: Start Trade → Place ID: " .. TRADE_START_PLACE_ID .. " (เหรียญ > " .. MIN_COINS_THRESHOLD .. ")")
+        printToConsole("   3: Shutdown Game")
         printToConsole("")
         printToConsole("👥 ระบบ Coroutines:")
         printToConsole("   👨‍💼 นาย A: รัน script (1 ครั้งเท่านั้น)")
@@ -367,11 +360,11 @@ local function mainLoop()
         if coins then
             printToConsole("💰 เหรียญปัจจุบัน: " .. tostring(coins))
         end
-        printToConsole("🟢 AUTO START TRADE MODE เปิดใช้งาน...")
+        printToConsole("🟢 พร้อมรับคำสั่งจากเว็บ...")
         printToConsole("----------------------------------------")
         
         -- ส่งสถานะเริ่มต้นไปยังเว็บ
-        sendStatus("start_trade", "สคริปต์ทำงานในโหมด Start Trade ตลอดเวลา (Auto Mode)")
+        sendStatus("ready", "สคริปต์พร้อมรับคำสั่ง (Coroutines)")
         
         -- เริ่มต้น coroutines
         local personA_thread = coroutine.create(personA_scriptRunner)
