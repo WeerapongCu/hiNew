@@ -1091,7 +1091,7 @@ local function CheckTradePartner()
     return true
 end
 
--- ฟังก์ชัน accept trade request สำหรับ Sender
+-- ฟังก์ชัน accept trade request สำหรับ Sender (รองรับ auto-accept จาก sender list)
 local function AcceptTradeRequestForSender()
     local success, error = pcall(function()
         local requestsFrame = LocalPlayer.PlayerGui.RequestsGui.RequestsFrame.Other
@@ -1104,15 +1104,32 @@ local function AcceptTradeRequestForSender()
                 local senderName = child.Name:sub(6) -- ตัด "Trade" ออก
                 -- Sender สามารถรับ trade request จาก sender อื่นได้
                 if IsInList(senderName, SENDER_LIST) then
-                    print("✅ Sender พบ trade request จาก " .. senderName .. " กำลัง accept...")
+                    print("✅ Sender พบ trade request จาก " .. senderName .. " (อยู่ใน SENDER_LIST) กำลัง auto-accept และเปลี่ยนเป็น receiver ชั่วคราว...")
 
-                    -- อัปเดตเวลาสุดท้ายที่ได้รับ trade request (เพิ่มใหม่)
+                    -- อัปเดตเวลาสุดท้ายที่ได้รับ trade request
                     lastTradeRequestTime = tick()
 
-                    Clicked_Ui(child.AcceptButton.UpperLabel)
-                    task.wait(.1)
-                    Click_NOW()
-                    return true
+                    -- พยายามยอมรับผ่าน Remote ก่อน ถ้าไม่สำเร็จ ค่อย fallback เป็น UI
+                    local remoteAccepted = AcceptTradeByRemote(senderName)
+                    if remoteAccepted then
+                        print("✅ Auto-accept ผ่าน Remote สำเร็จ - กำลังเปลี่ยนเป็น receiver mode ชั่วคราว")
+                        -- หยุดการทำงานของ main sender loop
+                        isSenderMainActive = false
+                        -- เปิดใช้งาน receiver mode ชั่วคราว
+                        isSenderReceiverActive = true
+                        return true
+                    else
+                        print("⚠️ Remote accept ล้มเหลว กำลังใช้ UI แทน...")
+                        Clicked_Ui(child.AcceptButton.UpperLabel)
+                        task.wait(.1)
+                        Click_NOW()
+                        print("✅ Auto-accept ผ่าน UI สำเร็จ - กำลังเปลี่ยนเป็น receiver mode ชั่วคราว")
+                        -- หยุดการทำงานของ main sender loop
+                        isSenderMainActive = false
+                        -- เปิดใช้งาน receiver mode ชั่วคราว
+                        isSenderReceiverActive = true
+                        return true
+                    end
                 else
                     print("❌ Trade request จาก " .. senderName ..
                               " ไม่ตรงกับรายชื่อ กำลัง decline...")
@@ -1276,7 +1293,7 @@ local function SenderReceiverCoroutine()
             end
             
             if not LocalPlayer.PlayerGui.TradeGui.Enabled then
-                -- รอ trade request
+                -- รอ trade request และ auto-accept จาก sender อื่น
                 AcceptTradeRequestForSender()
 
                 -- ตรวจสอบ timeout สำหรับ Sender ที่ทำงานแบบ Receiver (เพิ่มใหม่)
@@ -1335,10 +1352,13 @@ local function SenderReceiverCoroutine()
                     end
                 end
 
-                -- ถ้ามี trade request ให้ override main sender
+                -- ถ้ามี trade request ให้ override main sender และตรวจสอบ auto-accept
                 if hasTradeRequest then
                     print("📩 พบ trade request กำลัง override Main Sender...")
                     isSenderMainActive = false
+                    
+                    -- ตรวจสอบและ auto-accept trade request จาก sender อื่นใน SENDER_LIST
+                    AcceptTradeRequestForSender()
                 end
 
                 -- ตรวจสอบว่า main sender loop กำลังทำงานอยู่หรือไม่
@@ -1355,7 +1375,7 @@ local function SenderReceiverCoroutine()
                         isSenderReceiverActive = true
                         currentStepReceiver = 1
                         print(
-                            "🚀 Sender เริ่มขั้นตอนที่ 1: Add Creature (โหมด Receiver)")
+                            "🚀 Sender เริ่มขั้นตอนที่ 1: Add Creature (โหมด Receiver ชั่วคราว - Auto-accept จาก Sender อื่น)")
                     else
                         wait(1)
                     end
@@ -1383,7 +1403,7 @@ local function SenderReceiverCoroutine()
                         if elapsedTime >= 5 then
                             currentStepReceiver = 2
                             print(
-                                "   Sender เริ่มขั้นตอนที่ 2: Click Accept (โหมด Receiver)")
+                                "   Sender เริ่มขั้นตอนที่ 2: Click Accept (โหมด Receiver ชั่วคราว)")
                         else
                             print("⏳ รอ Add Creature เสร็จ... (" ..
                                       string.format("%.1f", 5 - elapsedTime) .. " วินาที)")
@@ -1405,7 +1425,7 @@ local function SenderReceiverCoroutine()
                         local elapsedTime = tick() - receiverAcceptStartTime
                         if elapsedTime >= 3 then
                             currentStepReceiver = 0
-                            print("✅ Sender เทรดเสร็จสิ้น (โหมด Receiver)")
+                            print("✅ Sender เทรดเสร็จสิ้น (โหมด Receiver ชั่วคราว - กลับสู่โหมด Sender ปกติ)")
                             -- รีเซ็ตสถานะ
                             receiverCreatureStartTime = 0
                             receiverCreatureRequested = false
@@ -1463,10 +1483,10 @@ function TradeStepHandlerSender(step)
             step = 0
         end
 
-        -- ตรวจสอบว่า SenderReceiver กำลังทำงานอยู่หรือไม่
+        -- ตรวจสอบว่า SenderReceiver กำลังทำงานอยู่หรือไม่ (โหมด receiver ชั่วคราว)
         if isSenderReceiverActive then
             print(
-                "⏸️ SenderReceiver กำลังทำงานอยู่ Main Sender รอสักครู่...")
+                "⏸️ SenderReceiver กำลังทำงานอยู่ (โหมด receiver ชั่วคราว) Main Sender รอสักครู่...")
             return 0
         end
 
