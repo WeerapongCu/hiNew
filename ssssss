@@ -7,15 +7,15 @@
     
     คำสั่งที่รองรับ:
     - 1: Stop Trade
-    - 2: Start Trade  
-    - 3: Shutdown Game
+    - 2: Start Trade
+    - 3: Kick Player Out
     
     วิธีการใช้งาน:
     1. เปิด Roblox Executor
     2. Copy โค้ดนี้ไปวาง
     3. กด Execute
     4. สคริปต์จะรอคำสั่งจากเว็บ
-]]
+]]--
 
 -- Configuration
 local CHECK_INTERVAL = 5 -- เช็คคำสั่งทุก 5 วินาที
@@ -33,7 +33,7 @@ local TRADE_STOP_LOADSTRING = "https://api.luarmor.net/files/v3/loaders/c9a580c9
 -- ตัวแปรเก็บสถานะ
 local last_action_time = 0
 local ACTION_COOLDOWN = 10 -- วินาที (ป้องกันการทำงานซ้ำเร็วเกินไป)
-local last_command = 2 -- เก็บคำสั่งล่าสุด (default = 1 = Stop Trade)
+local last_command = 1 -- เก็บคำสั่งล่าสุด (default = 1 = Stop Trade)
 local is_running = true -- สถานะการทำงานของสคริปต์
 
 -- ตัวแปรสำหรับ coroutines
@@ -157,16 +157,45 @@ local function sendStatus(status, message)
     end
 end
 
--- ฟังก์ชันสำหรับ join place
+-- ฟังก์ชันสำหรับ join place (ใช้ remote แทน TeleportService)
 local function joinPlace(placeId, reason)
     local success, result = pcall(function()
-        printToConsole("🚀 กำลัง join place ID: " .. placeId .. " (" .. reason .. ")")
-        local TeleportService = game:GetService("TeleportService")
-        TeleportService:Teleport(placeId)
-        printToConsole("✅ เริ่มการ join place สำเร็จ")
+        printToConsole("🚀 กำลัง teleport ด้วย remote: " .. placeId .. " (" .. reason .. ")")
+        
+        -- pcall สำหรับ WaitForChild ป้องกัน timeout
+        local replicatedStorageSuccess, replicatedStorage = pcall(function()
+            return game:GetService("ReplicatedStorage"):WaitForChild("Remotes", 10)
+        end)
+        
+        if not replicatedStorageSuccess then
+            error("ไม่พบ ReplicatedStorage.Remotes")
+        end
+        
+        -- pcall สำหรับ remote teleport
+        local remoteSuccess, remoteResult = pcall(function()
+            local args = {
+                true
+            }
+            replicatedStorage:WaitForChild("RequestTradeRealmTeleport", 5):FireServer(unpack(args))
+        end)
+        
+        if not remoteSuccess then
+            error("ไม่สามารถเรียก remote RequestTradeRealmTeleport ได้: " .. tostring(remoteResult))
+        end
+        
+        printToConsole("✅ ส่งคำขอ teleport ด้วย remote สำเร็จ")
     end)
+    
     if not success then
-        printToConsole("❌ ไม่สามารถ join place ได้: " .. tostring(result))
+        printToConsole("❌ ไม่สามารถ teleport ด้วย remote ได้: " .. tostring(result))
+        
+        -- ลองใช้วิธีสำรองหากมีปัญหา
+        pcall(function()
+            printToConsole("🔄 ลองใช้วิธีสำรอง...")
+            local args = { true }
+            game:GetService("ReplicatedStorage").Remotes.RequestTradeRealmTeleport:FireServer(unpack(args))
+            printToConsole("✅ ใช้วิธีสำรองสำเร็จ")
+        end)
     end
 end
 
@@ -212,14 +241,27 @@ local function runTradeStopScript()
     end
 end
 
--- ฟังก์ชันปิดเกม
+-- ฟังก์ชันปิดเกม (ใช้ kick แทน shutdown)
 local function shutdownGame()
     local success, result = pcall(function()
-        printToConsole("🔄 กำลังปิดเกม...")
-        game:Shutdown()
+        printToConsole("🔄 กำลัง kick ผู้เล่นออกจากเกม...")
+        
+        -- ใช้ kick ออกจากเกมแทน shutdown (ปลอดภัยกว่า)
+        game.Players.LocalPlayer:Kick("🚪 ออกจากเกมตามคำสั่งจากเว็บ")
+        
+        printToConsole("✅ Kick ผู้เล่นออกสำเร็จ")
     end)
+    
     if not success then
-        printToConsole("❌ ไม่สามารถปิดเกมได้: " .. tostring(result))
+        printToConsole("❌ ไม่สามารถ kick ผู้เล่นออกได้: " .. tostring(result))
+        -- ถ้า kick ไม่ได้ ให้ใช้วิธีอื่นเป็นทางเลือกสุดท้าย
+        pcall(function()
+            printToConsole("🔄 ใช้วิธีสำรองในการออกจากเกม...")
+            game:GetService("GuiService"):SetMenuIsOpen(false)
+            game:GetService("StarterGui"):SetCore("ResetButtonCallback", function()
+                game.Players.LocalPlayer:Kick("ออกจากเกมด้วยวิธีสำรอง")
+            end)
+        end)
     end
 end
 
@@ -253,8 +295,8 @@ local function personA_scriptRunner()
                     script_run_flags.stop_trade_ran = true
                     sendStatus("success", "Stop Trade Script รันสำเร็จ")
                 end
-            elseif command == 3 then -- Shutdown
-                printToConsole("👨‍💼 นาย A: ปิดเกม")
+            elseif command == 3 then -- Kick Player Out
+                printToConsole("👨‍💼 นาย A: Kick ผู้เล่นออก")
                 shutdownGame()
                 is_running = false -- ใช้ flag แทน break
             end
@@ -300,14 +342,13 @@ local function personB_placeController()
                     -- อยู่ที่ Stop Place แล้ว ไม่ต้องทำอะไร (เน้น ไม่งั้นเดี๋ยววาร์ปมั่ว)
                     printToConsole("👨‍💼 นาย B: อยู่ที่ Stop Place แล้ว ไม่ต้องทำอะไร")
                 else
-                    -- ไม่อยู่ที่ Stop Place ให้วาร์ปกลับทันที (ไม่สน coin)
-                    printToConsole("👨‍💼 นาย B: วาร์ปกลับ Stop Trade Place ทันที")
-                    joinPlace(TRADE_STOP_PLACE_ID, "Stop Trade - นาย B")
-                    -- รีเซ็ต flag เมื่อย้าย place
-                    script_run_flags.stop_trade_ran = false
+                    -- ไม่อยู่ที่ Stop Place ให้ kick ออกทันที (ไม่สน coin)
+                    printToConsole("👨‍💼 นาย B: ไม่อยู่ที่ Stop Place - Kick ออกทันที")
+                    shutdownGame()
+                    is_running = false -- หยุดการทำงาน
                 end
-            elseif command == 3 then -- Shutdown
-                printToConsole("👨‍💼 นาย B: ปิดเกม")
+            elseif command == 3 then -- Kick Player Out
+                printToConsole("👨‍💼 นาย B: Kick ผู้เล่นออก")
                 shutdownGame()
                 is_running = false -- ใช้ flag แทน break
             end
@@ -336,7 +377,7 @@ local function mainLoop()
         printToConsole("🎯 คำสั่งที่รองรับ:")
         printToConsole("   1: Stop Trade → Place ID: " .. TRADE_STOP_PLACE_ID)
         printToConsole("   2: Start Trade → Place ID: " .. TRADE_START_PLACE_ID .. " (เหรียญ > " .. MIN_COINS_THRESHOLD .. ")")
-        printToConsole("   3: Shutdown Game")
+        printToConsole("   3: Kick Player Out")
         printToConsole("")
         printToConsole("👥 ระบบ Coroutines:")
         printToConsole("   👨‍💼 นาย A: รัน script (1 ครั้งเท่านั้น)")
@@ -351,6 +392,7 @@ local function mainLoop()
         printToConsole("   - รีเซ็ต flag เมื่อย้าย place")
         printToConsole("   - แสดงข้อความใน console ทุกการทำงาน")
         printToConsole("   - ส่งสถานะกลับไปยังเว็บ")
+        printToConsole("   - ใช้ Kick แทน Shutdown (ปลอดภัยกว่า)")
         printToConsole("----------------------------------------")
         
         -- แสดงสถานะเริ่มต้น
