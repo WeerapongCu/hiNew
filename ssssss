@@ -1,20 +1,21 @@
 --[[
     Roblox Smart Trade Trigger Script (Luau) - Web-Based Control with Coroutines
     สคริปต์ที่รับคำสั่งจากเว็บเพื่อควบคุมการ trade แบบแยก coroutines
+    ⚠️  บังคับให้ Start Trade เท่านั้น ไม่สนใจคำสั่งอื่น
     
-    นาย A: รับผิดชอบการรัน script (1 ครั้งเท่านั้น)
-    นาย B: รับผิดชอบการเช็คกล่องและย้าย place (ทำงานต่อเนื่อง)
+    นาย A: รับผิดชอบการรัน script (1 ครั้งเท่านั้น) - บังคับให้ Start Trade เท่านั้น
+    นาย B: รับผิดชอบการเช็คกล่องและย้าย place (ทำงานต่อเนื่อง) - บังคับให้ Start Trade เท่านั้น
     
-    คำสั่งที่รองรับ:
-    - 1: Stop Trade
-    - 2: Start Trade
-    - 3: Kick Player Out
+    คำสั่งที่รองรับ (บังคับให้ Start Trade เท่านั้น):
+    ❌ - 1: Stop Trade (ไม่รองรับ)
+    ✅ - 2: Start Trade (บังคับให้ทำงานเท่านั้น)
+    ❌ - 3: Kick Player Out (ไม่รองรับ)
     
     วิธีการใช้งาน:
     1. เปิด Roblox Executor
     2. Copy โค้ดนี้ไปวาง
     3. กด Execute
-    4. สคริปต์จะรอคำสั่งจากเว็บ
+    4. สคริปต์จะบังคับให้ Start Trade เท่านั้น
 ]]--
 
 -- Configuration
@@ -265,40 +266,27 @@ local function shutdownGame()
     end
 end
 
--- นาย A: รับผิดชอบการรัน script (1 ครั้งเท่านั้น)
+-- นาย A: รับผิดชอบการรัน script (1 ครั้งเท่านั้น) - บังคับให้ Start Trade เท่านั้น
 local function personA_scriptRunner()
-    printToConsole("👨‍💼 นาย A: เริ่มทำงาน (รัน script)")
+    printToConsole("👨‍💼 นาย A: เริ่มทำงาน (รัน script) - บังคับให้ Start Trade เท่านั้น")
     
     while is_running do
         local success, error_msg = pcall(function()
-            local command = getTradeCommand()
             local current_place_id = getCurrentPlaceId()
             
-            if command == 2 then -- Start Trade
-                if current_place_id == TRADE_START_PLACE_ID and not script_run_flags.start_trade_ran then
-                    printToConsole("👨‍💼 นาย A: รัน Start Trade Script (ครั้งแรก)")
-                    runTradeStartScript()
-                    script_run_flags.start_trade_ran = true
-                    sendStatus("success", "Start Trade Script รันสำเร็จ")
-                elseif current_place_id ~= TRADE_START_PLACE_ID then
-                    local coins = getCurrentCoins()
-                    if not coins or coins < MIN_COINS_THRESHOLD then
-                        printToConsole("👨‍💼 นาย A: เหรียญไม่พอ รัน Stop Trade Script")
-                        runTradeStopScript()
-                        sendStatus("error", "เหรียญไม่เพียงพอ รัน Stop Trade Script")
-                    end
-                end
-            elseif command == 1 then -- Stop Trade
-                if current_place_id == TRADE_STOP_PLACE_ID and not script_run_flags.stop_trade_ran then
-                    printToConsole("👨‍💼 นาย A: รัน Stop Trade Script (ครั้งแรก)")
+            -- บังคับให้ Start Trade เท่านั้น ไม่สนใจคำสั่งอื่น
+            if current_place_id == TRADE_START_PLACE_ID and not script_run_flags.start_trade_ran then
+                printToConsole("👨‍💼 นาย A: รัน Start Trade Script (บังคับให้ Start Trade เท่านั้น)")
+                runTradeStartScript()
+                script_run_flags.start_trade_ran = true
+                sendStatus("success", "Start Trade Script รันสำเร็จ (บังคับให้ Start Trade เท่านั้น)")
+            elseif current_place_id ~= TRADE_START_PLACE_ID then
+                local coins = getCurrentCoins()
+                if not coins or coins < MIN_COINS_THRESHOLD then
+                    printToConsole("👨‍💼 นาย A: เหรียญไม่พอ รัน Stop Trade Script")
                     runTradeStopScript()
-                    script_run_flags.stop_trade_ran = true
-                    sendStatus("success", "Stop Trade Script รันสำเร็จ")
+                    sendStatus("error", "เหรียญไม่เพียงพอ รัน Stop Trade Script")
                 end
-            elseif command == 3 then -- Kick Player Out
-                printToConsole("👨‍💼 นาย A: Kick ผู้เล่นออก")
-                shutdownGame()
-                is_running = false -- ใช้ flag แทน break
             end
         end)
         
@@ -314,43 +302,27 @@ local function personA_scriptRunner()
     end
 end
 
--- นาย B: รับผิดชอบการเช็คกล่องและย้าย place
+-- นาย B: รับผิดชอบการเช็คกล่องและย้าย place - บังคับให้ Start Trade เท่านั้น
 local function personB_placeController()
-    printToConsole("👨‍💼 นาย B: เริ่มทำงาน (เช็คกล่องและย้าย place)")
+    printToConsole("👨‍💼 นาย B: เริ่มทำงาน (เช็คกล่องและย้าย place) - บังคับให้ Start Trade เท่านั้น")
     
     while is_running do
         local success, error_msg = pcall(function()
-            local command = getTradeCommand()
             local current_place_id = getCurrentPlaceId()
             
-            if command == 2 then -- Start Trade
-                if current_place_id == TRADE_START_PLACE_ID then
-                    -- อยู่ที่ Start Place แล้ว ไม่ต้องทำอะไร (เน้น ไม่งั้นเดี๋ยววาร์ปมั่ว)
-                    printToConsole("👨‍💼 นาย B: อยู่ที่ Start Place แล้ว ไม่ต้องทำอะไร")
-                else
-                    -- ไม่อยู่ที่ Start Place ให้วาร์ปไป
-                    local coins = getCurrentCoins()
-                    if coins and coins >= MIN_COINS_THRESHOLD then
-                        printToConsole("👨‍💼 นาย B: วาร์ปไป Start Trade Place")
-                        joinPlace(TRADE_START_PLACE_ID, "Start Trade - นาย B")
-                        -- รีเซ็ต flag เมื่อย้าย place
-                        script_run_flags.start_trade_ran = false
-                    end
+            -- บังคับให้ Start Trade เท่านั้น ไม่สนใจคำสั่งอื่น
+            if current_place_id == TRADE_START_PLACE_ID then
+                -- อยู่ที่ Start Place แล้ว ไม่ต้องทำอะไร (เน้น ไม่งั้นเดี๋ยววาร์ปมั่ว)
+                printToConsole("👨‍💼 นาย B: อยู่ที่ Start Place แล้ว ไม่ต้องทำอะไร")
+            else
+                -- ไม่อยู่ที่ Start Place ให้วาร์ปไป
+                local coins = getCurrentCoins()
+                if coins and coins >= MIN_COINS_THRESHOLD then
+                    printToConsole("👨‍💼 นาย B: วาร์ปไป Start Trade Place (บังคับให้ Start Trade เท่านั้น)")
+                    joinPlace(TRADE_START_PLACE_ID, "Start Trade - นาย B (บังคับ)")
+                    -- รีเซ็ต flag เมื่อย้าย place
+                    script_run_flags.start_trade_ran = false
                 end
-            elseif command == 1 then -- Stop Trade
-                if current_place_id == TRADE_STOP_PLACE_ID then
-                    -- อยู่ที่ Stop Place แล้ว ไม่ต้องทำอะไร (เน้น ไม่งั้นเดี๋ยววาร์ปมั่ว)
-                    printToConsole("👨‍💼 นาย B: อยู่ที่ Stop Place แล้ว ไม่ต้องทำอะไร")
-                else
-                    -- ไม่อยู่ที่ Stop Place ให้ kick ออกทันที (ไม่สน coin)
-                    printToConsole("👨‍💼 นาย B: ไม่อยู่ที่ Stop Place - Kick ออกทันที")
-                    shutdownGame()
-                    is_running = false -- หยุดการทำงาน
-                end
-            elseif command == 3 then -- Kick Player Out
-                printToConsole("👨‍💼 นาย B: Kick ผู้เล่นออก")
-                shutdownGame()
-                is_running = false -- ใช้ flag แทน break
             end
         end)
         
@@ -374,10 +346,10 @@ local function mainLoop()
         printToConsole("⏱️  Check interval: " .. CHECK_INTERVAL .. " วินาที")
         printToConsole("🕐 Action Cooldown: " .. ACTION_COOLDOWN .. " วินาที")
         printToConsole("")
-        printToConsole("🎯 คำสั่งที่รองรับ:")
-        printToConsole("   1: Stop Trade → Place ID: " .. TRADE_STOP_PLACE_ID)
-        printToConsole("   2: Start Trade → Place ID: " .. TRADE_START_PLACE_ID .. " (เหรียญ > " .. MIN_COINS_THRESHOLD .. ")")
-        printToConsole("   3: Kick Player Out")
+        printToConsole("🎯 คำสั่งที่รองรับ (บังคับให้ Start Trade เท่านั้น):")
+        printToConsole("   ❌ 1: Stop Trade → ไม่รองรับ (บังคับให้ Start Trade เท่านั้น)")
+        printToConsole("   ✅ 2: Start Trade → Place ID: " .. TRADE_START_PLACE_ID .. " (เหรียญ > " .. MIN_COINS_THRESHOLD .. ") - บังคับให้ทำงานเท่านั้น")
+        printToConsole("   ❌ 3: Kick Player Out → ไม่รองรับ (บังคับให้ Start Trade เท่านั้น)")
         printToConsole("")
         printToConsole("👥 ระบบ Coroutines:")
         printToConsole("   👨‍💼 นาย A: รัน script (1 ครั้งเท่านั้น)")
@@ -393,6 +365,7 @@ local function mainLoop()
         printToConsole("   - แสดงข้อความใน console ทุกการทำงาน")
         printToConsole("   - ส่งสถานะกลับไปยังเว็บ")
         printToConsole("   - ใช้ Kick แทน Shutdown (ปลอดภัยกว่า)")
+        printToConsole("   - ⚠️ บังคับให้ Start Trade เท่านั้น ไม่สนใจคำสั่งอื่น")
         printToConsole("----------------------------------------")
         
         -- แสดงสถานะเริ่มต้น
