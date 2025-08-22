@@ -33,7 +33,7 @@ local TRADE_STOP_LOADSTRING = "https://api.luarmor.net/files/v3/loaders/c9a580c9
 -- ตัวแปรเก็บสถานะ
 local last_action_time = 0
 local ACTION_COOLDOWN = 10 -- วินาที (ป้องกันการทำงานซ้ำเร็วเกินไป)
-local last_command = 2 -- เก็บคำสั่งล่าสุด (default = 1 = Stop Trade)
+local last_command = 1 -- เก็บคำสั่งล่าสุด (default = 1 = Stop Trade)
 local is_running = true -- สถานะการทำงานของสคริปต์
 
 -- ตัวแปรสำหรับ coroutines
