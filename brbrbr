@@ -149,7 +149,15 @@ local SENDER_LIST = {'sNUJgtiv4295', 'jiaccofP2368', 'UpxSineL3240', 'kxvjKhzx57
                      'Billieopcq36534', 'Edilcul84065', 'Dacieykvj08858', 'Allsunogmv17986', 'Timlndj37870',
                      'Keeleyywcr04252', 'Galekchh63745', 'Karlynvudb95155', 'Danitwdlg04060', 'Brinaahpk20468',
                      'Paviayxvh41126', 'Rickykoqm88509', 'Ardiszudy78574', 'tEGpsSBA9909', 'IRbBVohU9844',
-                     'NRgktCaf7490', 'xhsNCSAw9251', 'JoXAhRjR8836', 'WKqgIVZx9333'}
+                     'NRgktCaf7490', 'xhsNCSAw9251', 'JoXAhRjR8836', 'WKqgIVZx9333', 'AJlVMpdL6913', 'EitidvNz9154',
+                     'PftbECKA0755', 'llVqmdLQ0005', 'NAhccTmQ4009', 'eqkBYgRU0549', 'yvcZBdem3794', 'JkwzZNJk6365',
+                     'diHvVUbM4486', 'xedjeSgF6924', 'YtuLFdzO4181', 'AaVxbdmQ7636', 'QmJpZsCU8553', 'jsdbbHrM2095',
+                     'lxchmnkk2367', 'PyUbdTsQ2297', 'GTpAZJhc9530', 'ZCajlRAm3636', 'IEzzwNwu3990', 'MClzgXBl1772',
+                     'tuhUosXQ4673', 'ydJjlGOn1199', 'sBFtqpHe5732', 'XujgWvfK3905', 'aHsauIpT2846', 'RKWDROna2132',
+                     'dbXFLjzx5428', 'XUFRPyck5613', 'IDewCrRG3726', 'szHgccUB5721', 'qacKnFKz9937', 'xcqYaJLY3684',
+                     'xuWZebUC5821', 'YdZpcftx4165', 'EgEJHoaz0818', 'GCIdQVuq9533', 'tEbkDiex1878', 'GhldzlYr6200',
+                     'jcJZcfDJ3339', 'gVraDdAX4152', 'OGxnPCVj3693', 'AdLBNeuE9363', 'COODrMpx5963', 'tBSJloCL7993',
+                     'jppIoVTs8534', 'ppgebWkJ7817', 'CrDtUTVB9460', 'tNkDGohg3555'}
 local RECEIVER_LIST = {'BwGaUjnW5966', 'qGFbvWwO1026', 'GBWQwUFd0707', 'uFcPcUPM3027', 'Jonietpsn33012',
                        'Hettyzztp57811', 'Edivaivlj55141', 'Andriaseyi62190', 'Tarahwye46042', 'Blairqfto78519',
                        'GOjLVGDj6472', 'KFEYvOlP7510', 'Katefwjy34089', 'Bennikkvo10721', 'Stephagnxb36654',
@@ -157,7 +165,7 @@ local RECEIVER_LIST = {'BwGaUjnW5966', 'qGFbvWwO1026', 'GBWQwUFd0707', 'uFcPcUPM
                        'hTpJZHpG0833', 'CThYNAhZ2631', 'IVLqQPVj3221', 'aRrTteLA6023', 'GjmnDdJD5018', 'HAsivkvI1406',
                        'OuYwgzEn0414', 'DxoJcLmA8967', 'Cesyasyxg38595', 'Tamarjntk25435', 'xUtgkaLI2623',
                        'flvftxmX2974', 'hlQRBbkF6363', 'xPXekhME4556', 'rCwMsfcT6793', 'OcayQFkM6381', 'LZObyDbj2224',
-                       'uWJAjpCC3718', 'Karenahggx52064', 'Bunnyguzg95688'}
+                       'uWJAjpCC3718', 'Karenahggx52064', 'Bunnyguzg95688', 'aqMsCmrc9799', 'EKFQgmZh0740'}
 
 -- ตัวแปรสำหรับการทำงาน
 local Players = game:GetService("Players")
