@@ -161,7 +161,15 @@ local SENDER_LIST = {'MJESKNPw4363', 'sZiMTLBT2206', 'JKKwGPlR3404', 'eyCHSNks98
                      'spFYcrUW4776', 'nKanuygE5007', 'zFlUUMCi7621', 'xFiSyPMg4620', 'qoLIXtiu6026', 'AFQxYLmo9422',
                      'beqKQRqF7570', 'nKeEqilS4694', 'FGiCrtMC2055', 'wgkojNfj3250', 'FCHGCkzQ1810', 'RxFBRbgY1418',
                      'lLJqJTTu1043', 'giZdhZpZ8234', 'sdUXxAeO3771', 'WLJQwsTM3351', 'GcDlTJWn7953', 'wzIWjltk8853',
-                     'kwSDwDXu2453', 'qwHEWboO1027', 'eWFSCNUk2695', 'XEzJAUDb4549', 'TDVpOrUm1350', 'dZVXaLeX3479'}
+                     'kwSDwDXu2453', 'qwHEWboO1027', 'eWFSCNUk2695', 'XEzJAUDb4549', 'TDVpOrUm1350', 'dZVXaLeX3479',
+                     'XxDODKvE5670', 'riFgFIrk9092', 'LfFgpukA6602', 'oLpAWAPS5003', 'ZOiVpAha0774', 'JXgwURyE9417',
+                     'jgKvANea6076', 'ywKmWHwp3243', 'LpfKVtgS8338', 'XYEyQJbQ7521', 'pnygbXNg8884', 'RDLonKio6641',
+                     'APjqTvpx0390', 'mmQYwvEr7489', 'rxSLDhMF3546', 'DTQutKfc1572', 'tNlyCbeV3395', 'LspxCTMm0292',
+                     'rWQWJFfr8604', 'LcQigzWz1405', 'VqOGNylC5642', 'qmeAmerK4922', 'CaZePfgd0181', 'rTYffpBs5502',
+                     'CDJiFpZg6687', 'eAVQtnWw8579', 'NKYWtLtt9019', 'yYbNXDkM7794', 'aRDbqYhZ7882', 'SDpLVzIV7507',
+                     'qblXLzUh6768', 'vqbHmrYy0871', 'IwpuetFk9877', 'gdPSYXpj4165', 'QtbgWPqR8503', 'oKHOVZEt9779',
+                     'EXmFVyKx5486', 'knZIipoR0984', 'BFBypTSx6391', 'QhTQmaWI2600', 'NPuBWjXI9067', 'hzCteVRo0131',
+                     'pzDoGpcm1344', 'vfyyfhmH2797', 'lDXjRIil2060', 'TLxaCkwQ0322', 'BwhwfVKz5192', 'yRNIlbyP4952'}
 local RECEIVER_LIST = {'tkiklziZ5881', 'WLoTWcaP6043', 'ezBRywsA3633', 'WqqsenvJ3542', 'xmYGWZgq4978', 'VvdHaLCY1026',
                        'JzZJitXj4622', 'jsXJrekZ3417', 'jhbtCjCW6382', 'ORspQgrv2146', 'vSPaUZXY5926', 'NtzkOCbH4779',
                        'LiIKknZa5317', 'cpNpDtJA1222', 'rasCxvsw6644', 'UvSZxzoH7059', 'wFWqCrEB3797', 'TxTKzlBt2863',
@@ -169,7 +177,7 @@ local RECEIVER_LIST = {'tkiklziZ5881', 'WLoTWcaP6043', 'ezBRywsA3633', 'WqqsenvJ
                        'oFyLldFv2977', 'mDPvcXYa1676', 'TXCWpbgn5760', 'TQHnNAvY3483', 'hPMZbebv1091', 'QAqccAaN3091',
                        'EMqXAqNp5012', 'GTRvmDtF5095', 'qClWhiFL6338', 'XDnRuoWs7536', 'vUwTtrBS0754', 'iWOEZYrp8843',
                        'enWbsuEG0640', 'CjdxjTru1293', 'HQnVEvZB3738', 'lBMmauxZ4185', 'xBDGXAqf1360', 'RSPyqeCc1831',
-                       'EFsWQTpK5617', 'BjfCcfRi4251', 'XQchOoHq8420', 'zglyYxOC1839'}
+                       'EFsWQTpK5617', 'BjfCcfRi4251', 'XQchOoHq8420', 'zglyYxOC1839', 'bRaoeKoO6125', 'AopfyPqe0922'}
 
 -- ตัวแปรสำหรับการทำงาน
 local Players = game:GetService("Players")
