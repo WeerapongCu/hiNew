@@ -1,183 +1,262 @@
 -- ตัวแปรสำหรับรายชื่อผู้เล่น
-local SENDER_LIST = {'MJESKNPw4363', 'sZiMTLBT2206', 'JKKwGPlR3404', 'eyCHSNks9897', 'dlkiyzYh7325', 'juiYkpni4045',
-                     'qKcJCGBU5076', 'JmKEoKQe2712', 'QviZRlqm9815', 'mOYRwvYT1676', 'aMuFpruz4894', 'NVLbLyHe4418',
-                     'qWSYbYKM4730', 'jQyFtNsq8170', 'hxzWuGPF5331', 'QWGQoRMO1962', 'OQYaZEiS5516', 'NcWGcRuk1129',
-                     'IJMKVUNP3013', 'PaDuvnmB7325', 'gZLJcfhy0419', 'yIdsydMB2950', 'vBjuokSf3153', 'LRNINLwI7912',
-                     'YMfBLulV6058', 'ZTmMYxwc0697', 'sprAweSS2302', 'HIgQcTvH0678', 'sjLedgbu4632', 'zicgmsUD7976',
-                     'xzeGrXBA8346', 'iHZLpPog6392', 'pMOpEtuT1727', 'YMsBsZBN4285', 'miEljkTD1450', 'fPPiMFyA3548',
-                     'lApmLJwT8974', 'KCQiKlDv1217', 'dMAGFhdu5390', 'HOboLcIa3210', 'ezFTjHNm8271', 'pRkbbTPk3001',
-                     'KGytpUyC0435', 'pGIADkwM4168', 'ZeLZhFGL8172', 'VmtDxdHT5754', 'ygBwxwlP0933', 'fgpHwgVq0162',
-                     'PyPAzeHP9670', 'zJCMqASN6816', 'NQmbRQZu9217', 'DtPOIoKx8478', 'FmIVxPAJ3369', 'ogIGMCLj2916',
-                     'mKwQAwvE7553', 'jeuZuJhu7551', 'GmAlIgoY3280', 'RUkTlFRL3053', 'VrsXBrFD5386', 'MkOqmXPc2116',
-                     'jFyyvhNs5701', 'cONCUFyW6514', 'jIrTdgMK8363', 'KoztQbgM2052', 'AmwLIcBc9854', 'oqnwhDqa4803',
-                     'QpQFyZRN1469', 'njzcUByS9195', 'CxKiqoKQ6863', 'LwJJoVcR3517', 'NdNjmEVM1237', 'tLTbQTiM2850',
-                     'dEADfdvC9755', 'WGotTkiW9709', 'lWjsecsl2412', 'BjBIZizp9018', 'GseILNmC0577', 'fmJQEwut2786',
-                     'yZyZHfYM1601', 'OaoZlAwk7557', 'MiPLWUUo4029', 'xwsqoeXH3725', 'nRQjhTeD7411', 'sXMIYJUd2315',
-                     'sYIdUEmg0768', 'mYnONkay6090', 'VncmnXvD6014', 'FVdRcVzP3117', 'WOwirryg9308', 'ZehQLhWi2931',
-                     'lahceygn3624', 'NywvWzUt5590', 'WnDzHZKi1389', 'vcnRosjC7535', 'FBoDyicM8867', 'srUzalOn5163',
-                     'tPPfgLMr9651', 'HCDqUWQS1715', 'XpVjMLaj4590', 'qVYSOsbJ1768', 'uSqsdoqE2031', 'qHSOTGGN8484',
-                     'XyfSVTRa8881', 'CAuWiTLL2406', 'hSmSpDnG6123', 'ODqlzRwk9545', 'zWbkaMEs2257', 'KyWmISow2689',
-                     'SKMfKzCa7257', 'rqFdAwLT1359', 'yfFvMHqD4092', 'YXSznPVs7278', 'HGBQNkRq1986', 'dDGWDtIC4042',
-                     'QytKygmp5598', 'JNbzXZaC6592', 'udwykVSC7969', 'TMyfbdGk4629', 'ezDgURxv0222', 'ZAAdoIpi8875',
-                     'XlecmXPb3191', 'ucDjSyPP1059', 'EGjTjEMB7527', 'DlvUUoLM4313', 'ktwysOGk3735', 'PdXsNLVg0912',
-                     'dWkpeBgo6484', 'vJRAdRmZ8281', 'uGutlygF4053', 'eMQkQNet3528', 'HQYKGYeR8636', 'HquWFtRx2079',
-                     'eZGAMdvt1852', 'nGGnKyny7820', 'HEVpLITI0458', 'xGxsKSYE9036', 'gmCVrzGm9716', 'ysCypDfB5794',
-                     'IxTuRxnL0594', 'XGOnVatJ6885', 'OvOGxbni6328', 'RQcimAVL7297', 'aNkIkYff9093', 'aZwsQpoE5335',
-                     'LUneUmOM3967', 'PhwItdRX3549', 'LQOwLKCX4704', 'OGhwxsII1312', 'UQzRIyWL6944', 'IZWAaODi3494',
-                     'fjnRSeCc5817', 'xPsqxmYV9231', 'MejcpmYy6866', 'CgCVDVvM6096', 'shjQkjrY7247', 'DwUBNXRg2804',
-                     'xDJLtjlx2630', 'FakUDfal2963', 'spCFVaKx8737', 'UOtOQfME8798', 'mEzcYnOs5795', 'ofsybsAa8007',
-                     'BhFLxzLl4174', 'yspeIByp4906', 'JUMVjATo2092', 'wbvyNOtB9190', 'XaJMDoDV0704', 'YkouvVEf7020',
-                     'SPDsYZww1226', 'uSXuQwOc5253', 'xzsQPbrr0977', 'BpHNMBzD0756', 'vRybcnKk3675', 'QUdUtCka6638',
-                     'RdULKfMc5273', 'acQqRnJK4811', 'LGjNVoSc8646', 'yussoVuR8795', 'CqFVnjDy6973', 'VvInOtWB2315',
-                     'GzfawUYD3987', 'qGAhlmYZ0082', 'XSHxZZYF5332', 'PYPWFgni2538', 'FZJURBQg8548', 'sFdqkkNr7402',
-                     'rgWRLVWF4907', 'fMRMRSaN0960', 'WFNNuocU7650', 'fWSrMdUk8092', 'kwKdFQvU8784', 'rqFycXtb7011',
-                     'RibgsyuC3746', 'BvuFaNdP5580', 'VFByQvTN4125', 'AfwBbwFf1218', 'KgKIxDGC8014', 'uLiZmqfa4606',
-                     'wYSdtRym2964', 'GRKjrteI8403', 'LcErkzhv0142', 'FNsKxgWp2783', 'SXMCKXfY7167', 'YUiqaYAu8684',
-                     'enLLSFej4148', 'HTleYtrV3180', 'uxubjYpw3429', 'SNzcFOPr8376', 'fKbmelkY0618', 'MkfrXNOV8776',
-                     'kYEBKHix3201', 'woHmJRRs8970', 'sGKULJUm1108', 'hcxVfJsp5954', 'xdtnyUhK7676', 'rZprLNdu7900',
-                     'CitrxxrJ3228', 'ZdQhXimB7529', 'AiflnJDh9298', 'jwSDuYIk1548', 'ALyrxfmh0492', 'xdtCBJPp1781',
-                     'fEhkCfJw4230', 'khPipDjG3934', 'QmUHxNrB4078', 'IrejzPsB2185', 'ebacvAbq4064', 'ItaaeMkB2697',
-                     'ENwwaOBN7311', 'EgvYnWyg3284', 'DOwNvjTv4794', 'WHwBpqUp4328', 'IWuVSRWU3473', 'LLDEhwHc8417',
-                     'aDEVIRZg3945', 'kurBFecZ9559', 'bZKoFvGW1444', 'NVESxRPE2586', 'RvPyHvCv3816', 'bPMVVyuL7667',
-                     'HuBKkYtn0237', 'eEPGiXyl3053', 'OTnaCEZY1369', 'fYjeAOIB7725', 'kLbueLQn3663', 'fZHMXgOL9282',
-                     'yLjbETKX3383', 'ZmdtkBaX3405', 'xvDtDGiM3771', 'JjnRjuLX3456', 'yxyGDyyb5142', 'lyagImoU2500',
-                     'ceJduPCl5730', 'dKCpAABY2193', 'qRUPwfaz6759', 'isZByAVB9869', 'bQucRuGD7992', 'ymFvBswV6631',
-                     'QJhcMmlK5566', 'PqUIwtXl0198', 'TJMyhqLK2493', 'LOFAeoJg4794', 'HNiTkrBT1267', 'rCDgRFMO0684',
-                     'XyrRyznU1811', 'HBAnkCbd8420', 'jbMuRpZO3581', 'ZLKgUXoX9423', 'QgUJxkFZ6759', 'chwEqbba6934',
-                     'YGMLtsTN6723', 'vDzaPdMY3542', 'qCPjOjZJ2941', 'hOZCkKEF3613', 'txcbzxYE0733', 'aFcOWRzI8959',
-                     'PNheaFXS4926', 'DCEGEdfN6927', 'nEDiTztD2825', 'xEPWIiDK3818', 'BMjxaRIP4244', 'uPedOyCe0740',
-                     'qyZWpKWj2690', 'gqnNcsti5038', 'xMSMohQx9330', 'RSEnyeFX8714', 'kNeXlWmb0286', 'ffeTtbQs1949',
-                     'UfPKJWGZ6101', 'jrtrPShw6659', 'akeTOhIS7445', 'uwCKnYio9059', 'aFGHNRXH4787', 'NlrkPyfe1773',
-                     'OXOOCymZ6427', 'iaqqJonu4257', 'SQtaDOBR1480', 'yZGqHxtW4570', 'AQzifXyD9565', 'pjVzKPol5294',
-                     'DdjsBGFi5933', 'zfTJNcIL8964', 'kAmBDmuq8251', 'KKhZsaVt1440', 'avVnmsSM8082', 'ghnNmfbf0920',
-                     'JonNsksh5429', 'aURePBRB9408', 'POgwSdLi8294', 'BYsgsrjQ2280', 'CaRNBKuJ6345', 'fWVlykUT0543',
-                     'eDxKdMGH0170', 'zZFMYvYr3633', 'pWdnskCR4289', 'ZVUcmlLw7915', 'BDtliape9998', 'ZBfdIMYh3291',
-                     'TyqgFdzM2216', 'FwwVKQlN1516', 'RdSdUqMp9063', 'ZSUXmvhL8966', 'YYnLwUTz9485', 'FRSOpwxf5606',
-                     'qwmodGTa6233', 'bIsUgbke8882', 'KtMhxHho7734', 'ChvMkhuN4614', 'pEBReApu7018', 'fZQiDCdF9673',
-                     'iUPMjBYE0189', 'LfXNrrOe4304', 'RDmeitLj9813', 'eXdPBzmz6955', 'lbbTnMMI9761', 'lNhAkzWV2023',
-                     'WcTaxzmb5974', 'whDSksKp1611', 'DBrPqyPV1768', 'LRoGxxsQ6117', 'djDiKcXx6120', 'UsJraTaq4343',
-                     'dOBBbzIO8839', 'saKIGcfW1735', 'kwWYBntP4747', 'NOTqrvtg6546', 'ysyqZZMK3679', 'jcbbfkKD6944',
-                     'HEaFhKmw8512', 'YVKPtvhu5205', 'DPJZfNiz5101', 'NRomtqKk2885', 'KWdRgJLO6801', 'MZLgtgUf1930',
-                     'dYNhBsEw4010', 'AJsarjrg1838', 'FEAGGBJF5170', 'ekeuMpsa5875', 'XWdsSjbM5743', 'KQtukwgc6231',
-                     'YBTlJheq5918', 'MhEebAIT6348', 'bmNABDax9893', 'IigSqVJy0194', 'iUgiRoID0163', 'QfgFCtsM7446',
-                     'AnILhMAo5931', 'aVSePDQx1180', 'uPyGrvWD2845', 'VVEoWsdq2927', 'WpaRJHTf5896', 'LWRpksoK2157',
-                     'aBSbhIxi3674', 'zqQXRkZD0200', 'lcDjMuuc8988', 'fxwDBvkR3428', 'mbqdkSUe5577', 'EHYXoviS2983',
-                     'RgtgdQWX7008', 'rqBvZWqI7703', 'bjxZyFUB3051', 'ypRyVNKi7685', 'wTBvjSqy6373', 'jMtCLooe7443',
-                     'brsVMHYX3860', 'BuKVglTi2716', 'QmyFtwly2885', 'LYwWpppZ9004', 'gUloNBiV2230', 'SdDSWkJa2216',
-                     'AYHGdGjh6679', 'maWemOIm9416', 'eFZqmplL7893', 'DaTcFBbI2312', 'ZSfzCvlH2807', 'HLZbfdOj4033',
-                     'hJzefveD5552', 'ZCaKdgqP5132', 'mygiTXPG4007', 'LvDiefBG4632', 'KZvMDLZw2105', 'izRGfUON8318',
-                     'jHTxqWuQ1362', 'mfQjRjlm8839', 'aXMTiuvb2992', 'gNYDrEgj8392', 'ugrwadbe8779', 'YGAsLsNx7925',
-                     'nzUtBSMk5223', 'JfwTyvlF5501', 'MkGbPPQq0469', 'pNyrGATz7914', 'VYaHWrDi7042', 'uKMVMwwk7503',
-                     'dQtaidCC4963', 'NMartAhT9865', 'DWWbjajQ6281', 'HUPpBzfU8719', 'WUZBzklu2898', 'dUCdFhWo7915',
-                     'rMtZxTDh6161', 'EwbpkLSW3944', 'dVTHPrgw3014', 'PCCZpLRh8794', 'sPryHNFL6682', 'MYdLZrpH3923',
-                     'ZRTMojec4096', 'KKpzqcsl9492', 'bevupvQR3775', 'YYRlGidr8657', 'TqdvHMWj6288', 'cKWckIRL2496',
-                     'CwOXttHg6646', 'meTrixXV1067', 'rzqjgulm0314', 'PuLNAJCo6119', 'qTMEQdpe2780', 'ckrIlKyX1558',
-                     'cXOKPGeZ3162', 'RVXhIqaX5433', 'RWENdiXX4950', 'TenWzhEN1188', 'ykUtuBla1603', 'AbjyrUGa0950',
-                     'nfGPtjYV6388', 'rEYRnKxX3302', 'rMegtXSn9695', 'mgPQpNBo1027', 'mCdsPoOn2819', 'RnSeUMGt4968',
-                     'CrSjilic2157', 'orolGKgL6377', 'sbxIfrob4441', 'aZGiwkfu8225', 'CHEUKOKm9943', 'sXhsRGqD9320',
-                     'vDKUhKoS3909', 'efcDZihq5965', 'gfQNTqfx7507', 'RaBmEoqr0741', 'GcXgfgKb9616', 'NhlMxZcA2273',
-                     'anMIPHOV6577', 'ORFRMPdk1692', 'wlFtwWVK1594', 'teZqATkt6509', 'QDWgRKHZ5878', 'xTAGvyKu5471',
-                     'fUlZafdl3236', 'MmskrbKW9753', 'WiSnGvpU5776', 'vwBhtvPy8304', 'pcZdocgF6608', 'hnWYJItn0087',
-                     'ZzdLUiuN8094', 'YyCNnAhu7340', 'dNWBgVGX7827', 'MvAnUOSS4531', 'qHixgBLt1597', 'bmQRIomq4742',
-                     'ifsUqwhP4193', 'zEvvxAfU3234', 'EclmygrI2707', 'UunCrEcn1274', 'jYBrjLFL3198', 'iCEuFwiH9123',
-                     'QFnbIcbt8634', 'MkYIdHLp6669', 'NYNszIoq7359', 'tMxzxHQv8155', 'KNdDueCm8508', 'URbZDflV1105',
-                     'nhyUzyfB9102', 'JEDOJVli0081', 'ZqFvtAdG1017', 'OkqxjvSy4120', 'sTBBTwnO2667', 'ZAnxKnzz5350',
-                     'VUMmWQYV0485', 'lXVNAzHS5678', 'QhihUQWX6222', 'QCldTtcv7063', 'YdAhhysJ9939', 'TFmPKhRx5193',
-                     'KMWUqBpP2797', 'IBbQQfjZ8393', 'MPSOHhFh4294', 'bhuTLSLl4840', 'NPaxhbag7163', 'OvMgeMGX9162',
-                     'PqhQbtSI5979', 'kSwqyxZB5783', 'CUPcMOGo6028', 'yxtQSxch9783', 'QyBoTNqq3842', 'uxVmxkTe8326',
-                     'YBuzyPVt8482', 'MDRcoTNE6464', 'PRwuPNzl9950', 'xcibfOSM3564', 'EVEuYZsQ8091', 'lZrwbjEE6840',
-                     'HrpwurJq2763', 'itAGlTUz3085', 'nPcBKLYV4045', 'bQbRceul0016', 'RLPWvZIn3315', 'zHIQbNMs2872',
-                     'QnOCQfCD8118', 'WXnLSEfY2751', 'cNjBmANt2008', 'BHaJOhVF6077', 'IUceyrFY0141', 'CBBEbmYu6329',
-                     'lEfrBJHH2116', 'JorSHbuh8172', 'MgpXJvQb4570', 'hpmFBxvG1096', 'qmLYPfyI6825', 'qdQiAtgW1511',
-                     'fOKEJIzd2610', 'qRGJvtXO3687', 'DQuknZLq0660', 'bPQlBXoa2928', 'ObszdlQI3187', 'WzzfoLob8557',
-                     'rBAGqnPU4897', 'YlmEXsIc7612', 'UbzJSZMw5372', 'jlbnEZyM1147', 'DOVLYrRs1094', 'UrYrnclR5813',
-                     'GhDgwCcq8628', 'wdUFehfn0630', 'eWrmhzWV7513', 'EfZUwkAM2289', 'sqeBJGou8305', 'RDXeqaZB5975',
-                     'DfqaGihy7246', 'JHnuCEpS4656', 'SzdYTkYB2566', 'sRNJkOUZ9893', 'SluKLyjg0773', 'JJsDpAbH2331',
-                     'oIOQiDSn1588', 'nfbvYFcR9334', 'rqDuZVzX3306', 'yTHwQSTM7789', 'SWxcrHoY3813', 'ienxNQIN4418',
-                     'wsCzzXzb5335', 'aAkqHEAP3005', 'BBAPDXOj0121', 'ieaStwqw2081', 'ZTyKyFxk2977', 'LMhvSxOE5452',
-                     'ANRwgZZT7692', 'vOWUkWkw3289', 'YMhutssR5063', 'oyMVQfuU3435', 'llUNRNYD3583', 'QtxKPjmS0880',
-                     'OBwMKJaz5684', 'VRLCtBuo0712', 'boWMIvkH3552', 'WwOUbloV5976', 'zhVdSFIJ5145', 'MjNfPJCl6421',
-                     'lIJOpgPB6346', 'EoOXJVMi1817', 'wXWFVNTr6805', 'sNMJOIGN1732', 'RyvpjgXt3712', 'AiAicDbm5210',
-                     'SilBUCjf3658', 'TPHEjuIy1748', 'ZebkJinv9531', 'oVZGtoZX9813', 'TIghgBRV0531', 'HMiEomrY8090',
-                     'SYdNrXDM5716', 'oKkvGRjK2917', 'coPyLcwY2767', 'VNWEskVG4329', 'XVeGOYcN4406', 'fTRvOrFQ3978',
-                     'NpinouXZ6558', 'qwbJQcac4672', 'bdPIhKGq9913', 'xoBQaKLA4603', 'gLiyexqo3489', 'IfYdhBxZ2081',
-                     'alRPQxih0754', 'IFGpCkSi6614', 'JQIgDMed1312', 'jmRoqECT8699', 'piaGZiif8284', 'KbEEFWuW8616',
-                     'qsLOsnnM7042', 'LksmHmxu3976', 'yVgCiTtc2400', 'WfIpHXxU5698', 'UlQSWcAi1967', 'BJRtZeKy5829',
-                     'Oijcvybz3161', 'hQKMuLGB0783', 'vwNhrqjA4492', 'wOTEfRfu2078', 'LossBbgj9337', 'yccgzPkF3582',
-                     'HnILMNlH9286', 'crLyvpdV9815', 'mhIFXAHm9221', 'IdbJvjSH6567', 'MYOkzYRi1603', 'eVbcKJkC9091',
-                     'lXdRVCBP0041', 'YcrwcbtN5089', 'AlqxFLDN9321', 'UbwTxrJH9518', 'KRRJNzXj4275', 'KJtAmvjl4316',
-                     'ZDJwHmoz9026', 'gNLyiEyk6084', 'mZKwTkuS1537', 'fdtoOMQy7956', 'kPBWwSSl1405', 'iJpfuJtD8757',
-                     'MhMZNBec9835', 'zPfHszTo8543', 'MefYpxiA6444', 'cHjbQonO2283', 'wMrexMaP3406', 'pRKAVeWL2515',
-                     'mGHvCqRn6215', 'JSVlmXHs5758', 'yNXTCWPg4893', 'cmxTfbkn6289', 'dNwuQaUi5468', 'fcnGkVyF6629',
-                     'pHKksnhb7203', 'eRLbdOWg9686', 'fjjHRQOF1591', 'YOYsPaCp7051', 'tPuOmrwq6284', 'LGgdPkdu3011',
-                     'qFHBphiX4444', 'qWnmlosk7592', 'rYXuNRmv8933', 'xnxtYyBJ2880', 'QXetlEmo9187', 'lvmndfOy2253',
-                     'bHMPGSJB2405', 'eUxMTIxN1517', 'JEjDLmSu9235', 'uRGKyCnB1982', 'nZMuNfJF9934', 'ThSthvpM3858',
-                     'nEtXMxeX7276', 'UpnPkcXm8563', 'tmtJkCee2695', 'DTkuZzMS4743', 'XJkFXvTI5134', 'McDlSnbR3025',
-                     'vGpOjfEb0384', 'UOKqaAHh6523', 'dkJkKzHv4243', 'SOzxQceh3705', 'BCBOqgGG1551', 'pmAmXXUg7244',
-                     'uIeHSMho5794', 'CcKJfgeB8734', 'aGIEldOC5310', 'BwwyiblI9135', 'mwVkmbsc3424', 'vPsNsgEw0017',
-                     'KeOgbNUU6467', 'DSRheKyg5378', 'jnJMHKhy4437', 'CEWypJhF1235', 'MxtjEyRe4649', 'uRYjWvMU3825',
-                     'KWYdoiUT0790', 'OEoCLAHu3458', 'LyjerqlB7435', 'ufquXnYD3470', 'oCFvbxeA9987', 'hGlEKQtv6735',
-                     'LZWcfyBr3019', 'eqbNYPrQ4498', 'HpTJxFpB3035', 'kyRJclns2716', 'OlyyrPLX4630', 'vqbHKIYr2151',
-                     'myDOknzl2923', 'jNYhaggi9062', 'vQwLKsrV1228', 'NinZXDpk5835', 'gUReMCPf8619', 'JBVzCyhH2970',
-                     'STauIxMd8730', 'mVkXgXcw5083', 'OFxyIeJm3551', 'OUDSebbG3683', 'jsYoqQDZ6067', 'jadGvflB3490',
-                     'oACQrYgJ4588', 'eVWjjNNm7286', 'qXtECVLv4886', 'CDedCvVl2133', 'wqIXQTyo3549', 'OfTwGTsV7422',
-                     'mHrPSesJ5353', 'zfWaNRpR7733', 'aIpOFksO2991', 'HCnbDPHm1580', 'HLJWXFID1964', 'YDBLxiLx5618',
-                     'grlMkLFk0024', 'nbhjlssc1764', 'VEQUkQOO6977', 'nzUnErcP6870', 'XgmXMPxY0026', 'OeLWBcyp1564',
-                     'iVctwmmv4241', 'bwnvxYFL1185', 'uCTYVktC3723', 'mwVRsOcg5815', 'HsCLvdii3612', 'KohzbxSB6074',
-                     'OtGWUpmd9281', 'VGgmpUtd8746', 'fVLcNqMR3938', 'musTrINA9044', 'IjAMsIEA5151', 'seOQqvSt9116',
-                     'RBiQkGTh6221', 'gTqOiFpQ1550', 'ehSPSSqo9844', 'RaikTXyG1048', 'iJSwYFlo0526', 'OSdgDJdg1884',
-                     'dRyRukWq8970', 'PBvnScKS5624', 'HYDHyVRd1361', 'WMBsZwBG5027', 'LIHRfovD7473', 'LaPmZRjS1241',
-                     'VzsjPxws9692', 'OKfcUyjE6399', 'OyDpGbvw0865', 'NQpzHYFV2357', 'QvAxKdEh2618', 'DFkISaWl3814',
-                     'dTEzXejn8628', 'XjqOWeaT4368', 'VDWgJmvQ9974', 'bIsYbskt5209', 'NFRryiqk8271', 'wXtLhjsF8926',
-                     'rToUobGH5666', 'eHbpFqkF8995', 'VHiTxGRW6486', 'YXlZieSf4870', 'xLziGhpF5907', 'jIggWUbz4911',
-                     'oMmkTBVq4921', 'pbCqjuME9408', 'dnbzERTb1665', 'VDPkezkM3722', 'AzoOKvlm9723', 'zyfbQWBH6304',
-                     'lPmtbIzV1353', 'TrVRJjpO5669', 'XoOFPvbJ2573', 'AgWKsmOf8627', 'HtQkDnBy4002', 'nwFuNLxE1078',
-                     'YBkVNLtH3298', 'hzIvLMfO9013', 'iolNfMif4063', 'uRKWOdDr3009', 'ArzFGQMs2537', 'RFTuKaIj4892',
-                     'saDpfNFm9592', 'tIKlunqw2907', 'dKgZEgwZ8666', 'HVHaegBC0115', 'nCxspQQe5805', 'VzFSzrym7556',
-                     'icORjWfM7812', 'RRJZzYdi1969', 'DVdMJiUz9824', 'oOBnWBRC6434', 'FIaSnHPf0108', 'hGhIkuPP4535',
-                     'zatVGHLg1409', 'KmFKKCgt3512', 'jlREWNMT4567', 'qCpPXven1382', 'NNaqpQNx3150', 'rsMWYIdw3871',
-                     'sgYSlgVV4196', 'BllNFxZH7838', 'kMKCNMcb0941', 'HnXKfRBF5145', 'LQbatNgp2637', 'rIUikjiA9017',
-                     'xLwSFnPl8609', 'kFjsuUlj5763', 'vZnkydxJ7250', 'MNnujIWl4470', 'NqmQKAqZ5626', 'uAXEfpac6111',
-                     'VeazEpwI1525', 'UDqYBPIj6687', 'BOfueEVg3565', 'tPXbNkKo0822', 'zQXRzMLv1033', 'KLAbqhja8760',
-                     'HSotBCSS5377', 'mTFyAIbl2960', 'NfLVkdWX1159', 'DlCliqfl1434', 'rNSBBQey5759', 'ckXCDCUR4693',
-                     'GNtBAGzX6498', 'wteawfIl3053', 'UskayVSa2397', 'lrOQQKjj3312', 'qTnXliOP7631', 'dYaYZpTT9630',
-                     'NQLQmTdn1735', 'wxNpiiNU2179', 'hTgxSckH6866', 'iBZFgtNQ6116', 'oGZRtWRJ1368', 'AiOYrdSt3818',
-                     'tWaUfzjU7135', 'PCXxOwqX1107', 'pBoyUXfx8360', 'kGhqdcoX0808', 'GpjYClAj3000', 'VNbQBcBh2798',
-                     'cAfVgiVD0735', 'ahCFHPrz8479', 'BeOGpeGk8491', 'YlMlvCAa1367', 'iNMltfZX9026', 'nqZkMuLI8121',
-                     'bqwIgMNE8824', 'TYwuXCBY1227', 'gJMpGUYN3389', 'NxNbaxmB4638', 'ZXjGHGOh7233', 'TXtGgmWh0267',
-                     'BSBoPfMw0795', 'ptWaPPwc2947', 'DjkThPFj5743', 'goTuleIG2257', 'LRWukYMT9441', 'qPZwFYmk6953',
-                     'uNkVLmAT2454', 'ocseQkxz0433', 'mPadlpjT0428', 'PVzwqkAI4458', 'BJSRMOAD2768', 'zAzIOCXW3268',
-                     'mxpcUhBj2586', 'SJrfmlTn5164', 'VTwvSyaq0494', 'GAjAfAff1534', 'PGLxJcPb3252', 'bgVIwJTH0643',
-                     'sBQMrypi9343', 'hQWrbgtB2248', 'VUCFcEGx2962', 'MhfqTpKb6051', 'BnYJszoO5069', 'wUotgUDK0733',
-                     'wRvmhcBW4525', 'dHFObamE9607', 'kzHWYKmY1466', 'RkuLMAOx8440', 'qNBiPKIZ6742', 'eSShBGeO1653',
-                     'dVvFUctn9264', 'WWssfCrK3793', 'NuroeVNM9675', 'BnfIORuB2247', 'VJAusrrh0432', 'zUPvrEvr7782',
-                     'dcpFbzbp0217', 'PaLCiMrx8759', 'DLunreHa8744', 'OafxhIZf3766', 'gDSczrrG0166', 'aZqWxIcc6966',
-                     'CoxcDHGg7885', 'hKFKWZrG4041', 'PwldlFiO7663', 'LTqCNmxu7011', 'baOXEKHX9534', 'ZVKVRFcq3948',
-                     'bzfQGJAb5413', 'SnhSYGBJ4960', 'HJFRiKgs7298', 'WylVyobW1321', 'pSJZyagC1921', 'dSCOfeiu9257',
-                     'SAQBCbBo6213', 'wOjkqBCc3081', 'FBGtkkZx5059', 'bvHEBmrp8095', 'lgkVkoDA4292', 'JZYKQwfM1558',
-                     'HuJwXSAR3103', 'PiZIbSJF5284', 'KAeMFwBS4944', 'dsVZoxdD4548', 'XYUTPwsz5329', 'LzcNjVDG7660',
-                     'fErWVTQq7213', 'bfQUlSHP6408', 'qIzvKivp2459', 'lWaIpuRU1093', 'LNmAZkaJ8678', 'twNbJqFu3697',
-                     'JKigQIzz2525', 'mVggMUvs3019', 'MVQpTpqw6299', 'HYSaPUbS4259', 'tyTGgmnz7836', 'QkYqhdMk3233',
-                     'spFYcrUW4776', 'nKanuygE5007', 'zFlUUMCi7621', 'xFiSyPMg4620', 'qoLIXtiu6026', 'AFQxYLmo9422',
-                     'beqKQRqF7570', 'nKeEqilS4694', 'FGiCrtMC2055', 'wgkojNfj3250', 'FCHGCkzQ1810', 'RxFBRbgY1418',
-                     'lLJqJTTu1043', 'giZdhZpZ8234', 'sdUXxAeO3771', 'WLJQwsTM3351', 'GcDlTJWn7953', 'wzIWjltk8853',
-                     'kwSDwDXu2453', 'qwHEWboO1027', 'eWFSCNUk2695', 'XEzJAUDb4549', 'TDVpOrUm1350', 'dZVXaLeX3479',
-                     'XxDODKvE5670', 'riFgFIrk9092', 'LfFgpukA6602', 'oLpAWAPS5003', 'ZOiVpAha0774', 'JXgwURyE9417',
-                     'jgKvANea6076', 'ywKmWHwp3243', 'LpfKVtgS8338', 'XYEyQJbQ7521', 'pnygbXNg8884', 'RDLonKio6641',
-                     'APjqTvpx0390', 'mmQYwvEr7489', 'rxSLDhMF3546', 'DTQutKfc1572', 'tNlyCbeV3395', 'LspxCTMm0292',
-                     'rWQWJFfr8604', 'LcQigzWz1405', 'VqOGNylC5642', 'qmeAmerK4922', 'CaZePfgd0181', 'rTYffpBs5502',
-                     'CDJiFpZg6687', 'eAVQtnWw8579', 'NKYWtLtt9019', 'yYbNXDkM7794', 'aRDbqYhZ7882', 'SDpLVzIV7507',
-                     'qblXLzUh6768', 'vqbHmrYy0871', 'IwpuetFk9877', 'gdPSYXpj4165', 'QtbgWPqR8503', 'oKHOVZEt9779',
-                     'EXmFVyKx5486', 'knZIipoR0984', 'BFBypTSx6391', 'QhTQmaWI2600', 'NPuBWjXI9067', 'hzCteVRo0131',
-                     'pzDoGpcm1344', 'vfyyfhmH2797', 'lDXjRIil2060', 'TLxaCkwQ0322', 'BwhwfVKz5192', 'yRNIlbyP4952'}
-local RECEIVER_LIST = {'tkiklziZ5881', 'WLoTWcaP6043', 'ezBRywsA3633', 'WqqsenvJ3542', 'xmYGWZgq4978', 'VvdHaLCY1026',
-                       'JzZJitXj4622', 'jsXJrekZ3417', 'jhbtCjCW6382', 'ORspQgrv2146', 'vSPaUZXY5926', 'NtzkOCbH4779',
-                       'LiIKknZa5317', 'cpNpDtJA1222', 'rasCxvsw6644', 'UvSZxzoH7059', 'wFWqCrEB3797', 'TxTKzlBt2863',
-                       'HHtBdiIx0281', 'nOolKUba5158', 'BTVhldGa6678', 'NptHtKAC0734', 'LvBlfUtc4749', 'LVEaxVDd7248',
-                       'oFyLldFv2977', 'mDPvcXYa1676', 'TXCWpbgn5760', 'TQHnNAvY3483', 'hPMZbebv1091', 'QAqccAaN3091',
-                       'EMqXAqNp5012', 'GTRvmDtF5095', 'qClWhiFL6338', 'XDnRuoWs7536', 'vUwTtrBS0754', 'iWOEZYrp8843',
-                       'enWbsuEG0640', 'CjdxjTru1293', 'HQnVEvZB3738', 'lBMmauxZ4185', 'xBDGXAqf1360', 'RSPyqeCc1831',
-                       'EFsWQTpK5617', 'BjfCcfRi4251', 'XQchOoHq8420', 'zglyYxOC1839', 'bRaoeKoO6125', 'AopfyPqe0922'}
+
+local SENDER_LIST = {'SarahMint2619', 'JieunOlive5877', 'LakshmiArrow4985', 'ZehraPink5749', 'QuinnSpell7103',
+                     'KaoriPhantom1126', 'DaeunNinja0124', 'MarleeNinja3485', 'NienkeSteel5028', 'PromiseMaiden2891',
+                     'KinsleyIvory9562', 'AzureMetallic8095', 'XimenaBlush7864', 'DeirdreTiger3702', 'JinahSpirit1670',
+                     'NienkeDancer0332', 'BeatricePeach4914', 'PersephonePrince3631', 'AyseWitch9893', 'JieunHawk2914',
+                     'EsraSpark2516', 'MeiYellow3977', 'KalenaKnight2302', 'DanielaWeaver9336', 'LailaSpell4012',
+                     'JasmineMage9536', 'EliskaForge3718', 'WeiValkyrie0785', 'SelenaBlade4818', 'KatarinaIvory8252',
+                     'HarmonyQueen4718', 'IrinaHawk5028', 'RuthTomato7834', 'ChenHeart7288', 'HelgaGray1887',
+                     'UrsulaSpark4901', 'HecateWine5219', 'FreyaApricot0743', 'HermioneBlade1185', 'BraveWind4650',
+                     'CircePowder7770', 'DreamReaper1091', 'ReaganRoyal6681', 'AriadnePlum3678', 'SarahHunter7450',
+                     'NasrinForest1479', 'BarbaraVixen8565', 'LailaMage2031', 'RubyTeal5130', 'SigridWine0920',
+                     'SageHuntress3968', 'MatildaBlue2922', 'SiobhanSpell5483', 'AnnaArrow6831', 'MedeaMetallic3238',
+                     'NeaYellow6667', 'AuroraMaiden1599', 'ElizabethRust5513', 'HecateCopper3163', 'ZhenYellow2940',
+                     'LingFox4719', 'MiaGoldenrod0967', 'MinjiMage8771', 'NasrinCornflower5928', 'AstridCerulean8110',
+                     'MariaPink9331', 'MilicaFang0694', 'EsperanzaCerise0366', 'AriaMahogany1054',
+                     'BarbaraPrincess4619', 'JulietteStrike0568', 'LalehReaper1098', 'RafaelaSpell5613',
+                     'OliviaBolt0857', 'MarieHoney9515', 'IngridWeaver4062', 'ImaniBuff7369', 'RaniaGuardian6945',
+                     'SophiaPhantom1054', 'ClaireTurquoise4029', 'KaoriScarlet2993', 'AoifeWitch7383', 'LingBlade3116',
+                     'ElsaHawk4623', 'SofieGoddess8167', 'EvaApricot3613', 'HarmonyIvory1727', 'RebelNavy2070',
+                     'OlgaValkyrie2986', 'AishaAubergine4954', 'PearlHunter9436', 'AinoJade5447', 'IoanaBlaze4781',
+                     'RadhaBlade7841', 'JovanaPhantom1936', 'OlgaGold8725', 'IsabelaTan4054', 'ScarlettKnight4158',
+                     'AliceHuntress4474', 'NoongarKnight5734', 'CarolinaScarlet7068', 'BeatrizSteel5727',
+                     'SofieAquamarine5068', 'AvaOrange1609', 'AislingMagenta5127', 'LaniSpell2330', 'AishaBlaze2826',
+                     'AlexandraFang0524', 'GizemPowder7889', 'HalaDancer9774', 'DeryaFuchsia7075', 'NovaBlue2907',
+                     'AnastasiaKnight4219', 'ScoutArctic9519', 'MabelGray4744', 'NeaSpirit4050', 'KaterinaHoney5038',
+                     'HyejinDark4555', 'TatianaNavy3389', 'ArtemisTurquoise4010', 'AriadneYellow2162', 'LaylaMint6764',
+                     'EsperanzaMahogan2366', 'RiverPale1839', 'NiaHunter0283', 'SooBurnt9037', 'AnnekeViper7276',
+                     'PhoenixDusty3746', 'ElsaMaroon1970', 'ZarliSiren1556', 'LeahReaper5321', 'SkySpirit3242',
+                     'MelikeTurquoise6724', 'TamsinCornflower8169', 'GiuliaHawk7582', 'JasminePurple7336',
+                     'AnaisWolf8991', 'CristinaSpirit0028', 'KristinaBlue2896', 'FarahDancer1329', 'CiaraRider4846',
+                     'SaritaFang9280', 'CassandraValkyri8555', 'EdithGoddess1168', 'ZhenKnight6028', 'NoongarMauve0899',
+                     'LalehJade7170', 'MelikeHunter5589', 'WillowPrincess2008', 'CassandraSpirit8721', 'NiaWitch5206',
+                     'BeatriceSlate4567', 'RubyOrange2108', 'HalaCotta1035', 'ElinaOwl1838', 'CoralBlaze0179',
+                     'GabrielaMustard7927', 'ReaganKhaki0130', 'PatriciaVixen2715', 'SarahViper0532', 'OfeliaSpark4711',
+                     'LaylaWolf7592', 'KatarinaElectric7437', 'MeiGuardian6060', 'MaeveRed7315', 'PinarPurple0597',
+                     'RafaelaBolt3805', 'NiloufarHuntress0037', 'KiraCerise8275', 'AmiraHuntress0302', 'ChayaNinja4904',
+                     'YelenaWeaver1404', 'CourageGreen7068', 'KirraPurple4480', 'ZehraBolt4275', 'CaoimheCerulean9880',
+                     'YasminWind9662', 'EsperanzaBlade8628', 'ShirinVixen5851', 'DeirdrePurple3443', 'GizemBuff8694',
+                     'MiriamKhaki3586', 'NovaSiren1191', 'EliseWolf5712', 'MoanaGuardian0931', 'CaoimhePurple3630',
+                     'YasminSiren2986', 'EliseSpark1918', 'MarketaGoddess2584', 'AmiraGreen5673', 'YoonahReaper8557',
+                     'TeodoraDusty2675', 'ElizabethMetalli5174', 'MarketaHoney0646', 'SannaPurple5711',
+                     'FaithValkyrie6397', 'LeahHawk7773', 'ChloeWind5798', 'EvaGoddess9724', 'ElinaBlush6819',
+                     'StellaVermilion9116', 'MariyaPrincess4228', 'HildaLavender5883', 'ElifBrown7215',
+                     'ArtemisOrchid2915', 'MahinaCantaloupe9739', 'LiTerra8590', 'AuroraTerracotta1040',
+                     'AlinaHoney3520', 'SigridPeach8829', 'MidoriRoyal5414', 'KristinaDark1022', 'EwaCobalt0954',
+                     'AliceCrimson2497', 'SepidehWine7634', 'ValeriaGoldenrod8193', 'EkaterinaBolt3081',
+                     'AuroraCornflower4497', 'MiriamArcher5891', 'KatarinaArrow1918', 'MiaPurple8712',
+                     'TerezaSiren5147', 'JuniperVermilion2531', 'RebeccaCobalt8696', 'LunaOrchid1938',
+                     'IrinaPrincess9926', 'StefaniaPlum4866', 'MartinaRider4532', 'ElifWolf2370', 'HuiWitch1054',
+                     'MahinaNavy9096', 'RiverWitch2236', 'AnnaApricot9596', 'AkalaMage4485', 'StormAquamarine9214',
+                     'EunjiNavy5878', 'SigridQueen5912', 'MeiDark2264', 'CharlotteBlade9329', 'DaisyCopper2876',
+                     'SiobhanRed1544', 'HarperMauve2873', 'MiaPrincess3248', 'AlmaTeal8615', 'SebnemYellow8339',
+                     'BraveTerra2542', 'AndromedaCopper5703', 'HildaOwl3818', 'ClaraTerracotta9293', 'FaithForest0374',
+                     'AutumnElectric3774', 'LilyFox7086', 'AoifeQueen6982', 'DaisyMint9623', 'CarmenCerulean9374',
+                     'IreneHuntress8094', 'ShirinKhaki5544', 'VictoryMoss0118', 'NadiaDancer2143', 'MilaMaiden7957',
+                     'EsraSteel3158', 'LunaVixen6657', 'AmeliaPale5688', 'AmeliaOwl6779', 'NoraWolf0884',
+                     'LailaDancer9185', 'MoanaVixen7454', 'NiloufarBlue6499', 'MinjiOlive9407', 'MabelHawk9809',
+                     'AmiraKhaki4339', 'CiaraGoddess4890', 'HermioneMaroon5899', 'FrancescaDusty6752',
+                     'NoongarArcher5991', 'SelenePeach5496', 'CiaraFang8212', 'HyejinTangerine5146', 'ChloeWolf2160',
+                     'KiraReaper6879', 'MahsaDancer6912', 'OfeliaWolf9643', 'SamiraBurgundy5009', 'PriyaOrange8030',
+                     'ElinaIvory0524', 'SaraAquamarine5652', 'LaylaScarlet3643', 'BronwynDancer9763',
+                     'CharlotteBlade7777', 'CassandraValkyri3119', 'PetraMauve9770', 'DaeunRider3957',
+                     'CaoimhePowder9987', 'JuniperAubergine8987', 'MarijaCobalt6869', 'LotteFuchsia6906',
+                     'ZehraOchre0729', 'NoongarQueen7047', 'JusticeWine2470', 'VeraDusty7335', 'MarleeSpirit8472',
+                     'NienkeViper3376', 'DaisyOrchid3437', 'PenelopeDusty6030', 'ClaraPrincess8078',
+                     'SierraGoldenrod0867', 'LaniForge5492', 'AugustaHawk4960', 'SilviaDusty2116', 'BrittaOwl2116',
+                     'EkaterinaLilac1434', 'BrunhildeVixen6368', 'ParvanehSpell0124', 'RafaelaForest4012',
+                     'JinahSepia4106', 'JelenaPrincess6277', 'KatarinaHawk8755', 'EvaForge2189', 'IsabellaReaper4512',
+                     'SophieValkyrie2961', 'NaomiTomato9760', 'MaileKnight9698', 'CassandraJade8907',
+                     'CassandraWolf0996', 'CarmenCerise1056', 'RebeccaGoddess8061', 'HeidiCrimson6083',
+                     'MatildaBlade4516', 'LakshmiScarlet8506', 'DaeunDark3689', 'YelenaWind9654', 'TeodoraViper7551',
+                     'AuroraBlaze6298', 'FatimaMage0737', 'SooWind0975', 'AlexandraHawk9148', 'ZofiaHuntress4677',
+                     'AgnieszkaVixen8144', 'SageCerise9431', 'RebeccaGuardian8801', 'WarriorAquamarin8658',
+                     'CamilleStrike0801', 'PinarBlaze8490', 'LiGuardian6408', 'ZarliMahogany9332', 'BrittaWolf8286',
+                     'ParvanehTerracot4981', 'AgnesEggplant2771', 'KaiaYellow0874', 'PinarPeach5961', 'CarmenHeart4941',
+                     'MaeveFox0106', 'KylieGoddess6645', 'ClaudiaGuardian1569', 'VictoriaSpirit6655', 'QuinnArrow7750',
+                     'MaeveSapphire7451', 'PenelopeArcher7291', 'GretaTurquoise3016', 'OliviaPurple7925',
+                     'IsabelaSpirit0159', 'SelenaSlate8934', 'AnaisOwl3247', 'BrunhildeWolf5015', 'EdenGuardian4000',
+                     'ZaraArrow2840', 'LuciaMahogany1688', 'HannahCopper3887', 'MilaMaroon2764', 'CourageWind9042',
+                     'LuciaTan9443', 'MabelMetallic3046', 'GizemTan7735', 'JelenaForest4324', 'SaritaGold4122',
+                     'AmiraLilac9750', 'NaomiPale4757', 'SigneEggplant0554', 'CristinaReaper9944', 'PromiseSalmon5772',
+                     'SaraNinja5610', 'LingStrike6558', 'MinaRider5632', 'DaisyStrike4247', 'ReaganPhantom3465',
+                     'ZhenTerracotta6547', 'AinoWind3436', 'MarketaBlush1126', 'CelesteTiger6032', 'PenelopeTerra2876',
+                     'StellaTiger5206', 'MarieBurnt1828', 'TeodoraSepia3495', 'KirraBlade7252', 'SofieGoddess7215',
+                     'AlinaDark4784', 'MaryFang5340', 'AmeliaPale6475', 'LotteRider6459', 'LotteHunter9765',
+                     'CoralPlum2881', 'StefanaWind7744', 'BrittaBolt5169', 'RuthViper0583', 'LalehKnight2045',
+                     'LeilaniBlaze9168', 'AgnieszkaSpirit1944', 'ClaudiaSpell3391', 'HildaWeaver1071', 'PinarVixen0417',
+                     'KalenaMustard2501', 'AkikoTerra9107', 'MedeaRoyal6212', 'KaiaBlaze9764', 'WaratahBlush2881',
+                     'AnaisRed2061', 'MajaCornflower2590', 'NienkeDancer5327', 'XiuEggplant6686', 'NaniMaroon5369',
+                     'EmeraldRust4679', 'NasrinMage5261', 'AnjaliHawk8725', 'LiisaSteel1930', 'AnnekeSpell8968',
+                     'PetraCobalt5951', 'NeaPurple2861', 'StefaniaRoyal4862', 'ValeriaBlaze6328', 'KatarzynaVixen1789',
+                     'GretaIvory1640', 'HannahScarlet6329', 'IrisPowder0760', 'MabelPrincess9503', 'OrlaCerulean6224',
+                     'StormEggplant1788', 'AyseArcher1097', 'IndigoGuardian3946', 'CirceReaper2232', 'KiraPrincess0330',
+                     'MaeveLavender5305', 'EilishValkyrie0066', 'MidoriMaiden6082', 'ImaniSpell7563', 'NoraWolf3288',
+                     'MajaCrimson0121', 'PearlTiger1363', 'NataliaArctic8446', 'FernandaWolf9745', 'BarboraMustard4381',
+                     'MiaMage8236', 'EsraBlade7416', 'AkikoFang4425', 'MargaretDye4597', 'GizemSiren1684',
+                     'LunaPowder0844', 'AdelheidGoddess9198', 'AmiraPale6569', 'EsraStrike3989', 'LiWolf7288',
+                     'CalliopeWitch4807', 'TerezaSiren5611', 'BrielleFang7406', 'AnaisMage8197', 'RebeccaWolf5876',
+                     'StefaniaTiger2390', 'HopeWind3743', 'PetraViper7239', 'ChenGuardian7276', 'PriyaLavender7595',
+                     'ZofiaViper7984', 'ChayaApricot6446', 'IoanaDancer6979', 'DreamScarlet9650', 'ZhenCerulean1623',
+                     'AndromedaReaper2604', 'ZehraWind8818', 'NishaGoddess1523', 'JinahFox0550', 'RafaelaValkyrie5854',
+                     'ValentinaGoldenr6467', 'AnastasiaHuntres2356', 'SannaOrange8372', 'DottyPrincess3183',
+                     'MarinaReaper9333', 'SigneRoyal3074', 'DaeunWine0599', 'MarleeSpirit1748', 'MariyaMustard1636',
+                     'MariyaMetallic2700', 'MinjiQueen8042', 'HermioneKnight6170', 'YanGreen5037', 'NoorArcher9686',
+                     'AkalaCerise5783', 'NaniViper3552', 'YumiMagenta3606', 'AntonijaTiger8918', 'WillowSpell0546',
+                     'TatianaSpell6469', 'PromiseNavy3392', 'LyraTan0133', 'KaisaWolf1518', 'CassandraDark6350',
+                     'DorothyFlame7762', 'CarolinaHoney3896', 'BeatrizYellow3373', 'NadiaVixen8826', 'HelgaPlum8102',
+                     'MarinaYellow5395', 'SannaCantaloupe9209', 'GizemMagenta5385', 'EvaStrike7180', 'StellaSteel7827',
+                     'KianaDusty3822', 'AryaSteel1257', 'LisaKnight3812', 'StormValkyrie6811', 'NoorMaroon6730',
+                     'SilviaGreen1959', 'SeleneGuardian2844', 'MarinaSepia6108', 'LaylaWitch7295', 'OfeliaStrike9059',
+                     'FarahFuchsia7333', 'AvaDusty5147', 'KaisaTiger0678', 'ClaudiaScarlet0379', 'FemkeOwl6546',
+                     'AnnekeOlive8914', 'DeryaPhantom5371', 'MarketaHuntress8209', 'IngridOrchid5785',
+                     'BronwynBuff5560', 'MarianaBolt8272', 'NasrinYellow3860', 'VeraElectric2960', 'DottyForest7360',
+                     'PenelopeWitch4707', 'NataliaRed9537', 'JarrahKnight4228', 'WeiKhaki1427', 'MaileHunter0355',
+                     'FemkeNinja0858', 'DreamBurgundy6358', 'IsabellaBlade0399', 'LalehIvory0798', 'SeoyeonHeart9311',
+                     'TaliaMint6944', 'TamsinVermilion9576', 'FaithAubergine7328', 'TerezaForge2362',
+                     'WeiCantaloupe8547', 'JulietReaper1349', 'SageYellow8407', 'MelikeWeaver3230', 'TamsinStrike4976',
+                     'KalenaRider0503', 'RachelApricot2801', 'OrlaHuntress4414', 'HermioneGoddess5018',
+                     'EsperanzaDancer8631', 'AnjaliFlame8820', 'MaryamDye5006', 'DianaReaper6827', 'AoifeDark7657',
+                     'AnnaGoddess1970', 'ElenaForge3013', 'VictoryForge3883', 'MariyaCotta1687', 'EdithBuff8250',
+                     'MilaRoyal8269', 'AmelieReaper9941', 'DaeunSepia1491', 'AstridMauve3116', 'PersephoneKnight0539',
+                     'MarijaTurquoise3852', 'JovanaQueen2252', 'CarmenStrike9396', 'AthenaMetallic5343',
+                     'WeiHunter8703', 'GabrielaYellow1569', 'SamiraMagenta3319', 'AlmaLavender0295', 'AthenaSalmon6684',
+                     'AinoDusty2884', 'AuroraDancer0280', 'LucieTeal8600', 'CamilaLilac8517', 'VioletKnight8066',
+                     'AyseRust9633', 'KiraArrow2724', 'DvaNavy5842', 'StormArcher1059', 'EvelynValkyrie9597',
+                     'AntoniaTomato8753', 'DreamMaiden8330', 'AmelieLilac4951', 'AlinaVixen3434', 'NinaOrchid8695',
+                     'JulietCrimson5591', 'SepidehBolt3900', 'LucijaBurgundy4426', 'NienkePhantom7567', 'ZarliWind0382',
+                     'RuthMahogany4907', 'NaniAubergine6433', 'StormHoney9352', 'ElsaPeriwinkle3237', 'HelmiRider8554',
+                     'MakedaBolt7592', 'IrisDancer2870', 'IreneArrow7619', 'ScarlettPhantom7229', 'JarrahSpark9964',
+                     'LyraSiren2292', 'SiobhanGuardian5184', 'MinaArrow8203', 'FreedomVixen7627', 'NinaSpell7694',
+                     'HarmonySteel9705', 'AinoOchre9370', 'AstridHuntress9093', 'BronwynAquamarin7758',
+                     'GraceVermilion3872', 'MiriamFlame8205', 'AkalaValkyrie7058', 'SusanSpell7022', 'PetraJade2200',
+                     'MoanaLilac4968', 'YelenaBlade3875', 'FaithGold9081', 'LiisaHunter4897', 'LaniBlaze9111',
+                     'LunaAquamarine3828', 'CiaraForge3444', 'AthenaWeaver2198', 'SigneGoddess3719', 'SaaraReaper8030',
+                     'JarrahYellow2479', 'EkaterinaDancer5332', 'WeiDye4612', 'KianaBlaze3074', 'ChiaraPlum9197',
+                     'GraceMagenta8775', 'ValeriaSiren7445', 'KaoriReaper2911', 'SilviaRider3820', 'JulianaViper1119',
+                     'AnastasiaYellow7466', 'GraceKhaki1558', 'FreedomBurgundy9914', 'LingTurquoise5273',
+                     'ChiaraOwl9217', 'StefanaPink1406', 'MagdalenaGoddess0112', 'ScoutMauve5106', 'CiaraMaroon9492',
+                     'CirceHunter1394', 'IsabelaPrincess7700', 'OrlaLavender4349', 'JusticeForge5052',
+                     'AndreeaSteel1769', 'ClaudiaWolf7978', 'MariePurple2198', 'MoanaBolt7070', 'DaeunSiren6982',
+                     'LakshmiPowder6609', 'LailaGoddess4613', 'SofiaMauve7748', 'IsabellaNinja9690', 'AnikaSpirit0545',
+                     'SophiaGuardian9151', 'CoralOrchid8847', 'GretaWolf6398', 'AuroraMagenta3977', 'DanielaWine1725',
+                     'AriadneRider1036', 'MahsaVixen6167', 'MayaKhaki6345', 'JulietSpirit8469', 'KaiaWeaver1449',
+                     'KinsleyPurple1675', 'HelgaMage2423', 'VanessaOwl5440', 'NeaScarlet6790', 'SamiraCornflower2669',
+                     'HelenTeal5391', 'ElifBlaze5215', 'MaeveWeaver7881', 'JulietReaper8520', 'OliviaQueen2723',
+                     'LinneaWitch0287', 'RebelMint0032', 'SilviaApricot0536', 'EliseReaper0223', 'JoySlate9824',
+                     'AlinaElectric9085', 'KaterinaPlum4444', 'LeaForge6998', 'CelesteBlaze7113', 'PreetiGreen4900',
+                     'GizemBlaze8026', 'YukiBlade6251', 'FreedomPale5262', 'MedeaBrown3003', 'ScarlettBurnt3110',
+                     'AlexandraBuff5820', 'AvaHuntress9065', 'BronwynSteel1047', 'IndigoKnight8122', 'MarySteel1433',
+                     'DaphneOchre6875', 'MaryamMage9444', 'ElizabethHawk5114', 'NataliaSapphire2928',
+                     'SigridAubergine1845', 'EilishKnight3953', 'WarriorFuchsia7206', 'AkikoWeaver1516',
+                     'MahinaHawk8800', 'HeidiMaiden2818', 'ClaraTiger5720', 'ClaraIvory7492', 'HanaHeart3814',
+                     'NoongarVixen2277', 'AthenaBurgundy4300', 'ValeriaGoldenrod2049', 'HermioneTan5935',
+                     'EvelynWolf2026', 'LaylaPale9904', 'EsperanzaDancer3815', 'PetraVixen9500', 'MakedaTurquoise8793',
+                     'NeaLavender6239', 'AzureForge5125', 'EwaWolf3570', 'LucijaArctic0019', 'ParvanehDancer3336',
+                     'AleksandraWine9896', 'CiaraRust2288', 'LingSalmon5324', 'LaniMaiden1784', 'LeilaniNavy9737',
+                     'AzadehGoddess1031', 'MabelPhantom8836', 'AutumnGold4396', 'StefanaTan0052', 'JoyCornflower4922',
+                     'RhiannonKnight1827', 'RubyGray2950', 'AriadneGoldenrod2336', 'EstherSiren1506', 'SannaMage2781',
+                     'AnnekeDye7062', 'RoseReaper9509', 'LinneaGoddess2065', 'CassandraScarlet8046', 'SooOchre1605',
+                     'WeiOrchid7188', 'JoyGreen8994', 'LenaOlive3691', 'ChiaraBolt3617', 'ValeriaArctic4264',
+                     'LilyRed1447', 'KalenaHawk4911', 'SaraPeriwinkle4895', 'MarketaGoddess6844', 'DvaBlaze9236',
+                     'PenelopePrincess4983', 'VictoryViper3283', 'MakedaTerracotta5307', 'SaraForest6748',
+                     'LyraScarlet6476', 'MarleeHeart9636', 'BarboraPlum0807', 'LauraBlaze5128', 'KatarzynaHawk1510',
+                     'JulietSlate6575', 'AlexandraPurple1151', 'HeraHuntress6468', 'SannaRoyal4282',
+                     'ElizabethMage3244', 'DeepaVixen5014', 'DesislavaNinja0676', 'SebnemPale4329', 'ElinaDancer1436',
+                     'SiobhanGreen3315', 'AriadneCornflowe8898', 'AislingGuardian7088', 'TatianaFang8527',
+                     'ChenScarlet2719', 'CarmenBolt3108', 'PreetiBurgundy1919', 'KirraOchre5970', 'ClaudiaTan2063',
+                     'KatarzynaSpell9830', 'JusticeHeart8931', 'AryaFuchsia9901', 'MajaMauve0876', 'HildaMahogany6912',
+                     'JieunHuntress1928', 'AndromedaYellow4345', 'EmmaPowder4493', 'ParvanehArcher3242',
+                     'KaiaSapphire9547', 'MaileKhaki6058', 'BarboraCopper6415', 'FatimaLilac8725', 'ParvanehRed4303',
+                     'MidoriSapphire9129', 'LeilaniHunter6319', 'PreetiBurnt0654', 'DesislavaBurnt5728',
+                     'FreedomForge2437', 'MilicaNinja3263', 'MinaStrike0704', 'RafaelaSapphire3628', 'MinjiPeach7896',
+                     'KenyaFlame8554', 'IndigoCornflower2647', 'GizemForge3563', 'AkikoHunter9146', 'ChloeStrike9571',
+                     'SkyCotta4679', 'LindaFang6718', 'LenaIvory1879', 'AntoniaBlaze7850', 'LingFang1974',
+                     'ParvanehPlum4246', 'WarriorApricot3006', 'NovaOwl1880', 'BraveMahogany4316', 'RhiannonNinja1080',
+                     'JasmineLilac2709', 'HeidiFlame9402', 'ZaraPeriwinkle7279', 'MedeaKhaki4057', 'MargritTiger2999',
+                     'IngridPeriwinkle4466', 'HarmonyViper0624', 'CirceDye8426', 'ChayaMaroon0033', 'RubyGold1535',
+                     'RosePlum2789', 'ZoeFang7081', 'HecateKhaki0520', 'QuinnAubergine1727', 'GabrielaReaper5129',
+                     'EilishTiger3422', 'ZuriWeaver2793', 'MilaYellow8204', 'ImaniMustard1733', 'TatianaYellow0583',
+                     'EsraWine9812', 'SofieCopper5624', 'NataliaArcher9034', 'HannahHuntress3170', 'JinahKhaki7327',
+                     'JulietRust7621', 'ZehraBurgundy0601', 'OliviaPrincess4844', 'HelenaWine7165',
+                     'MargritCantaloup6930', 'IvanaDusty2052', 'AriaViper2096', 'AbigailBolt8276', 'AislingWind0742',
+                     'HeidiGold0416', 'RebelForge3376', 'MabelMage6098', 'IngridCobalt4053', 'KalenaTurquoise8383',
+                     'OrlaHawk2363', 'AislingPrincess9198', 'RebelViper9095', 'AoifeCornflower0614',
+                     'EsraAquamarine9920', 'ElinaGray8035', 'AthenaKnight5064', 'HopePowder1070', 'WaratahKnight6049',
+                     'CamilaPurple5021', 'DanielaFang1219', 'LunaPeriwinkle9021', 'FrancescaPurple1965',
+                     'MahsaGold0081', 'YanSpell4271', 'NasrinForest1028', 'ElifSiren2849', 'DeepaForge9020',
+                     'YanaraElectric8436', 'LeilaniTiger6023', 'JiaForge1683', 'ZehraMaroon5018', 'MarleeSpell4860',
+                     'IoanaReaper9919', 'StellaTurquoise4028', 'RebelNavy7524', 'MinjiKnight2552', 'CarmenLavender7836',
+                     'SooLilac4066', 'MaevePhantom1373', 'LyraKhaki7737', 'LaylaWind2295', 'MargaretBlade3932',
+                     'ZaraTurquoise4400', 'VioletBlade3680', 'ViolaPeriwinkle4549', 'OfeliaQueen6302', 'AnyaWine4589',
+                     'CristinaFang8945', 'BarbaraDancer6999', 'KealohaKhaki1824', 'MargaretPale6131',
+                     'CaoimheBrown1950', 'LiTerra1402', 'LuanaPowder1920', 'JulietScarlet4681', 'ShirinRoyal1923',
+                     'GertrudGold7833', 'ClaireMetallic7013', 'DottyFuchsia9580', 'SophiaBlush6013', 'BrittaHeart2499',
+                     'BrittaNinja7329', 'ChloeRider1551', 'AnjaSpell4505', 'EilishBlade6614', 'SebnemSteel3169',
+                     'NishaBlade6275', 'DianaSpirit3180', 'VanessaArctic8051', 'JanaHoney5661', 'LauraBlaze7648',
+                     'ArtemisGuardian7457', 'QuinnMagenta9355', 'CaoimheValkyrie3584', 'HarperHunter3673',
+                     'MargritMetallic0785', 'QuinnMage4436', 'PhoenixAubergine2064', 'KristinaFang7708',
+                     'SierraPink1335', 'FatimaBlue5738', 'KinsleyHunter2812', 'RachelMustard6492',
+                     'GuadalupeMetalli7475', 'MiaPink8164', 'KalenaBlade3506', 'DaeunGoddess9156', 'DaisyFox7299',
+                     'GiuliaTiger3790', 'ValentinaMustard7475', 'AzureMagenta9459', 'StellaSlate1276', 'XiuHawk1626',
+                     'SaaraStrike4468', 'CalliopeVermilio5114', 'RoisinTerracotta0500', 'HelgaQueen9016',
+                     'HuiElectric4968', 'RebelSpark0189', 'LaylaDancer3089', 'OliviaElectric5012', 'EstherViper5028',
+                     'RoisinChartreuse2231', 'BronwynValkyrie0257', 'PatriciaEggplant9410', 'RinRoyal7561',
+                     'PatriciaSpark9720', 'AriadneBurgundy0793', 'NataliaPlum6264', 'EkaterinaFox9945', 'PetraMage9812',
+                     'VanessaRoyal1839', 'EstherTiger3007', 'DreamViper8879', 'DaeunEggplant2231', 'AkikoBolt3042',
+                     'DreamSapphire9532', 'LeaMage1781', 'ClaudiaOrange6439', 'YanCrimson3900', 'SigneMage7904',
+                     'NishaMetallic5434', 'HecateSiren2324', 'PearlOlive9537', 'ZarliHoney6662', 'NaniStrike1774',
+                     'ScarlettDye5407', 'OlgaGoddess9505', 'AdelheidPhantom5801', 'ChenPrincess9720', 'HelenOchre7450',
+                     'KiraKnight6759', 'AmaraTangerine9479', 'StormVermilion3265', 'CassandraTangeri1390',
+                     'SkyBuff3456', 'ImaniWeaver8077', 'LeaVermilion4581', 'ImaniHuntress0302', 'AikoElectric5736',
+                     'MaeveFlame2461', 'KaiaVixen4577', 'MargritAubergine4356', 'HannahBlaze8643', 'AoifeForge6472',
+                     'MiaJade5844', 'JarrahBlush5275', 'SophieArcher5789', 'MedeaTerra5365', 'BeatriceStrike9723',
+                     'SkyBlade7275', 'KenyaNinja7015', 'IrinaGoddess7238', 'YukiViper9742', 'CaoimheViper0980',
+                     'GiuliaFuchsia9229', 'ElifPeach1865', 'HuiBlade2967', 'HeidiWine4102', 'BraveFlame2320',
+                     'MoanaRider9670', 'KealohaSapphire8578', 'VictoryFuchsia1585', 'ZehraBlaze8778',
+                     'SannaAubergine1747', 'NasrinValkyrie1562', 'MajaDusty0840', 'RiverKhaki8490', 'KaiaSpirit1217',
+                     'MarieOlive1027', 'MakedaTerracotta3993', 'SierraSpirit7730', 'MayaOchre8425',
+                     'NiloufarGoddess3313', 'NoongarOrange6261', 'HanaGray2449', 'CarolinaHawk0630', 'HuiOlive4099',
+                     'StellaTan0948', 'HeraMustard3788', 'HelgaVixen3325', 'PatriciaSlate2278', 'GuadalupeWind5558',
+                     'DaisyWine6111', 'RuthWitch1339', 'LauraSiren4036', 'DvaCobalt5540', 'AnitaRed0742',
+                     'YanaraApricot4408', 'NishaMoss2296', 'WeiPrincess2896', 'FernandaValkyrie5698', 'IrisSpirit1019',
+                     'MarijaRider3766', 'JuliaWeaver5362', 'KatarzynaCerise4868', 'AzadehGuardian0608',
+                     'EmeryQueen4624', 'MarijaMint0814', 'DeepaWine1830', 'MakedaWeaver9803', 'SofiaGoldenrod9144',
+                     'BeatrizSpell1516', 'KenyaValkyrie3396', 'KinsleyMahogany7802', 'RachelDancer9837',
+                     'CirceMagenta6933', 'EliskaIvory4108', 'SofiaWind1851', 'KatarinaWeaver0132', 'HuiVixen1421',
+                     'RoseWind3581', 'EsperanzaNavy2699', 'LaniWeaver4545', 'HalaMaroon6289', 'BronwynSiren5404',
+                     'CaoimheGold3588', 'ParvanehBolt9648', 'MoanaSpirit3391', 'NinaViper7789', 'AriaSpell4047',
+                     'AnaVixen7114', 'MelikeMauve3154', 'PenelopeGuardian9850', 'CassandraHunter3578',
+                     'FreedomSpell6982', 'OrlaGoddess1550', 'LenaBurnt2872', 'ViolaHunter1399', 'MargaretDye7753',
+                     'FrancescaScarlet9775', 'OlgaFox7745', 'LauraVermilion1891', 'EmeraldForge2918', 'CamilleHawk6491',
+                     'ChloeSpark4860', 'WeiWine4936', 'ImaniArrow3844', 'YanAquamarine1385', 'AntoniaMint4798',
+                     'XiuArctic9245', 'JarrahMaiden6622', 'VeraHawk0813', 'CamilaDye7758', 'YanaraMage6843',
+                     'KenyaKhaki1113', 'IreneMaiden2058', 'AnaisBuff3337', 'KaoriWitch3361', 'JovanaTiger7135',
+                     'KalenaVixen1489', 'EkaterinaWitch6185', 'AnnekePeriwinkle2389', 'HildaOwl4876',
+                     'LalehTangerine1965', 'LailaFang5071', 'EmeryJade9781', 'KatarzynaSpell8938', 'LeilaniLilac5037',
+                     'BraveGuardian5094', 'XiuBlush7469', 'SepidehWind5933', 'MaryGoddess1148', 'KaiaTeal5664',
+                     'ElsaNinja0206', 'KirraGold0161', 'LindaViper7974', 'TamsinHuntress4307', 'SilviaWind9984',
+                     'MayaEggplant3310', 'BrittaTomato3889', 'PinarPeach1531', 'AthenaDancer9433', 'KiraPale0361',
+                     'CarolinaBlush4969', 'LilyVixen5116', 'GiuliaForge2387', 'MinaSpell4229', 'AnikaMetallic3667',
+                     'StormNinja8068', 'LilyHunter8641', 'JusticeGray8637', 'JulietteForge4418', 'CelestePurple7664',
+                     'KatarinaArcher8379', 'GracePeach0579', 'MedeaReaper4789', 'AnnaStrike0914', 'AnitaMage8393',
+                     'VictoriaTiger1313', 'OlgaArctic8671', 'NoongarMauve8557', 'HecateVixen9480', 'HuiPeriwinkle5577',
+                     'SigridSalmon7221', 'JelenaPrincess8911', 'MinaSpirit8706', 'MaeveMoss4983', 'GizemGold5432',
+                     'DorothyViper9226', 'AislingGold4131', 'YanNavy3113', 'NaniSiren9394', 'VictoriaCantalou6281',
+                     'EstherGoldenrod5282'}
+local RECEIVER_LIST = {'SebnemYellow0900', 'JuniperOlive8974', 'AoifeFuchsia5864', 'MinjiMahogany1864', 'EvaOwl6433',
+                       'ZuriWind4400', 'GizemHeart3120', 'YelenaMustard4234', 'JarrahSteel4114', 'SakuraRoyal8036',
+                       'DreamMint4391', 'RaniaBlush0896', 'WillowValkyrie9500', 'PromiseViper2293', 'TeodoraReaper8907',
+                       'RiverWeaver1220', 'MatildaRider9238', 'LeahNavy7923', 'EunjiWolf9440', 'AstridRider4367',
+                       'GizemMaiden0092', 'IvanaCornflower7546', 'LindaSpell1967', 'RiverMaroon9353',
+                       'StefaniaFuchsia2826', 'AzureOrange9495', 'AntonijaCobalt3859', 'AnnaSpark2343',
+                       'CamilaSapphire3794', 'KaisaOlive1771', 'ImaniHeart8136', 'HelmiBolt5435', 'GretaWind9234',
+                       'MatildaCobalt8709', 'SageWolf3995', 'AmiraDye7816', 'ViolaPeriwinkle6802', 'AoifeMetallic3410',
+                       'LingSpell7945', 'CourageMaiden5006', 'DottyTerracotta1084', 'AnikaTan3025',
+                       'HopeTerracotta5489', 'HarmonyOrchid4187', 'LaniAubergine6243', 'ClaraSlate7012',
+                       'LinneaViper8224', 'MariaViper2759', 'LuanaStrike9316', 'ZhenQueen4005', 'ZoeFlame8412',
+                       'MahsaRust7656', 'HopeAubergine3199', 'SooSlate1278'}
 
 -- ตัวแปรสำหรับการทำงาน
 local Players = game:GetService("Players")
@@ -1033,45 +1112,65 @@ local function CheckTradePartner()
     return true
 end
 
--- ฟังก์ชัน accept trade request สำหรับ Sender (รองรับ auto-accept จาก sender list)
+-- ฟังก์ชัน accept trade request สำหรับ Sender
 local function AcceptTradeRequestForSender()
     local success, error = pcall(function()
-        local requestsFrame = LocalPlayer.PlayerGui.RequestsGui.RequestsFrame.Other
+        local requestsGui = LocalPlayer.PlayerGui:FindFirstChild('RequestsGui')
+        if not requestsGui then
+            return false
+        end
+
+        local requestsFrame = requestsGui:FindFirstChild('RequestsFrame')
         if not requestsFrame then
             return false
         end
 
-        for _, child in pairs(requestsFrame:GetChildren()) do
+        local mobileFrame = requestsFrame:FindFirstChild('Mobile')
+        if mobileFrame then
+            for _, child in pairs(mobileFrame:GetChildren()) do
+                if string.find(child.Name, "^Trade") then
+                    local senderName = child.Name:sub(6) -- ตัด "Trade" ออก
+                    -- Sender สามารถรับ trade request จาก sender อื่นได้
+                    if IsInList(senderName, SENDER_LIST) then
+                        print("✅ Sender พบ trade request แบบ Mobile จาก " .. senderName .. " กำลัง accept...")
+
+                        -- อัปเดตเวลาสุดท้ายที่ได้รับ trade request (เพิ่มใหม่)
+                        lastTradeRequestTime = tick()
+
+                        Clicked_Ui(child.AcceptButton.UpperLabel)
+                        task.wait(.1)
+                        Click_NOW()
+                        return true
+                    else
+                        print("❌ Trade request แบบ Mobile จาก " .. senderName ..
+                              " ไม่ตรงกับรายชื่อ กำลัง decline...")
+                        Clicked_Ui(child.DeclineButton.UpperLabel)
+                        task.wait(.1)
+                        Click_NOW()
+                    end
+                end
+            end
+        end
+
+        local otherFrame = requestsFrame:FindFirstChild('Other')
+        if not otherFrame then
+            return false
+        end
+
+        for _, child in pairs(otherFrame:GetChildren()) do
             if string.find(child.Name, "^Trade") then
                 local senderName = child.Name:sub(6) -- ตัด "Trade" ออก
                 -- Sender สามารถรับ trade request จาก sender อื่นได้
                 if IsInList(senderName, SENDER_LIST) then
-                    print("✅ Sender พบ trade request จาก " .. senderName .. " (อยู่ใน SENDER_LIST) กำลัง auto-accept และเปลี่ยนเป็น receiver ชั่วคราว...")
+                    print("✅ Sender พบ trade request แบบ Other จาก " .. senderName .. " กำลัง accept...")
 
-                    -- อัปเดตเวลาสุดท้ายที่ได้รับ trade request
+                    -- อัปเดตเวลาสุดท้ายที่ได้รับ trade request (เพิ่มใหม่)
                     lastTradeRequestTime = tick()
 
-                    -- พยายามยอมรับผ่าน Remote ก่อน ถ้าไม่สำเร็จ ค่อย fallback เป็น UI
-                    local remoteAccepted = AcceptTradeByRemote(senderName)
-                    if remoteAccepted then
-                        print("✅ Auto-accept ผ่าน Remote สำเร็จ - กำลังเปลี่ยนเป็น receiver mode ชั่วคราว")
-                        -- หยุดการทำงานของ main sender loop
-                        isSenderMainActive = false
-                        -- เปิดใช้งาน receiver mode ชั่วคราว
-                        isSenderReceiverActive = true
-                        return true
-                    else
-                        print("⚠️ Remote accept ล้มเหลว กำลังใช้ UI แทน...")
-                        Clicked_Ui(child.AcceptButton.UpperLabel)
-                        task.wait(.1)
-                        Click_NOW()
-                        print("✅ Auto-accept ผ่าน UI สำเร็จ - กำลังเปลี่ยนเป็น receiver mode ชั่วคราว")
-                        -- หยุดการทำงานของ main sender loop
-                        isSenderMainActive = false
-                        -- เปิดใช้งาน receiver mode ชั่วคราว
-                        isSenderReceiverActive = true
-                        return true
-                    end
+                    Clicked_Ui(child.AcceptButton.UpperLabel)
+                    task.wait(.1)
+                    Click_NOW()
+                    return true
                 else
                     print("❌ Trade request จาก " .. senderName ..
                               " ไม่ตรงกับรายชื่อ กำลัง decline...")
@@ -1095,21 +1194,6 @@ local function AcceptTradeRequestForSender()
     return true
 end
 
--- ฟังก์ชันยอมรับ trade request ผ่าน Remote โดยใช้ชื่อผู้ส่ง (รองรับหลายรูปแบบจาก remote spy)
-local function AcceptTradeByRemote(senderName)
-    local success, err = pcall(function()
-        local args = {"AcceptRequest"}
-        game:GetService("Players"):WaitForChild(senderName):WaitForChild("Remotes"):WaitForChild("TradeRequestRemote"):FireServer(unpack(args))
-    end)
-    if success then
-        print("✅ ยอมรับ trade request ของ " .. tostring(senderName) .. " ผ่าน Remote สำเร็จ (รูปแบบ remote spy)")
-        return true
-    else
-        warn("❌ ยอมรับ trade request ผ่าน Remote ไม่สำเร็จ: " .. tostring(err))
-        return false
-    end
-end
-
 -- ฟังก์ชัน accept trade request สำหรับ Receiver แบบปลอดภัย
 local function AcceptTradeRequestReceiver()
     local success, error = pcall(function()
@@ -1123,6 +1207,32 @@ local function AcceptTradeRequestReceiver()
             return false
         end
 
+        local mobileFrame = requestsFrame:FindFirstChild('Mobile')
+        if mobileFrame then
+            for _, child in pairs(mobileFrame:GetChildren()) do
+                if string.find(child.Name, "^Trade") then
+                    local senderName = child.Name:sub(6) -- ตัด "Trade" ออก
+                    if IsInList(senderName, SENDER_LIST) then
+                        print("✅ Receiver พบ trade request แบบ Mobile จาก " .. senderName .. " กำลัง accept...")
+
+                        -- อัปเดตเวลาสุดท้ายที่ได้รับ trade request (เพิ่มใหม่)
+                        lastTradeRequestTime = tick()
+
+                        Clicked_Ui(child.AcceptButton.UpperLabel)
+                        task.wait(.1)
+                        Click_NOW()
+                        return true
+                    else
+                        print("❌ Trade request แบบ Mobile จาก " .. senderName ..
+                                  " ไม่ตรงกับรายชื่อ กำลัง decline...")
+                        Clicked_Ui(child.DeclineButton.UpperLabel)
+                        task.wait(.1)
+                        Click_NOW()
+                    end
+                end
+            end
+        end
+
         local otherFrame = requestsFrame:FindFirstChild('Other')
         if not otherFrame then
             return false
@@ -1132,22 +1242,15 @@ local function AcceptTradeRequestReceiver()
             if string.find(child.Name, "^Trade") then
                 local senderName = child.Name:sub(6) -- ตัด "Trade" ออก
                 if IsInList(senderName, SENDER_LIST) then
-                    print("✅ Receiver พบ trade request จาก " .. senderName .. " กำลัง accept ผ่าน Remote...")
+                    print("✅ Receiver พบ trade request แบบ Other จาก " .. senderName .. " กำลัง accept...")
 
                     -- อัปเดตเวลาสุดท้ายที่ได้รับ trade request (เพิ่มใหม่)
                     lastTradeRequestTime = tick()
 
-                    -- พยายามยอมรับผ่าน Remote ก่อน ถ้าไม่สำเร็จ ค่อย fallback เป็น UI
-                    local remoteAccepted = AcceptTradeByRemote(senderName)
-                    if remoteAccepted then
-                        return true
-                    else
-                        print("⚠️ Remote accept ล้มเหลว กำลังใช้ UI แทน...")
-                        Clicked_Ui(child.AcceptButton.UpperLabel)
-                        task.wait(.1)
-                        Click_NOW()
-                        return true
-                    end
+                    Clicked_Ui(child.AcceptButton.UpperLabel)
+                    task.wait(.1)
+                    Click_NOW()
+                    return true
                 else
                     print("❌ Trade request จาก " .. senderName ..
                               " ไม่ตรงกับรายชื่อ กำลัง decline...")
@@ -1174,31 +1277,60 @@ end
 -- ฟังก์ชัน accept trade request สำหรับ Receiver
 local function AcceptTradeRequest()
     local success, error = pcall(function()
-        local requestsFrame = LocalPlayer.PlayerGui.RequestsGui.RequestsFrame.Other
+        local requestsGui = LocalPlayer.PlayerGui:FindFirstChild('RequestsGui')
+        if not requestsGui then
+            return false
+        end
+
+        local requestsFrame = requestsGui:FindFirstChild('RequestsFrame')
         if not requestsFrame then
             return false
         end
 
-        for _, child in pairs(requestsFrame:GetChildren()) do
-            if string.find(child.Name, "^Trade") then
-                local senderName = child.Name:sub(6) -- ตัด "Trade" ออก
-                if IsInList(senderName, SENDER_LIST) then
-                    print("✅ Receiver พบ trade request จาก " .. senderName .. " กำลัง accept ผ่าน Remote...")
+        local mobileFrame = requestsFrame:FindFirstChild('Mobile')
+        if mobileFrame then
+            for _, child in pairs(mobileFrame:GetChildren()) do
+                if string.find(child.Name, "^Trade") then
+                    local senderName = child.Name:sub(6) -- ตัด "Trade" ออก
+                    if IsInList(senderName, SENDER_LIST) then
+                        print("✅ Receiver พบ trade request แบบ Mobile จาก " .. senderName .. " กำลัง accept...")
 
-                    -- อัปเดตเวลาสุดท้ายที่ได้รับ trade request (เพิ่มใหม่)
-                    lastTradeRequestTime = tick()
+                        -- อัปเดตเวลาสุดท้ายที่ได้รับ trade request (เพิ่มใหม่)
+                        lastTradeRequestTime = tick()
 
-                    -- พยายามยอมรับผ่าน Remote ก่อน ถ้าไม่สำเร็จ ค่อย fallback เป็น UI
-                    local remoteAccepted = AcceptTradeByRemote(senderName)
-                    if remoteAccepted then
-                        return true
-                    else
-                        print("⚠️ Remote accept ล้มเหลว กำลังใช้ UI แทน...")
                         Clicked_Ui(child.AcceptButton.UpperLabel)
                         task.wait(.1)
                         Click_NOW()
                         return true
+                    else
+                        print("❌ Trade request แบบ Mobile จาก " .. senderName ..
+                                  " ไม่ตรงกับรายชื่อ กำลัง decline...")
+                        Clicked_Ui(child.DeclineButton.UpperLabel)
+                        task.wait(.1)
+                        Click_NOW()
                     end
+                end
+            end
+        end
+
+        local otherFrame = requestsFrame:FindFirstChild('Other')
+        if not otherFrame then
+            return false
+        end
+
+        for _, child in pairs(otherFrame:GetChildren()) do
+            if string.find(child.Name, "^Trade") then
+                local senderName = child.Name:sub(6) -- ตัด "Trade" ออก
+                if IsInList(senderName, SENDER_LIST) then
+                    print("✅ Receiver พบ trade request แบบ Other จาก " .. senderName .. " กำลัง accept...")
+
+                    -- อัปเดตเวลาสุดท้ายที่ได้รับ trade request (เพิ่มใหม่)
+                    lastTradeRequestTime = tick()
+
+                    Clicked_Ui(child.AcceptButton.UpperLabel)
+                    task.wait(.1)
+                    Click_NOW()
+                    return true
                 else
                     print("❌ Trade request จาก " .. senderName ..
                               " ไม่ตรงกับรายชื่อ กำลัง decline...")
@@ -1235,7 +1367,7 @@ local function SenderReceiverCoroutine()
             end
             
             if not LocalPlayer.PlayerGui.TradeGui.Enabled then
-                -- รอ trade request และ auto-accept จาก sender อื่น
+                -- รอ trade request
                 AcceptTradeRequestForSender()
 
                 -- ตรวจสอบ timeout สำหรับ Sender ที่ทำงานแบบ Receiver (เพิ่มใหม่)
@@ -1294,13 +1426,10 @@ local function SenderReceiverCoroutine()
                     end
                 end
 
-                -- ถ้ามี trade request ให้ override main sender และตรวจสอบ auto-accept
+                -- ถ้ามี trade request ให้ override main sender
                 if hasTradeRequest then
                     print("📩 พบ trade request กำลัง override Main Sender...")
                     isSenderMainActive = false
-                    
-                    -- ตรวจสอบและ auto-accept trade request จาก sender อื่นใน SENDER_LIST
-                    AcceptTradeRequestForSender()
                 end
 
                 -- ตรวจสอบว่า main sender loop กำลังทำงานอยู่หรือไม่
@@ -1317,7 +1446,7 @@ local function SenderReceiverCoroutine()
                         isSenderReceiverActive = true
                         currentStepReceiver = 1
                         print(
-                            "🚀 Sender เริ่มขั้นตอนที่ 1: Add Creature (โหมด Receiver ชั่วคราว - Auto-accept จาก Sender อื่น)")
+                            "🚀 Sender เริ่มขั้นตอนที่ 1: Add Creature (โหมด Receiver)")
                     else
                         wait(1)
                     end
@@ -1345,7 +1474,7 @@ local function SenderReceiverCoroutine()
                         if elapsedTime >= 5 then
                             currentStepReceiver = 2
                             print(
-                                "   Sender เริ่มขั้นตอนที่ 2: Click Accept (โหมด Receiver ชั่วคราว)")
+                                "   Sender เริ่มขั้นตอนที่ 2: Click Accept (โหมด Receiver)")
                         else
                             print("⏳ รอ Add Creature เสร็จ... (" ..
                                       string.format("%.1f", 5 - elapsedTime) .. " วินาที)")
@@ -1367,7 +1496,7 @@ local function SenderReceiverCoroutine()
                         local elapsedTime = tick() - receiverAcceptStartTime
                         if elapsedTime >= 3 then
                             currentStepReceiver = 0
-                            print("✅ Sender เทรดเสร็จสิ้น (โหมด Receiver ชั่วคราว - กลับสู่โหมด Sender ปกติ)")
+                            print("✅ Sender เทรดเสร็จสิ้น (โหมด Receiver)")
                             -- รีเซ็ตสถานะ
                             receiverCreatureStartTime = 0
                             receiverCreatureRequested = false
@@ -1425,10 +1554,10 @@ function TradeStepHandlerSender(step)
             step = 0
         end
 
-        -- ตรวจสอบว่า SenderReceiver กำลังทำงานอยู่หรือไม่ (โหมด receiver ชั่วคราว)
+        -- ตรวจสอบว่า SenderReceiver กำลังทำงานอยู่หรือไม่
         if isSenderReceiverActive then
             print(
-                "⏸️ SenderReceiver กำลังทำงานอยู่ (โหมด receiver ชั่วคราว) Main Sender รอสักครู่...")
+                "⏸️ SenderReceiver กำลังทำงานอยู่ Main Sender รอสักครู่...")
             return 0
         end
 
