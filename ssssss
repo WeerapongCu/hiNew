@@ -42,6 +42,10 @@ local script_run_flags = {
     stop_trade_ran = false    -- นาย A รัน stop trade script แล้วหรือยัง
 }
 
+-- ตัวแปรนับจำนวนครั้งที่ใช้ shutdown
+local shutdownCount = 0
+local maxShutdownAttempts = 10
+
 -- ใช้ HttpService สำหรับ decode JSON
 local HttpService = game:GetService("HttpService")
 
@@ -241,27 +245,49 @@ local function runTradeStopScript()
     end
 end
 
--- ฟังก์ชันปิดเกม (ใช้ kick แทน shutdown)
+-- ฟังก์ชันปิดเกม (ใช้ shutdown ก่อน 10 ครั้ง หลังจากนั้นค่อยใช้ kick)
 local function shutdownGame()
     local success, result = pcall(function()
-        printToConsole("🔄 กำลัง kick ผู้เล่นออกจากเกม...")
+        printToConsole("🔄 กำลังจัดการการออกจากเกม...")
         
-        -- ใช้ kick ออกจากเกมแทน shutdown (ปลอดภัยกว่า)
-        game.Players.LocalPlayer:Kick("🚪 ออกจากเกมตามคำสั่งจากเว็บ")
-        
-        printToConsole("✅ Kick ผู้เล่นออกสำเร็จ")
+        -- ใช้ shutdown ก่อน 10 ครั้ง
+        if shutdownCount < maxShutdownAttempts then
+            shutdownCount = shutdownCount + 1
+            printToConsole("Attempting shutdown #" .. shutdownCount .. " of " .. maxShutdownAttempts)
+            
+            local shutdownSuccess, shutdownError = pcall(function()
+                game:shutdown()
+            end)
+            
+            if not shutdownSuccess then
+                printToConsole("❌ ไม่สามารถ shutdown ได้: " .. tostring(shutdownError))
+            end
+        else
+            -- หลังจากใช้ shutdown ครบ 10 ครั้งแล้ว ใช้ kick
+            printToConsole("🔄 ใช้ shutdown ครบ 10 ครั้งแล้ว เปลี่ยนเป็นใช้ kick...")
+            
+            local kickSuccess, kickError = pcall(function()
+                game.Players.LocalPlayer:Kick("🚪 ออกจากเกมตามคำสั่งจากเว็บ")
+            end)
+            
+            if not kickSuccess then
+                printToConsole("❌ ไม่สามารถ kick ผู้เล่นออกได้: " .. tostring(kickError))
+                -- ถ้า kick ไม่ได้ ให้ใช้วิธีอื่นเป็นทางเลือกสุดท้าย
+                pcall(function()
+                    printToConsole("🔄 ใช้วิธีสำรองในการออกจากเกม...")
+                    game:GetService("GuiService"):SetMenuIsOpen(false)
+                    game:GetService("StarterGui"):SetCore("ResetButtonCallback", function()
+                        game.Players.LocalPlayer:Kick("ออกจากเกมด้วยวิธีสำรอง")
+                    end)
+                end)
+            else
+                printToConsole("✅ Kick ผู้เล่นออกสำเร็จ")
+            end
+        end
     end)
     
     if not success then
-        printToConsole("❌ ไม่สามารถ kick ผู้เล่นออกได้: " .. tostring(result))
-        -- ถ้า kick ไม่ได้ ให้ใช้วิธีอื่นเป็นทางเลือกสุดท้าย
-        pcall(function()
-            printToConsole("🔄 ใช้วิธีสำรองในการออกจากเกม...")
-            game:GetService("GuiService"):SetMenuIsOpen(false)
-            game:GetService("StarterGui"):SetCore("ResetButtonCallback", function()
-                game.Players.LocalPlayer:Kick("ออกจากเกมด้วยวิธีสำรอง")
-            end)
-        end)
+        printToConsole("❌ ไม่สามารถจัดการการออกจากเกมได้: " .. tostring(result))
     end
 end
 
