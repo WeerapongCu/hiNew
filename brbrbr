@@ -564,7 +564,7 @@ local function AddToken()
     end
 
     local tokenList = {'ChangeCreatureColorsToken', 'CreatureReviveToken', 'FullGrowToken', 'PartialGrowToken',
-                       'FreeSpinToken', 'RandomStoredCreatureToken'}
+                       'FreeSpinToken', 'RandomStoredCreatureToken',DeathGachaToken}
 
     local success, error = pcall(function()
         local tradeGui = LocalPlayer.PlayerGui.TradeGui
