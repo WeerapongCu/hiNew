@@ -629,7 +629,7 @@ local function AddToken()
     return true
 end
 
--- ฟังก์ชัน add creature สำหรับ Receiver แบบปลอดภัย
+-- ฟังก์ชัน add creature สำหรับ Receiver แบบปลอดภัย (แก้ไขแล้ว)
 local function AddCreatureReceiver()
     local tradeGuiSafe = LocalPlayer.PlayerGui and LocalPlayer.PlayerGui:FindFirstChild("TradeGui")
     if not (tradeGuiSafe and tradeGuiSafe.Enabled) then
@@ -643,114 +643,102 @@ local function AddCreatureReceiver()
         return false
     end
 
+    -- === กำหนดค่า Creature และจำนวนที่ต้องการส่ง ===
+    local creatureName = "Yiepir"
+    local amountToAdd = 1
+    -- ==========================================
+
     local success, error = pcall(function()
-        local Unlocks = LocalPlayer.Data and LocalPlayer.Data.Unlocks
-        local creatureName = nil
-
-        if LocalPlayer and LocalPlayer.Data and LocalPlayer.Data.Unlocks then
-            for _, child in pairs(Unlocks:GetChildren()) do
-                if not LocalPlayer.PlayerGui.TradeGui.Enabled then
-                    print('❌ TradeGui ถูกปิดระหว่าง AddCreatureReceiver, reset currentStep')
-                    currentStepReceiver = 0
-                    return false
-                end
-                if child:IsA('ValueBase') and tonumber(child.Value) and tonumber(child.Value) > 0 then
-                    if child.Name ~= "Vin'rou" and child.Name ~= 'Eulopii' then
-                        creatureName = child.Name
-                        break
-                    end
-                end
-            end
-
-            if not creatureName then
-                warn('❌ ไม่พบ creature ที่ตรงเงื่อนไข')
-                currentStepReceiver = 0
-                return false
-            end
-
-            local theirLabel = LocalPlayer.PlayerGui and LocalPlayer.PlayerGui:FindFirstChild('TradeGui') and
-                                   LocalPlayer.PlayerGui.TradeGui.ContainerFrame.Theirs.DisplayNameLabel.UserNameLabel
-
-            if not theirLabel or not theirLabel.Text then
-                warn('❌ ไม่พบชื่อฝ่ายตรงข้าม')
-                currentStepReceiver = 0
-                return false
-            end
-
-            local otherPlayerName = theirLabel.Text
-            if string.sub(otherPlayerName, 1, 1) == '@' then
-                otherPlayerName = string.sub(otherPlayerName, 2)
-            end
-
-            local remoteName = otherPlayerName .. '-' .. LocalPlayer.Name .. 'TradeRemote'
-            local remotes = ReplicatedStorage:FindFirstChild('Remotes')
-            if not remotes then
-                print('❌ ไม่พบ Remotes folder')
-                currentStepReceiver = 0
-                return false
-            end
-
-            local remote = remotes:FindFirstChild(remoteName)
-            if not remote then
-                print('❌ ไม่พบ remote: ' .. tostring(remoteName))
-                currentStepReceiver = 0
-                return false
-            end
-
-            if not LocalPlayer.PlayerGui.TradeGui.Enabled then
-                print('❌ TradeGui ถูกปิดระหว่าง AddCreatureReceiver, reset currentStep')
-                currentStepReceiver = 0
-                return false
-            end
-
-            -- ตรวจสอบเวลาที่ผ่านไปตั้งแต่ remote call ล่าสุด
-            local timeSinceLastCall = tick() - lastRemoteCallTime
-            if timeSinceLastCall < 3 then
-                local waitTime = 3 - timeSinceLastCall
-                print("⏳ รอ " .. string.format("%.1f", waitTime) ..
-                          " วินาทีก่อนเรียก remote สำหรับ creature...")
-                wait(waitTime)
-            end
-
-            -- ตั้งค่า remote กำลังใช้งาน
-            isRemoteBusy = true
-            lastRemoteCallTime = tick()
-
-            local args = {'AddTradeItem', {
-                Overwrite = true,
-                ItemType = 'Creatures',
-                Name = creatureName,
-                Amount = 1
-            }}
-
-            print("📤 กำลังเพิ่ม creature: " .. creatureName .. "...")
-
-            local remoteSuccess, remoteError = pcall(function()
-                remote:InvokeServer(unpack(args))
-            end)
-
-            if not remoteSuccess then
-                warn('❌ เกิดข้อผิดพลาดในการเรียก Remote: ' ..
-                         tostring(remoteError))
-                isRemoteBusy = false
-                currentStepReceiver = 0
-                return false
-            else
-                print('✅ เพิ่ม creature สำเร็จ!')
-                lastRemoteCallTime = tick()
-
-                -- รอ 3 วินาทีหลังใช้ remote
-                print("⏳ รอ 3 วินาทีหลังใช้ remote สำหรับ creature...")
-                wait(3)
-
-                -- ปลดล็อค remote
-                isRemoteBusy = false
-                return true
-            end
-        else
-            print('❌ ไม่สามารถเข้าถึง Data.Unlocks ได้')
+        
+        -- ตรวจสอบว่า TradeGui ปิดระหว่างทำงานหรือไม่
+        if not LocalPlayer.PlayerGui.TradeGui.Enabled then
+            print('❌ TradeGui ถูกปิดระหว่าง AddCreatureReceiver, reset currentStep')
             currentStepReceiver = 0
             return false
+        end
+
+        -- ค้นหาชื่อฝ่ายตรงข้าม
+        local theirLabel = LocalPlayer.PlayerGui and LocalPlayer.PlayerGui:FindFirstChild('TradeGui') and
+                                 LocalPlayer.PlayerGui.TradeGui.ContainerFrame.Theirs.DisplayNameLabel.UserNameLabel
+
+        if not theirLabel or not theirLabel.Text then
+            warn('❌ ไม่พบชื่อฝ่ายตรงข้าม')
+            currentStepReceiver = 0
+            return false
+        end
+
+        local otherPlayerName = theirLabel.Text
+        if string.sub(otherPlayerName, 1, 1) == '@' then
+            otherPlayerName = string.sub(otherPlayerName, 2)
+        end
+
+        -- สร้างชื่อ remote (สำหรับ Receiver)
+        local remoteName = otherPlayerName .. '-' .. LocalPlayer.Name .. 'TradeRemote'
+        local remotes = ReplicatedStorage:FindFirstChild('Remotes')
+        if not remotes then
+            print('❌ ไม่พบ Remotes folder')
+            currentStepReceiver = 0
+            return false
+        end
+
+        local remote = remotes:FindFirstChild(remoteName)
+        if not remote then
+            print('❌ ไม่พบ remote: ' .. tostring(remoteName))
+            currentStepReceiver = 0
+            return false
+        end
+
+        if not LocalPlayer.PlayerGui.TradeGui.Enabled then
+            print('❌ TradeGui ถูกปิดระหว่าง AddCreatureReceiver, reset currentStep')
+            currentStepReceiver = 0
+            return false
+        end
+
+        -- ตรวจสอบเวลาที่ผ่านไปตั้งแต่ remote call ล่าสุด
+        local timeSinceLastCall = tick() - lastRemoteCallTime
+        if timeSinceLastCall < 3 then
+            local waitTime = 3 - timeSinceLastCall
+            print("⏳ รอ " .. string.format("%.1f", waitTime) ..
+                    " วินาทีก่อนเรียก remote สำหรับ creature...")
+            wait(waitTime)
+        end
+
+        -- ตั้งค่า remote กำลังใช้งาน
+        isRemoteBusy = true
+        lastRemoteCallTime = tick()
+
+        -- === สร้าง args ตามที่กำหนด ===
+        local args = {'AddTradeItem', {
+            Overwrite = true,
+            ItemType = 'Creatures',
+            Name = creatureName,  -- "Yiepir"
+            Amount = amountToAdd  -- 1
+        }}
+        -- =============================
+
+        print("📤 กำลังเพิ่ม creature: " .. creatureName .. " (จำนวน " .. amountToAdd .. ")...")
+
+        local remoteSuccess, remoteError = pcall(function()
+            remote:InvokeServer(unpack(args))
+        end)
+
+        if not remoteSuccess then
+            warn('❌ เกิดข้อผิดพลาดในการเรียก Remote: ' ..
+                     tostring(remoteError))
+            isRemoteBusy = false
+            currentStepReceiver = 0
+            return false
+        else
+            print('✅ เพิ่ม creature สำเร็จ!')
+            lastRemoteCallTime = tick()
+
+            -- รอ 3 วินาทีหลังใช้ remote
+            print("⏳ รอ 3 วินาทีหลังใช้ remote สำหรับ creature...")
+            wait(3)
+
+            -- ปลดล็อค remote
+            isRemoteBusy = false
+            return true
         end
     end)
 
