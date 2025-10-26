@@ -1,184 +1,173 @@
 -- ตัวแปรสำหรับรายชื่อผู้เล่น
-local SENDER_LIST = {'aamdfbxo0259', 'hxdiezcy1085', 'tmpjapco2513', 'lohn16yhrv95', 'igvd84lzpa15', 'nyrw33hbes43',
-                     'guiyltch3688', 'qyglkalg0658', 'mwhw51onjz84', 'tmkxzrjn5607', 'twym90joit82', 'rzfgxlxk2685',
-                     'ikqv67yayy50', 'sfqwrxlb1084', 'npsm36hfzr91', 'kchx97uoxi61', 'yrqkshga8681', 'wwgk66xifm78',
-                     'xvmwmooe8725', 'gefeeojh8767', 'usdr56zhzd55', 'azvq40jjdw51', 'ebvrcfpa8360', 'kdyn65ydwu82',
-                     'qfposvwp4989', 'mxxx73xpkq42', 'gjtl66jvvz72', 'edntdsxf7132', 'gfnx80yxdb72', 'cnqwmgyj7979',
-                     'xxxfwpyk3610', 'zsdogmqx4402', 'bvzg72cjkg17', 'njav22nmbr76', 'iwya93xddy16', 'pxphxdmh6249',
-                     'jqvm61jrxf25', 'mjiy08mzjs89', 'hhme08dlsh16', 'gksaammu0592', 'tamw34ehew30', 'jrfnzhtj7294',
-                     'voke48pibu26', 'nquy95hhfn81', 'igzsimdi9270', 'dkhszghw8166', 'ktlc98gxzy14', 'bsum51svnh51',
-                     'ytqw92olvj10', 'yjrhsbzh7456', 'wyngryjc9918', 'lzij16gcdz31', 'dhlcrilo3130', 'nkun03vgzb66',
-                     'zlnppzzm0543', 'sdmvwyom8602', 'tlfxeaed9333', 'mkyp44fmrs78', 'yshj92fipe42', 'exdmyler3463',
-                     'mxrrumoq5101', 'ogdsmxxx6735', 'yssklopo4464', 'bdwhnrte5772', 'gvvd69juor45', 'totn14cycu10',
-                     'nzmuglhk2879', 'gfikxtcp0242', 'xdws25zmep54', 'luxm48baul24', 'rtcnvicn2275', 'toqacjkc6737',
-                     'lxjh41bsla65', 'gekd93xjeo68', 'dpod44dwor35', 'eeyjctjj1819', 'yddctyed3393', 'plzh97msbr42',
-                     'asjn26qhii95', 'sdolfjun2579', 'zkwstvje5914', 'ycwzmvdp5472', 'zhxujpir7923', 'fajw10actv96',
-                     'mnpz91suby24', 'wjklxsfw0309', 'hqxaojsc8163', 'krsb18ekyc39', 'rqqlomkb8485', 'csqn14wgzk53',
-                     'wghn32szkj71', 'spdh99ukez09', 'nrzc08adtp76', 'rjhjmlrs6729', 'emajnbuf8786', 'qecvjzbk7681',
-                     'chblqonu2371', 'lxva95qaqu61', 'ncvspzcz1306', 'ghtdkmwu3303', 'hvzj08eybb86', 'jhhmtjdx7603',
-                     'yfxhnfct2671', 'szyguvhw0925', 'ivxczxeg6881', 'qrhbstoo7595', 'mudl27pmre73', 'rylw26wzrc93',
-                     'hrjl07klif65', 'mzon37pwyb27', 'ovkluvtk8910', 'liywlbmd6047', 'tpvx60iyvj38', 'qlyypmva6818',
-                     'ttyn80mhmp41', 'mnxfphwk2523', 'ynuu32vjkz62', 'pfku60rcib08', 'zbgzhugq5581', 'hmtr41vzyo84',
-                     'qkrb32xuoy16', 'hxjpuxrj5178', 'rvgfhewq9948', 'htfk99ghsk96', 'cvtpdbjh6100', 'hdljsohv8322',
-                     'vhcm20dpmb72', 'vghhmist4368', 'iergygdx7899', 'otlb87rqor20', 'bkoblblu2414', 'hjkc26hppg25',
-                     'wugbsqgo7342', 'hmsvnyyh5240', 'yyaclhry8367', 'yozxozew5542', 'rxqi66mjhl06', 'sqwk75iinu81',
-                     'svjdsgmk4306', 'qncq87kybi55', 'iadwkgag4638', 'brxp87olsj31', 'ngfb63nqrl63', 'hzgxpzhl1427',
-                     'xkyxjzur2136', 'ozql92dehj17', 'wmog74pxdb24', 'batqjvmq5436', 'oszo77vpbe11', 'xmxcacvk5834',
-                     'fbxvgdfa4821', 'pcvk96lgjr69', 'ufnwnala2840', 'fxtmwece9535', 'sdyv16khnv68', 'dohwhkbt4143',
-                     'ehexrijl0848', 'vloq07kfsx91', 'ewwp51tuxb91', 'pbqknews6323', 'owhhxfow6033', 'yvtu95ympy49',
-                     'kjiospsk5366', 'smzv44icef76', 'zjrw81fyui58', 'tiox33ored73', 'txhd46ivyk14', 'fizfsslh4816',
-                     'ppzgnqsz7140', 'vyimjuit8071', 'kdtg55rwzc14', 'adgg04glmm61', 'lvrwgsct5179', 'yjacmemx5515',
-                     'nvgyoidg7093', 'cgndnmix6967', 'rvqxadps7605', 'fzlgtxqv1179', 'dmcddjys3748', 'yikozcct4083',
-                     'ueeukahp8616', 'wpxpkssv4664', 'pwodecpw2577', 'uggy75hdjj80', 'iacc47tora76', 'mcia82auux40',
-                     'bpva73tyzf52', 'xfra78xtzc02', 'dtic31zuwq70', 'nlbxjwnx8388', 'uggiqfdt1802', 'ueaesgve5205',
-                     'llas50btyz49', 'wyii38zima81', 'bgkp54mvpl69', 'wxqz69fhkb53', 'ptdfjbxk3532', 'ltfs91uqlm49',
-                     'pvhfoxyw9338', 'deqjeock4939', 'pgrfmvhf3230', 'ahkbbfks6894', 'xfmy56oevh69', 'reblpydx6485',
-                     'oslz36znyb01', 'mxpj96kyop76', 'skbp22rqhc04', 'vazv64ymmd74', 'pixiyvsx5882', 'lqkwzzio4239',
-                     'vgiobfhl7204', 'elaj36aiuh35', 'rgsl20tues65', 'wiwdfwcj8762', 'iqekewqg4128', 'fqmo06otwk89',
-                     'zttw35yqpy96', 'rnvwbavo1572', 'ugkp18cwqw35', 'pzkldlkc3810', 'lssl88vjpy78', 'hwtg70lqsl27',
-                     'mwnb42uyng08', 'doawksuf4932', 'ijsnzhxx4009', 'cnyj73lcot21', 'ansaghmz9088', 'wzsuozdy4412',
-                     'xxmhycgf1303', 'dgnq90lvit01', 'jcwzvcej6567', 'wfhtgfmc9524', 'apblyjma5310', 'wgxshcie1083',
-                     'ibvvkojt8361', 'aydt33ffth78', 'xlyv29nwji73', 'fxqfzphm1905', 'udvsmpcq4646', 'lwvqvxyl9003',
-                     'loiy21sqxc78', 'rdia38aftn29', 'lwba81tbls72', 'wcqotslq0297', 'oconojzm1931', 'kciypcyw5648',
-                     'kcol74zdnx98', 'qucs37yeno19', 'Karlytgopu88301', 'Deborznwen91878', 'Disguhy93800',
-                     'Rebajudme83733', 'Breebkscs11161', 'Dynahnxjng17734', 'Velmaericc40905', 'Sukiwljvk22288',
-                     'Elyshadmiys22684', 'Tamarpbddw01361', 'Tybieaardg10431', 'Zarahygkba43342', 'Mabelxhjbk77627',
-                     'Liblmiby12442', 'Deloraafuam60053', 'Zondagckey15937', 'Pamelaqkfen40995', 'Siouxazrdc32186',
-                     'Astrixeqauw51624', 'Lynneaopbbr75414', 'Cheriedacwf16054', 'Dulseawoqxn88600', 'Jobynadiswm60397',
-                     'Connieddtpj56814', 'Barbecdrxj07433', 'Eleengyynp07590', 'Ashlanexhno19254', 'Daricekubbg67687',
-                     'Kitrorhy15280', 'Simonavfmrn51298', 'Dianadoift52476', 'Maryjoyjivz40433', 'Kristesxvum22721',
-                     'Xyliavttdc84073', 'Binnimhbky34190', 'Pianzsbi10755', 'Adoreektpox86431', 'Jenineyqxby15066',
-                     'Fionapoefl64460', 'Jackynmjrp23432', 'hhdmfgox5861', 'xume62jghq46', 'qngqykdz0464',
-                     'aptc38corn56', 'tdyk11hncl78', 'wmffbaea2688', 'tnfolbpo0986', 'bsnbxesu6543', 'yzmsugwv2515',
-                     'ouef68zywk28', 'kkcfekya6681', 'ktsp05xrig99', 'mrvm37fzmt75', 'cygweoqf9746', 'rzgi10xwrq05',
-                     'zldk26expd28', 'jfxj95ezey41', 'ouvz92zbbp26', 'kctq46bnev62', 'btfdekol2034', 'peqr49dnrl13',
-                     'eejuoifl7970', 'kjdfozci3160', 'luru59pcag75', 'jlzxqdrq2789', 'zhvngaar3817', 'zugrihbg9793',
-                     'wqfq19aqhz85', 'mzud36ijus32', 'oygv47wkun88', 'zisprhdf5107', 'koyy79bggo09', 'gkpf82xnru66',
-                     'dpdw72tsmd07', 'hcpovhgx8940', 'loyv47myrs89', 'zhrdudai5693', 'rnygtvss2588', 'hywfnykv8300',
-                     'qfqidazh9941', 'npgdfchi7846', 'qmuw32lyuo76', 'ipem17ehgi22', 'vmdt44fkfm90', 'ivtbqnze9292',
-                     'sgnu80grss46', 'zvfa45kutj29', 'vyat28ryom24', 'gtnr84dgkh32', 'aeyc23nfzf69', 'higkprir0691',
-                     'thmb18rqez14', 'lbbn66ketf92', 'gmxufjrh1074', 'qkzs20qrqi77', 'prmu51sjyc99', 'yzbk25pgci48',
-                     'fsoyhvvp5914', 'bunv55kiau48', 'caiezqim8870', 'llfygvxi2140', 'kgdcalkk9242', 'hzzrnwra2835',
-                     'gaxx90hkpw60', 'svkd26zksa01', 'ugma14hegb36', 'mpad84mggn72', 'njvz44ghoa72', 'mjbu68lugk37',
-                     'qgfmpetr4564', 'sgib71bawl57', 'dpow04iewa61', 'xckk35ejvk10', 'asyh89ihzx14', 'yujg23stdw98',
-                     'bnkj11qklx30', 'jvav90mata47', 'ioqc29xrwp10', 'entj57fypw15', 'gxny46ajpw91', 'yuvg44yicg35',
-                     'yebqpqhl9046', 'yutk86cfgb48', 'rsbw14qxfs80', 'ragf54cain29', 'lrgiwtzv1678', 'yiem37vpip79',
-                     'uzsnhzyr9667', 'klmnkayk5222', 'dbbq28hvjr17', 'ivgl91brxj46', 'amdr97bmmv82', 'xniw01phxv11',
-                     'rkrxigcw0144', 'ojxi08whkv93', 'ovvu21nvjk35', 'gniunhbc9415', 'nshpffjm6678', 'kuvw94mzvs41',
-                     'gwogjogb1882', 'pavnhovw5620', 'imdlfauq3857', 'wwwhjjmh3542', 'wubfadas5751', 'pila78amtu02',
-                     'kgysjmob8103', 'adkp46rhjn76', 'vnca04ahik07', 'zdsvulzg9021', 'vvjy99ajuq98', 'fcyynpje2216',
-                     'dxln29htzs45', 'xtcudbjl8925', 'boyeapes5706', 'ibkf91ekqc89', 'vcta22wons10', 'ipab92gfuu59',
-                     'qjul03esrp48', 'dayb42ocfv92', 'dfffzbvr6966', 'olip46dauh07', 'jsaryghd3977', 'tnxhojxm0329',
-                     'vjuv00jllb18', 'sqdayoeu0818', 'nlta21gqzp45', 'lbxvlqpo5254', 'wdxhhyvl4698', 'arpyyzvp7795',
-                     'naoe14eqyc10', 'xvyo45adwe05', 'azko80opjv31', 'nptn06eyts97', 'faoo90eueu37', 'yuit92rybi33',
-                     'qbgg87jcib71', 'urberenx3674', 'auek57qmfw97', 'yaewxncu1225', 'wwyuksru7297', 'ygvc54vujb24',
-                     'wfgnbohw5740', 'zdnnancb7523', 'behksana2743', 'ihth72hsnd86', 'clcz82siju22', 'rrttmghv4091',
-                     'mhdy22ipsx22', 'qxitmbnt2653', 'bigv58ttcy25', 'bhtn75cgai91', 'ysjyodto0808', 'cddh04qwee10',
-                     'pywlfcbq8853', 'jqhg08bheo67', 'snyp72gmre69', 'amyd14ghkk57', 'zgafbdai5480', 'gzwaxvbr0423',
-                     'qjcg80edbv01', 'nlmabdsn5384', 'yuaghqef6755', 'fnml80awdp52', 'bciw97izqd76', 'didu49tslx56',
-                     'xoogfnzv8048', 'ejptgauw6451', 'uqcz77uapa98', 'agoblvpb2157', 'mnvw46makp02', 'pxkh48rpjd20',
-                     'kynj40opke59', 'dzkcqfus2644', 'rqwrthvi8036', 'qtoq23qwka96', 'djgv98gods38', 'hwgqjqti8326',
-                     'rahg74rspb90', 'kblhzfhx0654', 'ssow74cicp52', 'yczqgmqf9111', 'mrcixpzw5023', 'jlpg55iioc63',
-                     'cufszgjq0607', 'rpjs13xkyl89', 'dyaclbia7943', 'rxaz10svcp46', 'lrlpgnpl9334', 'nnbwhumt9992',
-                     'zmquwxxt1172', 'evvrnukw9853', 'xfctragv7158', 'qltpghhx4126', 'qmzdgwcn5930', 'tiipczqi6879',
-                     'ggwh75bfba10', 'cdud45hmsq15', 'xzlg74dilv18', 'odvujtcm9653', 'wxxmdxhp4241', 'doilbasu9149',
-                     'vtrndsce3170', 'wsoc25gyxv45', 'jphmjiep2425', 'gylotpjr8052', 'muodqfwb3658', 'mmbd08sfur75',
-                     'dlzigvvf1888', 'stelpmci2747', 'ioeflenn6668', 'uods17yxuh90', 'drdbhkle0936', 'dggn30atsc61',
-                     'tdanscnc0175', 'hicv94unpb83', 'hjuzutwu7430', 'tzfc44niwo81', 'pubc08pqmv83', 'cztfovya3547',
-                     'ogztadzr9190', 'shbf90jsdb40', 'amux76zqcp26', 'rtcbkkhz3882', 'shxmgyzx0677', 'krqrmhjo5949',
-                     'ovfq32gpib35', 'hxevewtb3353', 'nher21sfyo32', 'sjqu89nocg07', 'irseqqql1046', 'yedvrlbn7088',
-                     'vvxr54bchc69', 'bwlngsjb7394', 'hopddjxp9642', 'gtxuyyeu4667', 'ppzr73vmhw15', 'eqqhmzqw5777',
-                     'tdoy34hqxn80', 'tshgbpfm7682', 'ybvq32uqbg08', 'mztm90zdan38', 'bcnv93vmgx12', 'vldpuowi7228',
-                     'fugl81pygi34', 'ubcsupuu9158', 'grek46qcpr51', 'kqpy29ieaj51', 'wvnwgvgh5484', 'lbft99jhkd75',
-                     'vyjtbsat7347', 'wkhwchwu7260', 'oscpbjpd1088', 'amws30vure38', 'qmynbsny7063', 'obvf50wpug21',
-                     'iwxk83ywyx98', 'viiy73icaz22', 'juthhddt0576', 'vkkryewk1024', 'mlzx91fymr97', 'zymf74ymfr73',
-                     'qyenwawh7997', 'oyjm72wjce16', 'odxyskfa2323', 'dincerfa1227', 'wntu68zxtk14', 'hruamccu6744',
-                     'ftdjiqkw5414', 'near13waft94', 'qqhbssxu4026', 'jgdvlgaj2916', 'wbve48zkqn12', 'rody49vlqk47',
-                     'kccg14ufdf12', 'buipxyrd0863', 'zpgk42qlvt21', 'fhxr41ewmg28', 'cwwfmmwc8927', 'zoaq67ffam94',
-                     'occpbgde2588', 'qwpxkeuv9765', 'fkws97xmyp52', 'trhzptri3080', 'cyjxjade6655', 'bigjraht0132',
-                     'hxjd01mdyw40', 'nknu55qwaa40', 'znzy13eawe78', 'ilzr15bhkp52', 'htlphbli7926', 'nroxkyrg3985',
-                     'sxgmypdg5803', 'nzbjteyf6665', 'zqjxitbd1596', 'daxdlwyp9852', 'vzdi73omts76', 'iali72sxac89',
-                     'qrdmxvha5368', 'agnn96jjef00', 'wkir06ehjb54', 'sasy49mipv50', 'tcxisnsy6687', 'qtnkrjin9079',
-                     'ajezaajn4899', 'tldrxofz6255', 'zzdimkzi8090', 'twdk29ehos13', 'uzda33tumr17', 'mmpt40ndae66',
-                     'vfyeghsr7841', 'bnovhagl7403', 'qwut25uuct01', 'gyzg51iaye92', 'ekem43bnzy01', 'nylacrjh4365',
-                     'qvzp44vtxo35', 'eegguclq6426', 'jimo42mucn18', 'ohtvnhdj4267', 'ehtx07xtdz52', 'vjfkvgzk8512',
-                     'hpxhrwlh0303', 'skzy23vlbm35', 'mloc41ruzv65', 'etnm55sgbh04', 'zaorjygr1311', 'lfnf50ofkg07',
-                     'kbdayugb0946', 'hloq66khgy77', 'nyez64jfud32', 'vtsa15qecg97', 'udqw41fyue45', 'sqhufxhk1062',
-                     'umtz48aoaf83', 'esti19pcfm77', 'rharwcyf8323', 'vnzpqfcj8666', 'ovuxvdjw8198', 'pqdpzlwx1424',
-                     'vchwvakf9605', 'fkijduup1736', 'nngj78qkqe54', 'rnvmpldf2389', 'gbue81ifyv72', 'aoqj43sckq47',
-                     'wbqmrrxh3176', 'kcmukahk7439', 'wabuxlqe3885', 'bffdgsqd3660', 'cjaleixj1551', 'kqnm27cknm74',
-                     'ansh20sunr04', 'dhmorujb7099', 'soes43rfsd06', 'cjcgyobx2122', 'mbsa78oamj78', 'wevs84hmyd21',
-                     'wyhr88cyxu99', 'biirpxxa7397', 'lmhy36nqpl34', 'mhmf60lzie20', 'hxrz25hbdj36', 'huszremn5093',
-                     'ldpzjclf6240', 'stoh70adnb97', 'pbjd14otph49', 'xemeeoxe9740', 'lscilsjs8315', 'igcuhogf9654',
-                     'gryhlvgj7011', 'gqfcjmuf8709', 'reni70fjzq24', 'lhdz75yhwc87', 'dqsn11bbuq35', 'puao27yhin27',
-                     'ioettrht1012', 'mzinuusn7056', 'pbrp45mlhr54', 'yuoo07dnxl05', 'ilewqkbq2385', 'jbeutatl1207',
-                     'svkj62xlad05', 'fmus71gvuh21', 'cdlyslie9984', 'zojkzbeq6219', 'iquh48bhld53', 'cyovtmvw8584',
-                     'umyozqaa6600', 'uyoe34iupg13', 'rkeo59imli58', 'hpsvcccg9447', 'jmew34vbkq94', 'otqycuzl2380',
-                     'xrelvfdc1673', 'utwbpbov2996', 'ujnzlver7126', 'swfxdzar8637', 'pmzz38bthb62', 'hvyu32gths10',
-                     'vlaoglzk7998', 'ykzb24ytqh98', 'frdqlytj3762', 'wgpahute4799', 'eslm49kzeb32', 'iyrn04kfgv46',
-                     'lqsvdlvh2126', 'dojx94ofoh47', 'cotw91pshi85', 'qphlvyhb0717', 'obrmxccf3595', 'aheq89dyyz21',
-                     'ltgr44varh27', 'znslauoy5250', 'jvsjquhq9918', 'oxzs67mltm20', 'jjjl05cboc57', 'xnjherhv7824',
-                     'jocb07jvjn59', 'ayme12rtrk26', 'ktuyvqnz3910', 'cjafbpbn5227', 'xanf17hvgq95', 'gnvg24spig95',
-                     'uhwb03rahw43', 'kmlv73obxz96', 'zela49zsoe54', 'peot12rufy85', 'rvigmdaz8581', 'ofroajsb2738',
-                     'cohn00wsvj80', 'veus69lewf59', 'hsmynzib9303', 'edlv16swki66', 'pecw58fiey33', 'euif12ajum37',
-                     'deli41aoro69', 'hlbc27snft70', 'ptdn69gxtu63', 'wfpy36nehj80', 'gtrf42qidr42', 'arpajzct6607',
-                     'cgxtgliq0344', 'xvnk26slca42', 'zfke16cdto52', 'mfwoscjf5478', 'zljhrlnv3868', 'pjka63hlax76',
-                     'xrye05abcv98', 'mtjmeesy9736', 'atgm06hqef80', 'edwi37clzu25', 'ktwh52vwmv72', 'cndmmbkx6356',
-                     'yfadzuzo5749', 'ibeaqxgr2253', 'hdahujcg6120', 'sxsxwpul7189', 'qwtwvktr2056', 'ccffnurz7908',
-                     'tpiqikzb1132', 'fdbdywub2690', 'fchjjblf5311', 'jump92opwe42', 'ajczwcrc5130', 'wuhtkjkr9698',
-                     'ztcv42ltoc39', 'vzdq56hyzl59', 'hjfs45uame23', 'nlnf55bocb07', 'tmsxaagd8622', 'snda09xfuh62',
-                     'btdlknos1563', 'bffb18ywrb00', 'ykxjpnur3600', 'grpfnzzu4549', 'bijalbjy6179', 'sqtjltdk7056',
-                     'olif52arcf50', 'eqsnbjoq1986', 'tssu05bjjp25', 'mjfhxlyi1235', 'grni86foww38', 'pnujwzsw7271',
-                     'mlgc05hyhw97', 'sxigppjn3767', 'ptlb60kgds00', 'dwcpdwxz7891', 'qzjv51vbkc98', 'vokytmlk3199',
-                     'qopdyoju4125', 'fitz16fvrq02', 'nqlrlnvr7593', 'aoxnidvk8044', 'vyyiondw3423', 'xkgm43kqmc53',
-                     'krrnvwnt1611', 'sfqq04sbix63', 'wgnrbful0190', 'jiuo53alnp28', 'yavg42rdfm24', 'ulwvwruf6910',
-                     'ryhzummy8185', 'moiv52pded59', 'msynzecr9461', 'tcbo73ooxb64', 'aoqldhlh2253', 'eanfkzjc6894',
-                     'miol90lxbm79', 'oyfd75immv24', 'odsutxjd2364', 'vmrbmwfd6795', 'ccsn37xrqm15', 'hptvimhu9883',
-                     'qcbi57wgnr13', 'fjzf18rpgj55', 'ewdykuds9208', 'mukw25xuts79', 'aixy58yxbw42', 'mygwzwkk5724',
-                     'tcgh99fbxu53', 'izpubiyg8170', 'qlje11ofdo39', 'symkkess3164', 'aocn33pmkc17', 'yrbjayxe0024',
-                     'zncptfgy7883', 'sysf34ezob96', 'mdsi46ahdb99', 'cbiv21lsfg59', 'pvgf37itfa05', 'nnnk10aqsh28',
-                     'tkqcnjuk3058', 'vzgmceje0759', 'pplm17cldz19', 'kmks88nqek04', 'jquhzsty7748', 'vctfnvve0713',
-                     'ykud12oopi32', 'bgxpbklv0488', 'xknt79ixfq26', 'hcqf91khzn68', 'ewzm16eyla15', 'cvwfqfeh8057',
-                     'pful35lrix66', 'zgof97kwoy85', 'ndbh24ayue84', 'ltle94teew74', 'wdbg48fnth68', 'ukxt00pwjj02',
-                     'oggkzhwm0772', 'dcuj42xntr26', 'cwxj70hlqa62', 'bimtqfqg3058', 'feplrkkt2114', 'crzc01otei36',
-                     'bokhfgsv7110', 'dovg99fbhd14', 'hvxe20isgz26', 'dgnf67xews62', 'xufx33bxjs25', 'lwvm78pjjc18',
-                     'gktw71bcpj63', 'azba64qofy31', 'dcmu26fosz85', 'dzkt45elur65', 'zhrw07clww79', 'emez72wgqz07',
-                     'lpqrbkao6770', 'cylw81vkjd54', 'hgglykdq3818', 'gnmq58xsns35', 'vxapqskc2387', 'xofh50vher45',
-                     'suzvabya5587', 'kxzdpnhw7338', 'ngcp28puzv69', 'jkkrcjtn4887', 'alunjwgt2862', 'nckv83zgwi92',
-                     'lsye13oqjy92', 'saffweyz7073', 'jqrxnvfl9668', 'sfnvolrt6228', 'rlttuugz8375', 'dpyx25plre94',
-                     'uhzn16vpmx20', 'ddoumvqa1837', 'iteg71htbd56', 'movy64sdcb70', 'aebi00yium84', 'tvmydfmr4212',
-                     'goyw33ssww31', 'sglb27bnlu33', 'dkaamucy4297', 'datk78dgwu21', 'kjnjdcdt1105', 'alpb73cnfm66',
-                     'jwhkekxc0905', 'dktyrlrr2912', 'fsvdhgxi1945', 'ajso52evqx39', 'safj68jhcn06', 'tnbgvkil3778',
-                     'eqyv42ekjy40', 'slomyfsi1130', 'ptewtqkh7698', 'dolo02ccaw88', 'ccidtled1561', 'dsdj22sgea89',
-                     'ckyrdypm9889', 'hwoqsltm7419', 'iglanvxo4885', 'gamq74ocbs05', 'lqzzobnn2924', 'mfieyafa7898',
-                     'uzlnffjb5808', 'gnndubfz9681', 'ylnq59skns48', 'nodo51llua00', 'tdhradxc6062', 'ybrq16zluu37',
-                     'xsihqzek8991', 'ommmjyuy2128', 'eybxrjkf3324', 'ekujyzrr8484', 'zeuwjhrv5229', 'fasfpxvn6427',
-                     'qxyvhgmu6220', 'nphx30ejdp72', 'cxiq67nkew35', 'ttoj77sfbt75', 'ikne26kywo35', 'hdiskkrq0762',
-                     'fzhcliav0992', 'jsgkmawr1931', 'abdr69caik10', 'wpbw59ppbq07', 'nkqcabcr2506', 'bwybesoo4877',
-                     'zntqxtht8470', 'defksfux2494', 'tqww58bdbd31', 'hqqmzazh9538', 'ovmd32tkfk23', 'dgri62qtss04',
-                     'nywq47edsj19', 'mudc05usbu12', 'uzxt94pkqc87', 'braicvii9887', 'uqlz84srmn93', 'okfavyfl1073',
-                     'qlcdsisc1311', 'ahtz87lkmw37', 'wztkqpjk4767', 'zyyy97zuaj62', 'gmqe56ffgn41', 'zghbrgrn5797',
-                     'qsjd85eppu19', 'fyld42eyuu81', 'mhyvpevx9432', 'pashjnsx1409', 'mjyymoho0877', 'bukv95nzev31',
-                     'kxvtwbgo8473', 'dyqcauur2340', 'tefi15jdpl54', 'ewxu10dhdn14', 'vogk28yoma83', 'ecol59yzee17',
-                     'pcnyurck8142', 'htbe20akwp69', 'waromvpf7972', 'zoeo80apva22', 'jtppkpvz8798', 'xnqvbauc4550',
-                     'cniarkhv8623', 'zudqoxod5502', 'hday15gzvt57', 'endsojdi0989', 'wdqx86svth50', 'ldmmvyzk5025',
-                     'jbmh02xeag22', 'szya98jxis20', 'yyii43phzd88', 'vjhnjqon9806', 'baev37tnus19', 'hkenipkp1538',
-                     'jinh38rxdz67', 'sjvz56wkjx29', 'vvmf50mugm40', 'amgkuood4776', 'vbvxvntd2526', 'vsdpgxzm9488',
-                     'ForestFight_Distinct', 'GrowRainDoubtful', 'DarkFountainBurnt', 'BornPlanetGrumpy',
-                     'Fragile_NapkinStuck', 'FellBrother_Amused', 'ZanyRose_Fought', 'ExuberantLizardStruc',
-                     'GlamorousSandwich_Dr', 'AnnoyingDeathHave', 'CleverToothbrushStri', 'SoccerDrewDizzy',
-                     'BeenManchester_Happy', 'SleepyBoyAwoken', 'RussiaHave_Vivacious', 'BeachGrewHappy',
-                     'BewilderedStone_Abod', 'ObedientNailKnown', 'Grumpy_LockArisen', 'BalloonStroveThankfu',
-                     'BeganDog_Beautiful', 'DoubtfulGarden_Strik', 'BringCrowdUgliest', 'KneelRoomBrainy',
-                     'Lead_MachineWeary', 'ShampooGrew_Spotless', 'CleverLockHeard', 'Concerned_KitchenHea'}
-local RECEIVER_LIST = {'ktde18ntnx12', 'rfjnxwhb3807', 'jtoa67gqkw62', 'ghxl64nzfb25', 'ujcefwow9407', 'lrtk39xbly94',
-                       'kwmt30kifo63', 'rdbo85ibrc30', 'duso68rqti50', 'ffynwffq2056', 'cclc34slmz09', 'iajtvjzk9665',
-                       'jqiesklc2694', 'gklkgias7271', 'ndwi46zvxt00', 'pyzmcaax5218', 'rzlt93sivd80', 'yera20udrd99',
-                       'supeyzjy2166', 'byzq88qjup40', 'naiichqm6503', 'utvazvzo9506', 'tdgv04aivh99', 'wylt33axac19',
-                       'plgnrhzx6716', 'dgsfkedn9476', 'golr71jrrc77', 'exkv75gwdb32', 'jbzm11xybm77', 'uxvhreym8193',
-                       'htefrjgf5361', 'ipqa18ujfg24', 'fesj94stco16', 'zqqomcow8205', 'wxjltyfp3043', 'tmey84xbqj03',
-                       'syeg13sajt54', 'vqlsrlee6731', 'qmlbmiag3311', 'ajcfyowr2503', 'klguwtnc0127', 'sroe99zijt13',
-                       'kjqz47ambe38', 'dmsm85vdjm84', 'BananaFight_Anxious', 'Soccer_AteGraceful'}
+local SENDER_LIST = {'wvsjlivx1935', 'ksow78ionj28', 'zank81hmpj25', 'cmbi06jrts73', 'qjlxwsnz5427', 'mbwnworo9755',
+                     'bzbbjtoi8963', 'wwyorpgg2021', 'rxkl85psun62', 'sqwp79popu01', 'jwjf86mzpr64', 'jugjwuiz5340',
+                     'nkwgifij2710', 'nqum07ibyb39', 'wytrudnb7154', 'ivjt86jtuf54', 'dpbedgcx8360', 'rcmfnnlg7435',
+                     'ehitroxt5218', 'viqbleev6961', 'mkjb58tfgq68', 'bkwk64tfzm89', 'osic06ffci62', 'ojllqyyd5877',
+                     'vpzptkmt7313', 'jvqp40mmkk26', 'nwjcrexp7049', 'gmup66hqoi47', 'iwwk63ixsx66', 'lvpeyfhn9712',
+                     'eetj72wtdd49', 'xfefdaol8709', 'uajlfnrb4944', 'jmmrfgbt4783', 'uwvc00pmai27', 'banu28nant04',
+                     'prvi46rbas71', 'pzhh22vglb12', 'vztdanhv3565', 'hqzfvflk2458', 'lhoo45puom41', 'nessfmwp2738',
+                     'iack85tkpo40', 'ppkrzzwv2039', 'kzidmqxb5193', 'cfwn58kxpp67', 'ekdvfzbh6949', 'qkdneydm4672',
+                     'fjekkhjl6449', 'xnbcvxpz0670', 'pnvhgrdz3003', 'efyn75fnvh51', 'gjkz04lskt00', 'xvpq97qdig72',
+                     'efhjgbod4297', 'gmsg67znhv88', 'quhd31gtyu44', 'daruyigc0378', 'nexrfxjn9526', 'eatq66jgku41',
+                     'mphe62gcst79', 'uvsa62wqrn58', 'nznqvowg2276', 'jnpulfbf9447', 'onyvkxzp4663', 'cyez88sqdu29',
+                     'kdyd74gyhz52', 'qdqw09hkpy43', 'dppt28decq78', 'hiyr28asfh18', 'bpiu24zzpn60', 'anzargau3695',
+                     'tburbszp7998', 'nuggjlru2669', 'opde74vela61', 'bivm39gtyz94', 'epqv01sbko69', 'nqlcznxq5815',
+                     'yeeigbvo2082', 'anmx53fzju13', 'ztis16njdg85', 'xqhd58qdvp35', 'eyej32zlup53', 'dduptlbj0773',
+                     'yfzi58emcn62', 'gqimysfb8529', 'ryluyttd3027', 'uefo58vaoi57', 'mrnrgzcj7974', 'osvm74vhnb38',
+                     'bgoabdhn6735', 'evyt10wzlq73', 'redfsdve6874', 'wgiqnaqn5515', 'hpyk81tfbf54', 'qbwy28tast23',
+                     'ugsl90pods47', 'oheroopw6992', 'yjmi12ikeo01', 'bgig07bgni70', 'blsj94pgtv10', 'fmcjzjal1385',
+                     'lola72mwvl81', 'xaayqeys2118', 'cbfa24wfzr26', 'cjdbnrzl0889', 'xikw91mkjc48', 'delf01hjnm95',
+                     'wrexgxgd5170', 'nnmb81jkwh39', 'mkgk17ykqb60', 'uiid41wewg20', 'eazo45blpb39', 'jfzypvsq8280',
+                     'bumg81fesj83', 'bcsz81qqgm12', 'jksu52qvot72', 'mrpi29qjqh21', 'xpba91msox28', 'vlriichr1090',
+                     'rcizscny2419', 'locw13wvue83', 'ovwk13ffcw61', 'mnaw56pafw64', 'ocwxpqrj4670', 'sejakmre8958',
+                     'fsxbjurj0805', 'euperyag0172', 'rargutcq9788', 'vuqafycp5768', 'qvaq80vofn10', 'ckybnjla9549',
+                     'qrmnxebb3138', 'shdsketv7180', 'qtthjmhc9344', 'ryqvuaae7982', 'kiyilkyz9739', 'dtyv93ibwr46',
+                     'ukljajcu7141', 'ipae46dxay31', 'qinc56ygpi11', 'kusxgqyz6116', 'oxervdgs2064', 'jroy69lbpl96',
+                     'nezaospr4162', 'nvwd94rmwp87', 'moyk77awua99', 'oysy82byvn94', 'lvbj35vvnd80', 'nmrdnxgo0967',
+                     'kvee58wrvd04', 'elyk58ptxi41', 'tppsgbll2196', 'bheduaki0575', 'ettk57hkhr50', 'xjeh39ghar73',
+                     'ixjnyxce8941', 'sbxw82obni68', 'tcvknikh7857', 'tihtbtva0426', 'bpqh13nbrh78', 'vzavnuvl2904',
+                     'ryrhreoy9424', 'abec25jmnl41', 'yvjj87rjdx09', 'lhvdioey6232', 'pgjkglro6068', 'aedwqikq8369',
+                     'rjzawgmm0088', 'qwlroxsk5654', 'ovclxpov4460', 'umgj18uuel89', 'wrethjao5755', 'kjns69lzvu11',
+                     'jnrjwkmg7539', 'bvvf50sqgi76', 'sjjoihwo7512', 'dlod85lkmi34', 'ddhnczxm8260', 'fngz99slal17',
+                     'eavoeqmt6681', 'znil15cpco15', 'btik40mcbn30', 'fueyizwe7884', 'zcsyrwrf9562', 'qftf54xahf42',
+                     'yrga39uqry19', 'ekshryhf0616', 'wmxh13rexi34', 'sscrzown8432', 'remm19ctez56', 'zqilubbq4578',
+                     'tjdp87yajk33', 'uosgmclk1108', 'fgwjpstg3543', 'fycoknwn3991', 'zctckgkr7580', 'wcacpotc2306',
+                     'dpsarghi2462', 'keyufcnl4062', 'qlsj36yeol05', 'omau40acnk28', 'dxol38fpmb51', 'ahcyejzr2924',
+                     'grntrpce4747', 'zmshymsh6050', 'wfxp25vhze31', 'thleizul9779', 'tiiu22fwbz67', 'qizzzlxh1479',
+                     'mttt42nxib77', 'uamztgtl9797', 'mxkzeynp9257', 'ifwulvey7191', 'lzbejkzc3205', 'oseh50rhij00',
+                     'skdvdrbu6990', 'ksgwtkue2947', 'iywf24wfpe44', 'xoxwnsvk1430', 'xupcxdew6074', 'iryfslem9904',
+                     'itfe81qzhs54', 'jwawvata5233', 'csjh80bsoi21', 'mvax49uomt21', 'gsux37tnrb35', 'pilgqcwv3989',
+                     'ttijnmdk6196', 'ukluofjo5249', 'kaqdoxuq5237', 'nhcc51ytuj60', 'obmg27gzsf57', 'etrszdjy5645',
+                     'oeub75weqe93', 'iokt87hsfe56', 'plrmhldq3008', 'hqmpmccg2680', 'usfn09rpyw73', 'ssgu24jhmx62',
+                     'vnpn46zzdv96', 'fhdudjln7239', 'opkj71stsl40', 'qkpnjowz1507', 'xoitwmiw4979', 'gmic40tiqd74',
+                     'awya26fnnc71', 'oldouyjv7034', 'mtcp19qazt18', 'nlgoghmo8166', 'iiox94vpmi45', 'xwwcpjbo5550',
+                     'kiqvfqwq9974', 'lbft99jhkd75', 'plgnrhzx6716', 'buipxyrd0863', 'iwxk83ywyx98', 'qyenwawh7997',
+                     'ftdjiqkw5414', 'qqhbssxu4026', 'fhxr41ewmg28', 'vkkryewk1024', 'kccg14ufdf12', 'wkhwchwu7260',
+                     'juthhddt0576', 'vyjtbsat7347', 'viiy73icaz22', 'wntu68zxtk14', 'near13waft94', 'oyjm72wjce16',
+                     'obvf50wpug21', 'oscpbjpd1088', 'jgdvlgaj2916', 'nroxkyrg3985', 'mlzx91fymr97', 'odxyskfa2323',
+                     'zymf74ymfr73', 'bigjraht0132', 'zoaq67ffam94', 'wbve48zkqn12', 'qmynbsny7063', 'cyjxjade6655',
+                     'rody49vlqk47', 'hxjd01mdyw40', 'zpgk42qlvt21', 'dgsfkedn9476', 'occpbgde2588', 'amws30vure38',
+                     'dincerfa1227', 'nknu55qwaa40', 'trhzptri3080', 'cwwfmmwc8927', 'qwpxkeuv9765', 'znzy13eawe78',
+                     'fkws97xmyp52', 'hruamccu6744', 'uzqzkiuf3209', 'mjlg61vvds50', 'spatkydd5274', 'mcrzrmnh7440',
+                     'ulwavhtp6666', 'lnml74xbph82', 'tiduauvd7336', 'efrnpovb0390', 'ctnimhkd8701', 'oyejhcwp2632',
+                     'kwdznqqj9709', 'wnzk09kili42', 'nokh05qpvf75', 'hfjnzoty5353', 'fuyt52zuuz82', 'udxyvglv2487',
+                     'jhqpylzg6598', 'igyc28uzih12', 'fnfd25omqr91', 'fcdkfygc3570', 'pewfmmpx7287', 'ouyg35mrrz10',
+                     'jtaeszkb9755', 'vzfg71tkel20', 'eosfryqp0027', 'itdcmbzx1847', 'xvkv91deov42', 'sxkn25yybc91',
+                     'gtmbgtvd2190', 'tacdhwus1483', 'qcur03orbj60', 'rcnvecam5494', 'mldototw9537', 'czhw23bhvf88',
+                     'kwpkkoyt4832', 'nwlf18wthk21', 'vfrj66mrnc99', 'vwtmrhnb5712', 'mowf78orbp53', 'kgucosta7017',
+                     'xbyp92cedy15', 'uktt73icyz93', 'hfvz99jxio40', 'limu42bpwl03', 'aqya42gams54', 'ycmh87epre42',
+                     'iivzeknx0875', 'qiix64kxxq03', 'chqa15pskl06', 'yhuhvhsb7411', 'bpul32yjyc73', 'sqizndpa5093',
+                     'npqtwnyp2432', 'mrfofcch7823', 'kgikcdmt5812', 'hhnyoqbu8016', 'gilr99vjyv68', 'opyzyeax9836',
+                     'fcwebhjn7186', 'mnxu53pqvm71', 'oqme26ngfo83', 'xeaw72bvid75', 'cyvo32xoup63', 'xciu89fxeo35',
+                     'eatcrnbh0375', 'pwqbysus1082', 'nimj56nvdr14', 'segl87qnus08', 'siuslzmt9474', 'jmtpkdno9877',
+                     'dsmk09vdvb19', 'tzcp26usgt19', 'rkfkwezq2274', 'aizporbf4254', 'ygzqrtmg3042', 'mrys34ydym88',
+                     'badtfiht8318', 'qbwthahj9983', 'kldw12kcsc08', 'albs15letp86', 'xpzcaanx8450', 'rpik81xclg62',
+                     'cmar37xzhy94', 'qgbh25ykbl02', 'mhuvhepa9659', 'tqujszjq6035', 'vqoi66idoa61', 'txwc81pkrz90',
+                     'yysbxyxy4599', 'vcyn96ytfd24', 'alqqpbwb0562', 'gbvs73oyvy98', 'osen24ndyp89', 'weej78qvwn59',
+                     'yzmxabdo5461', 'ocwtuxmg6904', 'hflffoga6107', 'hddg58eqgy68', 'nbimbkdm3063', 'hixw81uvwm92',
+                     'albegkhq9985', 'hlgpzdai5765', 'tmrw20agtx41', 'alqh78ihwl61', 'eyzchvib9189', 'dreywhzy7013',
+                     'lanqcowg7273', 'fqid52vjnv94', 'gcosrbkb7238', 'oivz06oamk45', 'sdfq12yeaj95', 'bodo56emlh63',
+                     'jarmndss7191', 'hnlmhjrx4896', 'ajbv04kqhx22', 'phklklck6563', 'pjfs43apnz25', 'aiwyjnpz9418',
+                     'oxgyrhjn6752', 'wxti33fosa01', 'xkjm43ezbq42', 'eywrdivs9525', 'fcme08fwba60', 'blsfjsjd1716',
+                     'sbgm57zzuq88', 'aahw45wmam91', 'ytyv74omyg56', 'lmek11gzbj51', 'txxz92gstm02', 'qzom74fzik18',
+                     'kjbvphjt9367', 'riro69lnti81', 'dqtj09apnd90', 'umsl31olya85', 'omnssvrh6228', 'rpzt77bcjr58',
+                     'ideh77qtwy79', 'ggrhebzd8705', 'gpeztktm0771', 'sxgb14wujm15', 'sipn55lipr97', 'earmefod4047',
+                     'bhqkfbdu9457', 'uacdkowg4120', 'etaw55mxtj23', 'lrixorif0291', 'pxevmxeq2259', 'cbcxavwm9774',
+                     'wozb78uthy79', 'rnktnptu1938', 'fkqrihul2271', 'zcdo88nowm51', 'vlxvehmd4014', 'tsox57rgxb85',
+                     'skma00qanm85', 'mgxhofgh7025', 'ukjnauaa6876', 'dpaaiyeq9038', 'irjl94stmi86', 'rbejsxzr2955',
+                     'zxhr58uyrs52', 'cdgb20uwet51', 'qobc53qovv14', 'mfii92lywj45', 'jprf33pooz31', 'nnyjxklk3517',
+                     'lkzildpt3197', 'efku88hotg96', 'csbirsul0798', 'yxlxikud1331', 'vxjbgosn0880', 'tuymijei3973',
+                     'dwkhcxxy5781', 'eohy01dsqr21', 'qvuxkmcw8199', 'hrfa55nrgp80', 'dgnw24iduy32', 'uglk66jlba18',
+                     'xgfa52lggz54', 'xvsqiaic0060', 'ekebbtvy7047', 'jpcq22suzk06', 'gakc20xduk92', 'tmsr52ltia09',
+                     'vhxz41unur85', 'ggyfbvuf4694', 'wykmhoim7828', 'ycgsnuiq7703', 'opqnlsce3408', 'vfxklftd9019',
+                     'vfhyboca8170', 'jsskykgw4981', 'wgyktybm8767', 'yprg34nwai92', 'hfer51dkre15', 'eqyyzevm0421',
+                     'fbkyhbvx7148', 'zhfpwqug0603', 'uvellyyl8582', 'hpazrqso9077', 'nqszoaiu8982', 'vcds67okbc67',
+                     'lcqptvdb5515', 'tavyeawc5032', 'bpodfqny9125', 'svpl30mqic76', 'zntnabng8982', 'azwb62jfip26',
+                     'eswxatfu4224', 'sfbr74vmtf44', 'skgmeuho7103', 'agzv41cqvt72', 'gbdw16dhgz35', 'xubh62mljp46',
+                     'tmxe56qbrw48', 'eueo92xzms32', 'liml80dhvc13', 'dsql99wptp78', 'bdqfvunz3761', 'mbxvcqom1075',
+                     'wfkqmevz2114', 'ivabddvl6065', 'bqgrctxk2368', 'nmyj09ogcj49', 'gskmtdzs9865', 'hhum74oxta36',
+                     'jvnu70usyl01', 'uiby87qfxn95', 'ygzi06tdvy03', 'cpchkuwk4519', 'gbec52qrwz41', 'biinqzsx8478',
+                     'geqf46mdgu60', 'dpjskccb3091', 'vaph02zqbi77', 'iywbdtdt4307', 'tggngmhm1223', 'pyyirygf0485',
+                     'uqropwqr6545', 'lwnw11unyu47', 'yqvj73ndpo55', 'cgph03ddez38', 'dhwoyvrc8764', 'ykds43tbjv13',
+                     'ucsb45lnxx59', 'adeibzas3958', 'vgdh05ayhb18', 'cezzapub3241', 'ijfvbesr2121', 'hygvyljb2079',
+                     'hulx23ymuu71', 'dszf30yzba14', 'nutmbmqt9721', 'cvhf18fapr38', 'bwdzqzdx0077', 'znmo84nymx48',
+                     'ntpzagfr6730', 'qciz90otqe51', 'juyfxxxu8412', 'xmpf86nfsa02', 'idinvpin1254', 'wuknmutj3885',
+                     'ygzg07dune65', 'cymn59pbbs25', 'srfi17bqbc05', 'czga17rxaf57', 'vwfx72vepp21', 'zxet01luaq73',
+                     'licn13dysw33', 'fmaexcbv9538', 'ynrp98jonb62', 'vbwwzamv2565', 'qdpc62cyrj42', 'wbmb86bioc61',
+                     'nvhh51hkji37', 'vtpdyqnc8902', 'lfmq65edoj18', 'zbyj74esca09', 'cjgs07ixkz28', 'sdmm57erbo29',
+                     'sxqntrpb0360', 'xwitdrlo2956', 'sazqwyhh8542', 'cvlw60rdhe17', 'ihpa24wsmg64', 'mhji29vyib10',
+                     'zlolxoij6845', 'yqimhcnd2718', 'folr80clyu67', 'gmko07nmlh05', 'rnul73oiak20', 'pake81ckqt95',
+                     'jvkcgzdc4364', 'qfobbgim2366', 'yqkenbuc2582', 'ltzvzuzu1435', 'oepdulga1064', 'kppc94oado92',
+                     'sqvcgczl8369', 'qnuu14qbxi80', 'xcehpvhe1668', 'osdz02cbmg25', 'mgkz72xhyl77', 'fbsm85gbah77',
+                     'uytz25eqbo57', 'bemk32cidb38', 'cjopvvkm8116', 'iixxwxij2884', 'dmzt49gumh20', 'gecjimie4771',
+                     'gbgu57pbyn29', 'ojbfrxws8929', 'gqtm54awpm37', 'tnnn13payy69', 'phrgtakl3210', 'lvbj48kksi69',
+                     'zsww32zvla20', 'zqxc25vofh80', 'odjk54ugxs74', 'txle16zyyf21', 'egxxsjmt6889', 'worcxihz6101',
+                     'tgpuavzh5580', 'mqtvfoqi5999', 'utdtqcho0253', 'cxvrgcbh6018', 'vdzvyxvu0407', 'dinlipbu8621',
+                     'dcpl06fxbs43', 'iyqf65ejml52', 'uvvzjosb4946', 'mgeqpqje0540', 'vsyhzdby4815', 'dwpu16ggno03',
+                     'ymmdvpcr8377', 'loikjqmj8004', 'nard01vxnp37', 'suqgiryx4792', 'yldvbuck2409', 'iqtwrhqf4039',
+                     'kodkotvh9335', 'ytfqtpej9149', 'oaekfmbt7736', 'jflr85icmv99', 'kkcrvbgc4642', 'gkxn74wioh95',
+                     'jlka62grxr97', 'wncd67txmi06', 'yxvqlknf4873', 'yruo12tusf68', 'hfqcdbaj4831', 'enhlpqwh5910',
+                     'fsmb58qbzk10', 'gznqthue7106', 'zfxd28giwm81', 'qiajuoyx5798', 'sowdheys5092', 'ssyu72karb22',
+                     'hcaczqnk6138', 'hysgfpdn2654', 'qzxgjolo8920', 'tyus37fskb84', 'efyvbiaw7698', 'eyvw28sdui02',
+                     'ilag47nhht79', 'ytui10jekq18', 'fiwknwej3175', 'bgzm83ioca63', 'rcauiggx6994', 'nmojapxm0725',
+                     'bmif46gtve61', 'uswa52hxoa01', 'ybjsxjef6891', 'ucss10gkud89', 'aqzqfmrx9514', 'cvxt01yxzi56',
+                     'avzlnlvc7016', 'ayyg51ipoa52', 'lkip45jfec93', 'lnfx33hfcu05', 'hfju85niad26', 'dfqy74qpnc75',
+                     'eovt80kgdg61', 'qsblmydr0212', 'yvgj93hsli49', 'ukrg11wlsz37', 'bdls39ztwy71', 'cyivekaw9303',
+                     'zjlx44tlzp18', 'pcjr23edku62', 'kqnx55bkxb46', 'szupihqk7234', 'wuvi14mmdm81', 'zhjnncxe1621',
+                     'xkec47uxfc01', 'leyv50eajl28', 'sspxzfci3802', 'dzhg82wlcs09', 'pcgwlqrq0723', 'yysi00mctp38',
+                     'flzcrhbt0205', 'nkvw40jwsj27', 'wlijfwgj9603', 'elmolokm8526', 'dqfkkqjv6248', 'todf58apif33',
+                     'mcnf95djwc55', 'awdq12mrel17', 'vyozpzjw4113', 'olin98ikwz39', 'xaue24rxlx28', 'kszp41bffc00',
+                     'rmzohpmc9444', 'ykqfivvh0822', 'nkav57mwog39', 'ysgb30fuuv45', 'wvazqtie0746', 'himkaqem6538',
+                     'cmwehrpt8444', 'mvnsuqnb8036', 'axhipnmn4468', 'jhny10tdja53', 'opnjgdze9608', 'achz52cyco80',
+                     'rsuivpis2802', 'xceh68oucv45', 'gdekgpxt7804', 'fnrmezqm3009', 'uaxzudoc3055', 'bgwu58tmsj73',
+                     'kvtnabqh0673', 'vxcq50jgdn08', 'ecdihrdk6972', 'wekx05klvs88', 'aizo97hiof64', 'rtgxnrgg8200',
+                     'hufs72jqga66', 'faxb74sbkf56', 'ngniaegf0355', 'plevwgei4604', 'lzhviqxq6286', 'uxgncrhf1178',
+                     'alwwvzxj2518', 'kjny55heoi31', 'nafm10msdf94', 'tzik73zfrz40', 'mvvjmynr0608', 'divy39tsrs62',
+                     'cuut80ircb56', 'mwynrwte1999', 'rwvoefup1489', 'debraalh5926', 'hzjr45yxrj67', 'tjmz06djga25',
+                     'fiigqqkn3564', 'wpalzqgo0937', 'fnhm71msul31', 'aull85lkhs84', 'sdyy12vqjy20', 'locktkce6855',
+                     'pnujatbb1013', 'fcpw59ypjs36', 'huixfcyt5217', 'xchdzqwx7188', 'xncwqnhy5249', 'mixtngfz6408',
+                     'npmgfzzj3446', 'wqyqgbah5030', 'xfvhbbcr0904', 'zpfwphbb7173', 'wtlhitrp5299', 'tqal62pcar89',
+                     'gusmthal1142', 'dgtteyik0687', 'kagfeqcz4590', 'fspropqh5883', 'wqmh12pdue34', 'twjw15tjgh03',
+                     'lsuk65ovzi29', 'seauynnc9131', 'psyb59wgtz43', 'bquvorto1432', 'lxhu30kyif06', 'poxpixme0172',
+                     'vbdc33tznz51', 'jtwa80qmht47', 'jvnynzsj3819', 'pdfy16cnvt32', 'wbeypykr6332', 'hdbrhjej8585',
+                     'gubxuuhk1744', 'qtkfdmsf1894', 'beowzhsn7813', 'bupi24wzuc76', 'kwma96ggwm46', 'ktabtiro3349',
+                     'banf52sbex95', 'nlum60aocu28', 'zfpg27ohwk94', 'jaww63demb24', 'xzvtgyks5972', 'ipcpmhzt5090',
+                     'nqbu93buda49', 'dgdnqevb4179', 'qlwxmrrh5255', 'mqmp01nufl48', 'pvcpayif3568', 'liyngivb4042',
+                     'tqotizfk7589', 'vwzm97bggk75', 'ierv08nfzg93', 'tfdgnxcu4356', 'blwv71tecd87', 'zysd19fomn63',
+                     'arzq49ykoe50', 'evmw32gabj32', 'zpud98xkca11', 'xzpimdjt8241', 'vryinjgz3223', 'gewy76zzsv94',
+                     'xnmlescc2283', 'uqvw89wihv89', 'gnir78qzzj77', 'koah36mopt74', 'ofgm56jjqo69', 'booo04oqbm30',
+                     'cbcl48qbro30', 'esqozgsf2055', 'iuit51fsvt29', 'vaak14biem52', 'tapt52wpmn36', 'gfzmxtvz9293',
+                     'geqdqrwj6161', 'iixntooc1359', 'fxheulaf7979', 'iyozkbed6776', 'agwe58ktfk57', 'jbpq77kvhd25',
+                     'lahhvxvw0828', 'zbtglxqy9575', 'uyhb03qncr85', 'omdbuswj3872', 'fasbvgti7287', 'alov47bwrk88',
+                     'avqk98zdkr51', 'qohj06jwvg86', 'rkijrgxu9291', 'wixzpwxu3730', 'wjknfdan7568', 'lavh01flvf99',
+                     'girrfsbi9274', 'bgrozktz1879', 'frufffca9378', 'cpib23rzxr47', 'gndo52zcrj33', 'vbrwrssj8983',
+                     'xdxzivij1307', 'tgit97dynb02', 'qxvnkunj5770', 'ybvantyx9368', 'wcdkiwgv3229', 'zoojcrfi9802',
+                     'xfppdpbq3288', 'wkwg69hsbd17', 'jefc66sstf77', 'uqow47rrrb09', 'wzyu91uudj21', 'xfaelsrb5048',
+                     'lnpswmam4920', 'wbqa00kbgl20', 'vgwn39qygs07', 'jyax05yasm25', 'ntjkwnfu1005', 'ioem66ajwm02',
+                     'txmbvepi9197', 'sorvjrnx3592', 'xqvlxbmr4951', 'mqvx46yppt09', 'dsbpcohj3028', 'kthvrusi9492',
+                     'nybesjwa3215', 'bvgz49yxxj60', 'vjpvpqle6537', 'uqjk23ecuz97', 'gyqz51rdgh57', 'iaffpsan4086',
+                     'vjyb68dttv18', 'bvntmycz9831', 'iamt22veor14', 'witgrtoy6571', 'lucwkoea2386', 'fwlhanva3512',
+                     'fqrp00pnzc94', 'aopjemje5709', 'surn42nexx58', 'kbufepaw8895', 'jxffzxgo4260', 'ixcz67vukz51',
+                     'zretstch4371', 'ghnn64bdyu76', 'glsglpzv6992', 'rphvaxty9340', 'aorajmnk7390', 'hdoa54yoxq26',
+                     'myjulhff9052', 'xjqj65fybt88', 'vxzafbpk8769', 'aesnrwry5782', 'qwyybifp9704', 'pxobsdrr9684',
+                     'zvkh82jfqh22', 'sdrf17ccjl79', 'hqxe41ofij80', 'jfqgimxi4316', 'apsjlxbg4400', 'mabogdjr1022',
+                     'qmfz58odar94', 'udgy77bbtr77', 'derngrxk1696', 'ksng39sijf39', 'zchs37ekek77', 'wvvq18wkoy79',
+                     'qluk17nhsx47', 'oxncacym2691', 'ylkq55txnd20', 'dllm51xokj05', 'vmhb31tvqg16', 'zmeytnll3615',
+                     'hvry83ddjf02', 'mzftmeca8263', 'prnj74gavw87', 'odqn32jtdh19', 'awrrdocw0408', 'ttgzslmp6717',
+                     'sxrtxozl5263', 'khqu79wesd65', 'bksgdogo4733', 'hfaa18dtgc16', 'dnbq57ojgv48', 'mdpw62shha19',
+                     'udirsjdn4476', 'cevencbl8470', 'mbgbabfm1537', 'qrkj53unxt07', 'kplrneav8650', 'Breebkscs11161',
+                     'Elyshadmiys22684', 'Zarahygkba43342', 'Pamelaqkfen40995', 'Connieddtpj56814', 'Zondagckey15937',
+                     'Liblmiby12442', 'Dynahnxjng17734', 'Barbecdrxj07433', 'Xyliavttdc84073', 'Dianadoift52476',
+                     'Astrixeqauw51624', 'Maryjoyjivz40433', 'Adoreektpox86431', 'Dulseawoqxn88600', 'Jobynadiswm60397',
+                     'Jackynmjrp23432', 'Daricekubbg67687', 'Eleengyynp07590', 'Fionapoefl64460'}
+local RECEIVER_LIST = {'aqzskodl1600', 'kobqcpxt7978', 'cups51zywy88', 'gdpovmel0011', 'maeh89kntx63', 'ryejbumb9798',
+                       'czcd33xehm52', 'scqk54wcet62', 'ronqoqhf1317', 'geotfpat2239', 'pmyjuoct5603', 'osbrxqae8204',
+                       'yxfg45xmjy47', 'sveeuzrv2265', 'lbgvtmtz0020', 'etjblvbt7997', 'ajkwzlxa3068', 'luot88ygcy33',
+                       'wgrd50abeg85', 'apel86tyvm36', 'cbuwxtfw3632', 'ybuegtwr9734', 'zsdxcboc2978', 'tbtw03hdpg14',
+                       'xcpdwpua2814', 'rhdfigat8539', 'uuwq48gnzt00', 'cyhk26tmyp58', 'nhysfijq9353', 'zipiylpy7269',
+                       'burlyups6652', 'idko06nfas93', 'rkdq31kfpj14', 'kqygrldf7588', 'ccsmbzgl2516', 'rkwcthxa9920',
+                       'aoal54csei64', 'byoabanz8058', 'hofrznfr0749', 'mjjv12ajem75', 'uwsgwvcp7878', 'uhzg83imkw45',
+                       'agrhcakb3847', 'kgdx78rulu66'}
 
 -- ตัวแปรสำหรับการทำงาน
 local Players = game:GetService("Players")
@@ -629,7 +618,7 @@ local function AddToken()
     return true
 end
 
--- ฟังก์ชัน add creature สำหรับ Receiver แบบปลอดภัย (แก้ไขแล้ว)
+-- ฟังก์ชัน add creature สำหรับ Receiver แบบปลอดภัย
 local function AddCreatureReceiver()
     local tradeGuiSafe = LocalPlayer.PlayerGui and LocalPlayer.PlayerGui:FindFirstChild("TradeGui")
     if not (tradeGuiSafe and tradeGuiSafe.Enabled) then
@@ -643,102 +632,114 @@ local function AddCreatureReceiver()
         return false
     end
 
-    -- === กำหนดค่า Creature และจำนวนที่ต้องการส่ง ===
-    local creatureName = "Yiepir"
-    local amountToAdd = 1
-    -- ==========================================
-
     local success, error = pcall(function()
-        
-        -- ตรวจสอบว่า TradeGui ปิดระหว่างทำงานหรือไม่
-        if not LocalPlayer.PlayerGui.TradeGui.Enabled then
-            print('❌ TradeGui ถูกปิดระหว่าง AddCreatureReceiver, reset currentStep')
-            currentStepReceiver = 0
-            return false
-        end
+        local Unlocks = LocalPlayer.Data and LocalPlayer.Data.Unlocks
+        local creatureName = nil
 
-        -- ค้นหาชื่อฝ่ายตรงข้าม
-        local theirLabel = LocalPlayer.PlayerGui and LocalPlayer.PlayerGui:FindFirstChild('TradeGui') and
-                                 LocalPlayer.PlayerGui.TradeGui.ContainerFrame.Theirs.DisplayNameLabel.UserNameLabel
+        if LocalPlayer and LocalPlayer.Data and LocalPlayer.Data.Unlocks then
+            for _, child in pairs(Unlocks:GetChildren()) do
+                if not LocalPlayer.PlayerGui.TradeGui.Enabled then
+                    print('❌ TradeGui ถูกปิดระหว่าง AddCreatureReceiver, reset currentStep')
+                    currentStepReceiver = 0
+                    return false
+                end
+                if child:IsA('ValueBase') and tonumber(child.Value) and tonumber(child.Value) > 0 then
+                    if child.Name ~= "Vin'rou" and child.Name ~= 'Eulopii' then
+                        creatureName = child.Name
+                        break
+                    end
+                end
+            end
 
-        if not theirLabel or not theirLabel.Text then
-            warn('❌ ไม่พบชื่อฝ่ายตรงข้าม')
-            currentStepReceiver = 0
-            return false
-        end
+            if not creatureName then
+                warn('❌ ไม่พบ creature ที่ตรงเงื่อนไข')
+                currentStepReceiver = 0
+                return false
+            end
 
-        local otherPlayerName = theirLabel.Text
-        if string.sub(otherPlayerName, 1, 1) == '@' then
-            otherPlayerName = string.sub(otherPlayerName, 2)
-        end
+            local theirLabel = LocalPlayer.PlayerGui and LocalPlayer.PlayerGui:FindFirstChild('TradeGui') and
+                                   LocalPlayer.PlayerGui.TradeGui.ContainerFrame.Theirs.DisplayNameLabel.UserNameLabel
 
-        -- สร้างชื่อ remote (สำหรับ Receiver)
-        local remoteName = otherPlayerName .. '-' .. LocalPlayer.Name .. 'TradeRemote'
-        local remotes = ReplicatedStorage:FindFirstChild('Remotes')
-        if not remotes then
-            print('❌ ไม่พบ Remotes folder')
-            currentStepReceiver = 0
-            return false
-        end
+            if not theirLabel or not theirLabel.Text then
+                warn('❌ ไม่พบชื่อฝ่ายตรงข้าม')
+                currentStepReceiver = 0
+                return false
+            end
 
-        local remote = remotes:FindFirstChild(remoteName)
-        if not remote then
-            print('❌ ไม่พบ remote: ' .. tostring(remoteName))
-            currentStepReceiver = 0
-            return false
-        end
+            local otherPlayerName = theirLabel.Text
+            if string.sub(otherPlayerName, 1, 1) == '@' then
+                otherPlayerName = string.sub(otherPlayerName, 2)
+            end
 
-        if not LocalPlayer.PlayerGui.TradeGui.Enabled then
-            print('❌ TradeGui ถูกปิดระหว่าง AddCreatureReceiver, reset currentStep')
-            currentStepReceiver = 0
-            return false
-        end
+            local remoteName = otherPlayerName .. '-' .. LocalPlayer.Name .. 'TradeRemote'
+            local remotes = ReplicatedStorage:FindFirstChild('Remotes')
+            if not remotes then
+                print('❌ ไม่พบ Remotes folder')
+                currentStepReceiver = 0
+                return false
+            end
 
-        -- ตรวจสอบเวลาที่ผ่านไปตั้งแต่ remote call ล่าสุด
-        local timeSinceLastCall = tick() - lastRemoteCallTime
-        if timeSinceLastCall < 3 then
-            local waitTime = 3 - timeSinceLastCall
-            print("⏳ รอ " .. string.format("%.1f", waitTime) ..
-                    " วินาทีก่อนเรียก remote สำหรับ creature...")
-            wait(waitTime)
-        end
+            local remote = remotes:FindFirstChild(remoteName)
+            if not remote then
+                print('❌ ไม่พบ remote: ' .. tostring(remoteName))
+                currentStepReceiver = 0
+                return false
+            end
 
-        -- ตั้งค่า remote กำลังใช้งาน
-        isRemoteBusy = true
-        lastRemoteCallTime = tick()
+            if not LocalPlayer.PlayerGui.TradeGui.Enabled then
+                print('❌ TradeGui ถูกปิดระหว่าง AddCreatureReceiver, reset currentStep')
+                currentStepReceiver = 0
+                return false
+            end
 
-        -- === สร้าง args ตามที่กำหนด ===
-        local args = {'AddTradeItem', {
-            Overwrite = true,
-            ItemType = 'Creatures',
-            Name = creatureName,  -- "Yiepir"
-            Amount = amountToAdd  -- 1
-        }}
-        -- =============================
+            -- ตรวจสอบเวลาที่ผ่านไปตั้งแต่ remote call ล่าสุด
+            local timeSinceLastCall = tick() - lastRemoteCallTime
+            if timeSinceLastCall < 3 then
+                local waitTime = 3 - timeSinceLastCall
+                print("⏳ รอ " .. string.format("%.1f", waitTime) ..
+                          " วินาทีก่อนเรียก remote สำหรับ creature...")
+                wait(waitTime)
+            end
 
-        print("📤 กำลังเพิ่ม creature: " .. creatureName .. " (จำนวน " .. amountToAdd .. ")...")
-
-        local remoteSuccess, remoteError = pcall(function()
-            remote:InvokeServer(unpack(args))
-        end)
-
-        if not remoteSuccess then
-            warn('❌ เกิดข้อผิดพลาดในการเรียก Remote: ' ..
-                     tostring(remoteError))
-            isRemoteBusy = false
-            currentStepReceiver = 0
-            return false
-        else
-            print('✅ เพิ่ม creature สำเร็จ!')
+            -- ตั้งค่า remote กำลังใช้งาน
+            isRemoteBusy = true
             lastRemoteCallTime = tick()
 
-            -- รอ 3 วินาทีหลังใช้ remote
-            print("⏳ รอ 3 วินาทีหลังใช้ remote สำหรับ creature...")
-            wait(3)
+            local args = {'AddTradeItem', {
+                Overwrite = true,
+                ItemType = 'Creatures',
+                Name = creatureName,
+                Amount = 1
+            }}
 
-            -- ปลดล็อค remote
-            isRemoteBusy = false
-            return true
+            print("📤 กำลังเพิ่ม creature: " .. creatureName .. "...")
+
+            local remoteSuccess, remoteError = pcall(function()
+                remote:InvokeServer(unpack(args))
+            end)
+
+            if not remoteSuccess then
+                warn('❌ เกิดข้อผิดพลาดในการเรียก Remote: ' ..
+                         tostring(remoteError))
+                isRemoteBusy = false
+                currentStepReceiver = 0
+                return false
+            else
+                print('✅ เพิ่ม creature สำเร็จ!')
+                lastRemoteCallTime = tick()
+
+                -- รอ 3 วินาทีหลังใช้ remote
+                print("⏳ รอ 3 วินาทีหลังใช้ remote สำหรับ creature...")
+                wait(3)
+
+                -- ปลดล็อค remote
+                isRemoteBusy = false
+                return true
+            end
+        else
+            print('❌ ไม่สามารถเข้าถึง Data.Unlocks ได้')
+            currentStepReceiver = 0
+            return false
         end
     end)
 
@@ -754,7 +755,6 @@ local function AddCreatureReceiver()
 end
 
 -- ฟังก์ชัน add creature
--- ฟังก์ชัน add creature (แก้ไขแล้ว)
 local function AddCreature(isReceiver)
     local tradeGuiSafe = LocalPlayer.PlayerGui and LocalPlayer.PlayerGui:FindFirstChild("TradeGui")
     if not (tradeGuiSafe and tradeGuiSafe.Enabled) then
@@ -768,102 +768,113 @@ local function AddCreature(isReceiver)
         return false
     end
 
-    -- === กำหนดค่า Creature และจำนวนที่ต้องการส่ง ===
-    local creatureName = "Yiepir"
-    local amountToAdd = 150
-    -- ==========================================
-
     local success, error = pcall(function()
-        
-        -- ตรวจสอบว่า TradeGui ปิดระหว่างทำงานหรือไม่
-        if not LocalPlayer.PlayerGui.TradeGui.Enabled then
-            print('❌ TradeGui ถูกปิดระหว่าง AddCreature, reset currentStep')
-            currentStep = 0
-            return false
-        end
+        local Unlocks = LocalPlayer.Data and LocalPlayer.Data.Unlocks
+        local creatureName = nil
 
-        -- ค้นหาชื่อฝ่ายตรงข้าม (ยังจำเป็นต้องใช้)
-        local theirLabel = LocalPlayer.PlayerGui and LocalPlayer.PlayerGui:FindFirstChild('TradeGui') and
-                                 LocalPlayer.PlayerGui.TradeGui.ContainerFrame.Theirs.DisplayNameLabel.UserNameLabel
+        if LocalPlayer and LocalPlayer.Data and LocalPlayer.Data.Unlocks then
+            for _, child in pairs(Unlocks:GetChildren()) do
+                if not LocalPlayer.PlayerGui.TradeGui.Enabled then
+                    print('❌ TradeGui ถูกปิดระหว่าง AddCreature, reset currentStep')
+                    currentStep = 0
+                    return false
+                end
+                if child:IsA('ValueBase') and tonumber(child.Value) and tonumber(child.Value) > 0 then
+                    if child.Name ~= "Vin'rou" and child.Name ~= 'Eulopii' then
+                        creatureName = child.Name
+                        break
+                    end
+                end
+            end
 
-        if not theirLabel or not theirLabel.Text then
-            warn('❌ ไม่พบชื่อฝ่ายตรงข้าม')
-            currentStep = 0
-            return false
-        end
+            if not creatureName then
+                warn('❌ ไม่พบ creature ที่ตรงเงื่อนไข')
+                currentStep = 0
+                return false
+            end
 
-        local otherPlayerName = theirLabel.Text
-        if string.sub(otherPlayerName, 1, 1) == '@' then
-            otherPlayerName = string.sub(otherPlayerName, 2)
-        end
+            local theirLabel = LocalPlayer.PlayerGui and LocalPlayer.PlayerGui:FindFirstChild('TradeGui') and
+                                   LocalPlayer.PlayerGui.TradeGui.ContainerFrame.Theirs.DisplayNameLabel.UserNameLabel
 
-        -- สร้างชื่อ remote (ยังจำเป็นต้องใช้)
-        local remoteName
-        if isReceiver then
-            remoteName = otherPlayerName .. '-' .. LocalPlayer.Name .. 'TradeRemote'
-        else
-            remoteName = LocalPlayer.Name .. '-' .. otherPlayerName .. 'TradeRemote'
-        end
-        local remote = ReplicatedStorage:FindFirstChild('Remotes') and
+            if not theirLabel or not theirLabel.Text then
+                warn('❌ ไม่พบชื่อฝ่ายตรงข้าม')
+                currentStep = 0
+                return false
+            end
+
+            local otherPlayerName = theirLabel.Text
+            if string.sub(otherPlayerName, 1, 1) == '@' then
+                otherPlayerName = string.sub(otherPlayerName, 2)
+            end
+
+            local remoteName
+            if isReceiver then
+                remoteName = otherPlayerName .. '-' .. LocalPlayer.Name .. 'TradeRemote'
+            else
+                remoteName = LocalPlayer.Name .. '-' .. otherPlayerName .. 'TradeRemote'
+            end
+            local remote = ReplicatedStorage:FindFirstChild('Remotes') and
                                ReplicatedStorage.Remotes:FindFirstChild(remoteName)
-        
-        if not remote then
-            print('❌ ไม่พบ remote: ' .. tostring(remoteName))
-            currentStep = 0
-            return false
-        end
+            if not remote then
+                print('❌ ไม่พบ remote: ' .. tostring(remoteName))
+                currentStep = 0
+                return false
+            end
 
-        if not LocalPlayer.PlayerGui.TradeGui.Enabled then
-            print('❌ TradeGui ถูกปิดระหว่าง AddCreature, reset currentStep')
-            currentStep = 0
-            return false
-        end
+            if not LocalPlayer.PlayerGui.TradeGui.Enabled then
+                print('❌ TradeGui ถูกปิดระหว่าง AddCreature, reset currentStep')
+                currentStep = 0
+                return false
+            end
 
-        -- ตรวจสอบเวลาที่ผ่านไปตั้งแต่ remote call ล่าสุด (ยังจำเป็นต้องใช้)
-        local timeSinceLastCall = tick() - lastRemoteCallTime
-        if timeSinceLastCall < 3 then
-            local waitTime = 3 - timeSinceLastCall
-            print("⏳ รอ " .. string.format("%.1f", waitTime) ..
-                    " วินาทีก่อนเรียก remote สำหรับ creature...")
-            wait(waitTime)
-        end
+            -- ตรวจสอบเวลาที่ผ่านไปตั้งแต่ remote call ล่าสุด
+            local timeSinceLastCall = tick() - lastRemoteCallTime
+            if timeSinceLastCall < 3 then
+                local waitTime = 3 - timeSinceLastCall
+                print("⏳ รอ " .. string.format("%.1f", waitTime) ..
+                          " วินาทีก่อนเรียก remote สำหรับ creature...")
+                wait(waitTime)
+            end
 
-        -- ตั้งค่า remote กำลังใช้งาน
-        isRemoteBusy = true
-        lastRemoteCallTime = tick()
-
-        -- === สร้าง args ตามที่กำหนด ===
-        local args = {'AddTradeItem', {
-            Overwrite = true,
-            ItemType = 'Creatures',
-            Name = creatureName,  -- "Yiepir"
-            Amount = amountToAdd  
-        }}
-        -- =============================
-
-        print("📤 กำลังเพิ่ม creature: " .. creatureName .. " (จำนวน " .. amountToAdd .. ")...")
-
-        local remoteSuccess, remoteError = pcall(function()
-            remote:InvokeServer(unpack(args))
-        end)
-
-        if not remoteSuccess then
-            warn('❌ เกิดข้อผิดพลาดในการเรียก Remote: ' ..
-                     tostring(remoteError))
-            isRemoteBusy = false
-            currentStep = 0
-            return false
-        else
-            print('✅ เพิ่ม creature สำเร็จ!')
+            -- ตั้งค่า remote กำลังใช้งาน
+            isRemoteBusy = true
             lastRemoteCallTime = tick()
 
-            -- รอ 3 วินาทีหลังใช้ remote
-            print("⏳ รอ 3 วินาทีหลังใช้ remote สำหรับ creature...")
-            wait(3)
+            local args = {'AddTradeItem', {
+                Overwrite = true,
+                ItemType = 'Creatures',
+                Name = creatureName,
+                Amount = 1
+            }}
 
-            -- ปลดล็อค remote
-            isRemoteBusy = false
-            return true
+            print("📤 กำลังเพิ่ม creature: " .. creatureName .. "...")
+
+            local remoteSuccess, remoteError = pcall(function()
+                remote:InvokeServer(unpack(args))
+            end)
+
+            if not remoteSuccess then
+                warn('❌ เกิดข้อผิดพลาดในการเรียก Remote: ' ..
+                         tostring(remoteError))
+                isRemoteBusy = false
+                currentStep = 0
+                return false
+            else
+                print('✅ เพิ่ม creature สำเร็จ!')
+                lastRemoteCallTime = tick()
+
+                -- รอ 3 วินาทีหลังใช้ remote
+                print("⏳ รอ 3 วินาทีหลังใช้ remote สำหรับ creature...")
+                wait(3)
+
+                -- ปลดล็อค remote
+                isRemoteBusy = false
+                return true
+            end
+        else
+            print('❌ ไม่สามารถเข้าถึง Data.Unlocks ได้')
+            currentStep = 0
+            return false
         end
     end)
 
