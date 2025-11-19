@@ -1,5 +1,3 @@
-task.wait(15)
-
 -- ตัวแปรสำหรับรายชื่อผู้เล่น
 local SENDER_LIST = {'Pitektsun6844', 'Avahgerti31779', 'Lydaymorin719', 'Tiafondy945', 'Strebdemes8932',
                      'Kohenbobko65664', 'Googedeall963', 'Dinesohal7237', 'Delkegint094', 'Malbyaarib49993',
